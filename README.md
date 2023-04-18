@@ -1,3 +1,13 @@
-# Triviallike
+O que é necessário instalar:
 
-A fantastic copy of Rogue (released in 1980) developed in C by a group of University Friends. If you wish to develop a game like this, you can call us and we will make it happen.
+ncurses
+ :
+	 sudo apt-get install libncurses-dev
+
+Para compilar o código:
+
+	make
+
+Para remover todos os ficheiros de código objeto e o executável:
+
+	make clean
