@@ -6,8 +6,20 @@ ncurses
 
 Para compilar o código:
 
-	make
+
+```bash
+$ make
+```
+
+Para compilar e executar
+
+```bash
+$ ./build.sh
+```
 
 Para remover todos os ficheiros de código objeto e o executável:
 
-	make clean
+
+```bash
+$ make clean
+```
