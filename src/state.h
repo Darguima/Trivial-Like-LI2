@@ -9,6 +9,7 @@
  * - o que está em cada casa
  *
  */
+
 typedef struct state {
 	int playerX;
 	int playerY;

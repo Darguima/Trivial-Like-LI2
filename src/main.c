@@ -7,12 +7,11 @@
 #include "state.h"
 #include "mapa.h"
 
-
-
 /**
  *
  * Um pequeno exemplo que mostra o que se pode fazer
  */
+
 void do_movement_action(STATE *st, int dx, int dy) {
 	st->playerX += dx;
 	st->playerY += dy;
@@ -64,8 +63,6 @@ int main() {
         init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
         init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
 
-	gerar(&st);
-
 	/**
 	 * Este código está muito mal escrito!
 	 * Deveria existir uma função chamada draw_player!
@@ -85,7 +82,6 @@ int main() {
 		move(nrows - 1, 0);
 		attron(COLOR_PAIR(COLOR_WHITE));
 		mvaddch(st.playerX, st.playerY, 'p');
-		attron(COLOR_PAIR(COLOR_WHITE);
 		move(st.playerX, st.playerY);
 		update(&st);
 	}

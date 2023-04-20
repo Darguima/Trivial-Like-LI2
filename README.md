@@ -1,24 +1,27 @@
-O que é necessário instalar:
+### Dependências
 
-ncurses
- :
-	 sudo apt-get install libncurses-dev
+#### ncurses
+
+Ubuntu
+```bash
+$ sudo apt-get install libncurses-dev
+```
+
+### Contribuindo
+
+Para compilar, executar e limpar os objetos.
+
+```bash
+$ make dev
+```
 
 Para compilar o código:
-
 
 ```bash
 $ make
 ```
 
-Para compilar e executar
-
-```bash
-$ ./build.sh
-```
-
-Para remover todos os ficheiros de código objeto e o executável:
-
+Para remover todos os ficheiros de código objeto:
 
 ```bash
 $ make clean

@@ -1,2 +1,2 @@
 #/bin/sh
-make && ./jogo
+make && rm && ./jogo
