@@ -6,7 +6,7 @@
 
 #include "mapa.h"
 
-void gerar(STATE *s) {
-	s->playerX = 10;
-	s->playerY = 10;
+void gerar(State *state) {
+	state->jogoAtual.jogador.posicao.x = 10;
+	state->jogoAtual.jogador.posicao.y = 10;
 }
