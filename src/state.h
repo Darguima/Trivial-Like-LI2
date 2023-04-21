@@ -30,7 +30,7 @@ typedef struct statusJogador {
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
 	char* mensagem; /* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
-	Arma inventario[];
+	Arma* inventario;
 } StatusJogador;
 
 typedef enum elementosDoMapa {
@@ -44,7 +44,7 @@ typedef enum elementosDoMapa {
 
 typedef struct jogoAtual {
 	StatusJogador jogador;
-	ElementosDoMapa Mapa[];
+	ElementosDoMapa* Mapa;
 } JogoAtual;
 
 typedef struct state {
