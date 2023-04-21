@@ -7,13 +7,28 @@
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"
 
+#include "Scenes/SelecionarJogador/desenhaSelecionarJogador.h"
+#include "Scenes/SelecionarJogador/eventosSelecionarJogador.h"
+
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
+
+#include "Scenes/Controlos/desenhaControlos.h"
+#include "Scenes/Controlos/eventosControlos.h"
+
+#include "Scenes/Sobre/desenhaSobre.h"
+#include "Scenes/Sobre/eventosSobre.h"
+
+#include "Scenes/Sair/desenhaSair.h"
+#include "Scenes/Sair/eventosSair.h"
 
 int main() {
 	State state = criarEstado();
 
 	WINDOW *window = initscr();
+
+	int nrows, ncols;
+	getmaxyx(window, nrows, ncols);
 
 	/* Configuring Window */
 	srand48(time(NULL));
@@ -24,14 +39,23 @@ int main() {
 	nonl();
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
-  move(0, 0);
 
 	/* Starting colors pairs */
 	init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
 	init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
 
+	Scene sceneAnterior = state.sceneAtual;
 	while(1) {
+		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
+		if (state.sceneAtual != sceneAnterior) {
+			for (int x = 0; x < ncols; x++)
+				for (int y = 0; y < nrows; y++)
+					mvaddch(y, x, ' ');
+
+			sceneAnterior = state.sceneAtual;
+		}
+
 		switch (state.sceneAtual)
 		{
 			case MenuInicial:
@@ -40,8 +64,8 @@ int main() {
 				break;
 			
 			case SelecionarJogador:
-				desenhaMenuInicial(window, &state);
-				eventosMenuInicial(&state);
+				desenhaSelecionarJogador(window, &state);
+				eventosSelecionarJogador(&state);
 				break;
 			
 			case Jogo:
@@ -50,20 +74,22 @@ int main() {
 				break;
 
 			case Controlos:
-				desenhaMenuInicial(window, &state);
-				eventosMenuInicial(&state);
+				desenhaControlos(window, &state);
+				eventosControlos(&state);
 				break;
 			
 			case Sobre:
-				desenhaMenuInicial(window, &state);
-				eventosMenuInicial(&state);
+				desenhaSobre(window, &state);
+				eventosSobre(&state);
 				break;
 
 			case Sair:
-				desenhaMenuInicial(window, &state);
-				eventosMenuInicial(&state);
+				desenhaSair(window, &state);
+				eventosSair(&state);
 				break;
 		}
+		
+		move(0, 0);
 	}
 
 	return 0;

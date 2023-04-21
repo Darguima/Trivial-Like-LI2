@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <ncurses.h>
 
 #include "../../state.h"
@@ -8,8 +7,15 @@ void eventosMenuInicial(State *state) {
 
 	switch(key) {
 		case 'j': 
-			state->sceneAtual = Jogo; break;
-			
-		case 'q': endwin(); exit(0); break;
+			state->sceneAtual = SelecionarJogador; break;
+		
+		case 'c': 
+			state->sceneAtual = Controlos; break;
+
+		case 's': 
+			state->sceneAtual = Sobre; break;
+
+		case 'q':
+			state->sceneAtual = Sair; break;
 	}
 }

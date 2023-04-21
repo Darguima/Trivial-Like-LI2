@@ -10,15 +10,14 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMenuInicial(WINDOW* window, State* state) {
+void desenhaSelecionarJogador(WINDOW* window, State* state) {
   UNUSED(window);
   UNUSED(state);
 
   int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
 
-  mvaddstr((nrows / 2) - 2, (ncols - 18) / 2, "press j para jogar");
-  mvaddstr((nrows / 2) - 1, (ncols - 26) / 2, "press c para ver controlos");
-  mvaddstr((nrows / 2) - 0, (ncols - 22) / 2, "press s para ver sobre");
-  mvaddstr((nrows / 2) + 1, (ncols - 17) / 2, "press q para sair");
+  mvaddstr((nrows / 2) - 2, (ncols - 43) / 2, "Neste menu vai ser possivel escolher o save");
+  mvaddstr((nrows / 2) + 0, (ncols - 18) / 2, "press j para jogar");
+  mvaddstr((nrows / 2) + 1, (ncols - 19) / 2, "press q para voltar");
 }
