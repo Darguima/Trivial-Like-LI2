@@ -2,7 +2,9 @@ CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -O2
 LIBS=-lm -lcurses
 
-jogo: src/main.o src/state.o src/Scenes/Jogo/desenhaJogo.o src/Scenes/Jogo/eventosJogo.o src/Scenes/MenuInicial/desenhaMenuInicial.o src/Scenes/MenuInicial/eventosMenuInicial.o
+# $(SRCS:.c=.o) => will compile all .c files to a .o file with the same name
+
+jogo: $(SRCS:.c=.o)
 # Compile main.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
