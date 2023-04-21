@@ -7,7 +7,7 @@ SOURCES := $(shell find ./src -type f -name '*.c')
 # And convert them to .o files
 OBJECTS := $(patsubst %.c, %.o, $(SOURCES))
 
-jogo: $(OBJECTS)
+triviallike: $(OBJECTS)
 # Compile main.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
@@ -17,4 +17,4 @@ clean:
 
 dev:
 # Clean, compile and run 
-	make clean && make && make clean && ./jogo
+	make clean && make && make clean && ./triviallike
