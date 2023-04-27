@@ -16,6 +16,9 @@ State criarEstado() {
 	state.jogoAtual.jogador.armaPrincipal = Nada;
 	state.jogoAtual.jogador.armaSecundaria = Nada;
 	state.jogoAtual.Mapa  = NULL;
-
+	state.controloMenu.highlight = 1;
+	state.controloMenu.side=0;
+	state.controloMenu.help=0;
+	
   return state;
 }
