@@ -2,6 +2,7 @@
 
 #include "../../state.h"
 
+#include "desenhaControlos.h"
 /*
  * Enquanto os dois parametros da funcao não forem usados
  * esta macro é importante para prevenir o warning:
@@ -10,8 +11,7 @@
  */
 #define UNUSED(x) (void)(x)
 
-#define NUM_OPTIONS 5
-#define MAX_OPTION_LEN 30
+
 
 void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, int highlight, int side, int help);
 

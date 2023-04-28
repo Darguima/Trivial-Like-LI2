@@ -2,8 +2,9 @@
 
 #include "../../state.h"
 
-#define NUM_OPTIONS 5
-#define MAX_OPTION_LEN 30
+#include "desenhaControlos.h"
+
+
 
 void eventosControlos(State *state) {
 	int key = getch();
