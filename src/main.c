@@ -46,6 +46,9 @@ int main() {
 	init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
 
 	Scene sceneAnterior = state.sceneAtual;
+	WINDOW *win = newwin(nrows-10,ncols-40,5,20);
+	 int mapa[ncols-40][nrows-10];
+	 gerarMapa (ncols,nrows,mapa);
 	while(1) {
 		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
 		if (state.sceneAtual != sceneAnterior) {
@@ -69,8 +72,11 @@ int main() {
 				break;
 			
 			case Jogo:
-				desenhaJogo(window, &state);
+			    wrefresh(window);
+				desenhaJogo(win, &state,ncols-40,nrows-10,mapa);
 				eventosJogo(&state);
+				wrefresh(window);
+				
 				break;
 
 			case Controlos:
