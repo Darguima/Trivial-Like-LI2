@@ -13,8 +13,8 @@ State criarEstado() {
 	state.jogoAtual.jogador.mensagem = NULL;
 	state.jogoAtual.jogador.inventario = NULL;
 	state.jogoAtual.jogador.dinheiro = 0;
-	state.jogoAtual.jogador.armaPrincipal = Nada;
-	state.jogoAtual.jogador.armaSecundaria = Nada;
+	//state.jogoAtual.jogador.armaPrincipal = ; 
+	//state.jogoAtual.jogador.armaSecundaria = ; 
 	state.jogoAtual.Mapa  = NULL;
 
   return state;
