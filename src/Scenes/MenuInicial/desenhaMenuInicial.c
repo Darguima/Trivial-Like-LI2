@@ -19,27 +19,6 @@ void desenhaMenuInicial(WINDOW* window, State* state) {
   UNUSED(window);
   UNUSED(state);
 
-  int nrows, ncols;
-	getmaxyx(window, nrows, ncols);
-
-  mvaddstr((nrows / 2) - 2, (ncols - 18) / 2, "press j para jogar");
-  mvaddstr((nrows / 2) - 1, (ncols - 26) / 2, "press c para ver controlos");
-  mvaddstr((nrows / 2) - 0, (ncols - 22) / 2, "press s para ver sobre");
-  mvaddstr((nrows / 2) + 1, (ncols - 17) / 2, "press q para sair");
-
-}
-
-
-
-int main()
-{
-    initscr(); // iniciar ecra
-    noecho();  // nao mostra no ecra o que o user escreve
-    cbreak(); // permite a leitura de teclas especiais, incluindo Esc
-    keypad(stdscr, TRUE); // ativa a leitura das teclas especiais como o Esc
-    curs_set(0); //desativa o rato
-
-
     start_color();
     init_pair(1, COLOR_WHITE, COLOR_BLACK); // cor da caixa
     init_pair(2, COLOR_WHITE, COLOR_BLACK); // cor do fundo da janela
@@ -84,27 +63,6 @@ int main()
     {
       switch (key)
       {
-     /* case '1':
-      limpaEcra(win, nrows, ncols);
-      desenhaBoxTitulo(win, ncols);
-
-      while (key = wgetch(win))
-      {
-        if (key == 27)
-        {
-          break;
-        }
-        
-        if (key == 'w' || key == 'a' || key == 's' || key == 'd')
-        {
-        desenhaJogador (win, 0,0, key);
-        }
-      }
-      
-      
-
-
-      break;*/
       case '4':
       desenhaEventos (win, menus, 4, 3 , key);
 
@@ -131,7 +89,7 @@ int main()
 
       case '3':
       limpaEcra (win, nrows, ncols);
-      desenhaSobre (win, 0, 2);
+      desenhaSobre (win, 0);
       
       while (key = wgetch(win))
       {
@@ -150,7 +108,7 @@ int main()
 
       
       default:
-      desenhaEcraDefault (win, nrows, ncols, menus, 4, 3,key);
+      desenhaEcraDefault (win, nrows, ncols, menus, key);
       break;
     
       }
@@ -159,8 +117,12 @@ int main()
     }
     
     endwin();
-    return 0;
+
 }
+
+
+
+
 
 /*
      

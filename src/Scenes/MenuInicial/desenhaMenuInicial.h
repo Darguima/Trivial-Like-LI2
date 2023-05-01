@@ -36,7 +36,7 @@ void desenhaInicializacao (WINDOW *win, Menu menus[],int n_menus)
 
 void limpaEcra (WINDOW *win, int y, int x)
 {
-    for (size_t i = 0; i < y; i++)
+    for (int i = 0; i < y; i++)
     {
         for (int j = 0; j < x; j++)
         {
@@ -48,14 +48,13 @@ void limpaEcra (WINDOW *win, int y, int x)
 }
 
 
-int desenhaEventos (WINDOW *win, Menu menus[], int n_menus, int cor, char key)
+void desenhaEventos (WINDOW *win, Menu menus[], int n_menus, int cor, char key)
 {
     init_pair(1, COLOR_WHITE, COLOR_BLACK); // cor da caixa
     init_pair(2, COLOR_WHITE, COLOR_BLACK); // cor do fundo da janela
     init_pair(3, COLOR_WHITE, COLOR_BLACK); // cor das opções
 
     int menu_atual= -1;
-    int sair = -1;
 
     for (int i = 0; i < n_menus; i++)
     {
@@ -77,7 +76,6 @@ int desenhaEventos (WINDOW *win, Menu menus[], int n_menus, int cor, char key)
         }
 
     }  
-    
 
     if (key == '4')
     {
@@ -88,7 +86,7 @@ int desenhaEventos (WINDOW *win, Menu menus[], int n_menus, int cor, char key)
     
 }
 
-void desenhaSobre(WINDOW *win, int y, int x)
+void desenhaSobre(WINDOW *win, int y)
 {
     mvwprintw (win, y, 1, " Pressione ESC para voltar atrás ");
     mvwprintw (win, 2, 2, "TriviaLike é um jogo criado com base no 'Rogue',");
@@ -107,40 +105,12 @@ void desenhaBoxTitulo (WINDOW *win, int ncols)
     mvwprintw(win, 0, (ncols/4)-5, " TriviaLike "); // nome do menu
 }
 
-void desenhaEcraDefault (WINDOW *win,int nrows, int ncols, Menu menus[], int n_menus, int cor, char key) 
+void desenhaEcraDefault (WINDOW *win,int nrows, int ncols, Menu menus[], char key) 
 {
      limpaEcra(win,nrows, ncols);
       desenhaBoxTitulo (win, ncols);
       desenhaEventos (win, menus, 4, 3 , key);
       
-}
-
-void desenhaJogador (WINDOW *win, int y, int x, char key)
-{
-    mvwprintw (win, y,x, "#");
-    while (key = wgetch(win))
-    {
-        switch (key)
-        {
-        case 'w':
-            mvwprintw (win, y-1 ,x, "#");
-            break;
-        case 'a':
-            mvwprintw (win, y ,x-1, "#");
-            break;
-        case 's':
-            mvwprintw (win, y+1, x, "#");
-            break;
-        case 'd':
-            mvwprintw (win, y ,x+1, "#");
-            break;
-        
-        default:
-            break;
-        }
-    }
-    
-    
 }
 
 
