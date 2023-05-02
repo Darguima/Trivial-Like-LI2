@@ -6,16 +6,16 @@ void eventosMenuInicial(State *state) {
 	int key = getch();
 
 	switch(key) {
-		case 'j': 
+		case '1': 
 			state->sceneAtual = SelecionarJogador; break;
 		
-		case 'c': 
+		case '2': 
 			state->sceneAtual = Controlos; break;
 
-		case 's': 
+		case '3': 
 			state->sceneAtual = Sobre; break;
 
-		case 'q':
+		case '4':
 			state->sceneAtual = Sair; break;
 	}
 }
