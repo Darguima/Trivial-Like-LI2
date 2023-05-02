@@ -1,6 +1,9 @@
 #ifndef ___State_H___
 #define ___State_H___
 
+
+
+
 typedef enum scene { /* São as diferentes páginas que podem aparecer ao longo do jogo */
 	MenuInicial, /* Primeira página que aparece no jogo */
 	SelecionarJogador, // Transição entre Menu Inicial e Jogo (para escolher o jogador)
@@ -47,11 +50,18 @@ typedef struct jogoAtual {
 	ElementosDoMapa* Mapa;
 } JogoAtual;
 
+typedef struct mapa {
+	int height;
+	int width;
+	int **matrix;
+}Mapa;
+
 typedef struct state {
 	Scene sceneAtual;
 	JogoAtual jogoAtual;
+	Mapa mapa ;
 } State;
 
-State criarEstado();
+State criarEstado(int colunas,int linhas);
 
 #endif

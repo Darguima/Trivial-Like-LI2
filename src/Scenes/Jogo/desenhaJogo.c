@@ -121,12 +121,12 @@ for (int k = 0 ; k <2; k++) {
 	return;
 }
 
-void gerarMapa (int ncols , int nrows , int mapa [ncols][nrows]) {
+void gerarMapa (int ncols , int nrows , int (*mapa)[nrows-10]) {
   povoarmapa57 (ncols-40 ,nrows-10 ,mapa );
-	applycelular(ncols-40,nrows-10, mapa);
+  applycelular(ncols-40,nrows-10, mapa);
   return;
 }
-void desenhaJogo(WINDOW* window, State* state, int x, int y, int mapa [x][y]) {
+void desenhaJogo(WINDOW* window, State* state, int x, int y, int (*mapa)[y]) {
 for (int i = 0 ; i<x ; i++) {
 		for (int n = 0 ; n< y ; n++) {
 			if(mapa[i][n] == 1  ) {mvwaddch(window,n, i, '#');}

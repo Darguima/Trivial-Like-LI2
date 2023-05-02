@@ -23,12 +23,13 @@
 #include "Scenes/Sair/eventosSair.h"
 
 int main() {
-	State state = criarEstado();
+	
 
 	WINDOW *window = initscr();
 
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
+	State state = criarEstado(ncols,nrows);
 
 	/* Configuring Window */
 	srand48(time(NULL));
@@ -47,8 +48,7 @@ int main() {
 
 	Scene sceneAnterior = state.sceneAtual;
 	WINDOW *win = newwin(nrows-10,ncols-40,5,20);
-	 int mapa[ncols-40][nrows-10];
-	 gerarMapa (ncols,nrows,mapa);
+	// gerarMapa (ncols,nrows,state.mapa.matrix);
 	while(1) {
 		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
 		if (state.sceneAtual != sceneAnterior) {
@@ -73,9 +73,9 @@ int main() {
 			
 			case Jogo:
 			    wrefresh(window);
-				desenhaJogo(win, &state,ncols-40,nrows-10,mapa);
+				desenhaJogo(win, &state,ncols-40,nrows-10,state.mapa.matrix);
 				eventosJogo(&state);
-				wrefresh(window);
+				//wrefresh(window);
 				
 				break;
 
