@@ -1,19 +1,21 @@
 #include <stdlib.h>
 #include "state.h"
 
-State criarEstado(int colunas, int linhas) {
+State criarEstado(int colunas, int linhas)
+{
 	State state;
-	int** matrix;
- 
-    // Allocate memory for the matrix
-    matrix = (int **)malloc(colunas * sizeof(int *));
-    for (int  i = 0; i < colunas; i++) {
-        matrix[i] = (int *)malloc(linhas * sizeof(int));
-    }
- 
-    // Fill the matrix with values
+	int **matrix;
 
-  state.sceneAtual = MenuInicial;
+	// Allocate memory for the matrix
+	matrix = (int **)malloc(colunas * sizeof(int *));
+	for (int i = 0; i < colunas; i++)
+	{
+		matrix[i] = (int *)malloc(linhas * sizeof(int));
+	}
+
+	// Fill the matrix with values
+
+	state.sceneAtual = MenuInicial;
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = NULL;
 	state.jogoAtual.jogador.posicao.x = 3;
@@ -24,11 +26,10 @@ State criarEstado(int colunas, int linhas) {
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = Nada;
 	state.jogoAtual.jogador.armaSecundaria = Nada;
-	state.jogoAtual.Mapa  = NULL;
+	state.jogoAtual.Mapa = NULL;
 	state.mapa.width = colunas;
 	state.mapa.height = linhas;
 	state.mapa.matrix = matrix;
 
-
-  return state;
+	return state;
 }
