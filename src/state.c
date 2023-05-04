@@ -16,8 +16,8 @@ State criarEstado(int colunas, int linhas) {
   state.sceneAtual = MenuInicial;
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = NULL;
-	state.jogoAtual.jogador.posicao.x = 3;
-	state.jogoAtual.jogador.posicao.y = 3;
+	state.jogoAtual.jogador.posicao.x = 10;
+	state.jogoAtual.jogador.posicao.y = 10;
 	state.jogoAtual.jogador.numMapaAtual = 1;
 	state.jogoAtual.jogador.mensagem = NULL;
 	state.jogoAtual.jogador.inventario = NULL;

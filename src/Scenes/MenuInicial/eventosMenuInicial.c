@@ -9,6 +9,8 @@ void eventosMenuInicial(State *state) {
 	switch(key) {
 		case 'j': 
 		geraMapa(state->mapa.width,state->mapa.height,state->mapa.matrix);
+		state->jogoAtual.jogador.posicao.x=5;
+		state->jogoAtual.jogador.posicao.y=5;
 			state->sceneAtual = SelecionarJogador; break;
 		
 		case 'c': 

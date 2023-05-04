@@ -11,7 +11,6 @@
 
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
-#include "Scenes/Jogo/geraMapa.h"
 
 #include "Scenes/Controlos/desenhaControlos.h"
 #include "Scenes/Controlos/eventosControlos.h"
@@ -74,9 +73,11 @@ int main() {
 			
 			case Jogo:
 			    wrefresh(window);
+				//visao(ncols-40,nrows-10,state.mapa.matrix,state.jogoAtual.jogador.posicao.x,state.jogoAtual.jogador.posicao.y);
 				desenhaJogo(win, &state,ncols-40,nrows-10,state.mapa.matrix);
 				eventosJogo(&state);
-				//wrefresh(window);
+				//visao(ncols-40,nrows-10,state.mapa.matrix,state.jogoAtual.jogador.posicao.x,state.jogoAtual.jogador.posicao.y);
+				
 				
 				break;
 
