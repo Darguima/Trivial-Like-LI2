@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <time.h>
-
 #include "state.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
@@ -12,6 +11,7 @@
 
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
+#include "Scenes/Jogo/geraMapa.h"
 
 #include "Scenes/Controlos/desenhaControlos.h"
 #include "Scenes/Controlos/eventosControlos.h"
@@ -21,6 +21,7 @@
 
 #include "Scenes/Sair/desenhaSair.h"
 #include "Scenes/Sair/eventosSair.h"
+
 
 int main() {
 	

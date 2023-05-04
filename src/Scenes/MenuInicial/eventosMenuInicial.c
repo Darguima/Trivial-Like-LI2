@@ -1,14 +1,14 @@
 #include <ncurses.h>
 
 #include "../../state.h"
-#include "../Jogo/desenhaJogo.h"
+#include "../Jogo/geraMapa.h"
 
 void eventosMenuInicial(State *state) {
 	int key = getch();
 
 	switch(key) {
 		case 'j': 
-		gerarMapa (state->mapa.width,state->mapa.height,state->mapa.matrix);
+		geraMapa(state->mapa.width,state->mapa.height,state->mapa.matrix);
 			state->sceneAtual = SelecionarJogador; break;
 		
 		case 'c': 

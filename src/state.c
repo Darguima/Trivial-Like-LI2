@@ -3,7 +3,7 @@
 
 State criarEstado(int colunas, int linhas) {
 	State state;
-	int **matrix;
+	int** matrix;
  
     // Allocate memory for the matrix
     matrix = (int **)malloc(colunas * sizeof(int *));

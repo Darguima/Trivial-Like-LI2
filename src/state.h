@@ -53,7 +53,7 @@ typedef struct jogoAtual {
 typedef struct mapa {
 	int height;
 	int width;
-	int **matrix;
+	int** matrix;
 }Mapa;
 
 typedef struct state {
