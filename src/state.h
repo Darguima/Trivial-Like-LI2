@@ -47,6 +47,13 @@ typedef enum elementosDoMapa
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
 } ElementosDoMapa;
 
+typedef struct controlosMenu
+{
+	int highlight;
+	int side;
+	int help;
+} ControlosMenu;
+
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
@@ -64,6 +71,7 @@ typedef struct state
 {
 	Scene sceneAtual;
 	JogoAtual jogoAtual;
+	ControlosMenu controloMenu;
 	Mapa mapa;
 } State;
 
