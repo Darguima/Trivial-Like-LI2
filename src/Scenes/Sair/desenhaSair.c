@@ -1,5 +1,4 @@
 #include <ncurses.h>
-
 #include "../../state.h"
 
 /*
@@ -10,15 +9,22 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaSair(WINDOW* window, State* state) {
+void desenhaSair(WINDOW *window, State *state)
+{
   UNUSED(window);
   UNUSED(state);
 
   int nrows, ncols;
-	getmaxyx(window, nrows, ncols);
+  getmaxyx(window, nrows, ncols);
 
-  mvaddstr((nrows / 2) - 2, (ncols - 18) / 2, "Neste menu vai ser");
-  mvaddstr((nrows / 2) - 1, (ncols - 25) / 2, "confirmado a acao de sair");
-  mvaddstr((nrows / 2) + 1, (ncols - 19) / 2, "press v para voltar");
-  mvaddstr((nrows / 2) + 2, (ncols - 17) / 2, "press q para sair");
+  int y = (nrows / 2) - 4;
+  int x = (ncols / 2) - 2;
+
+  box(window, 0, 0); // desenhar caixa
+
+  mvaddstr(y, x - 4, "Deseja mesmo sair?");
+  mvaddstr(y + 2, x - 12, "O jogo ainda tem tanto para dar...");
+
+  mvaddstr(nrows - 4, 2, "Pressione 's' para sair");
+  mvaddstr(nrows - 2, 2, "Pressione 'q' para voltar ao menu anterior");
 }
