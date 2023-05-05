@@ -31,7 +31,6 @@ int main()
 
 	/* Configuring Window */
 	srand48(time(NULL));
-	start_color();
 	// Desativa o cursor do ecrã
 	curs_set(0);
 
@@ -42,9 +41,11 @@ int main()
 	keypad(stdscr, true);
 
 	/* Starting colors pairs */
-	init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
-	init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
+	start_color();
+	init_pair(WhiteBlack, COLOR_WHITE, COLOR_BLACK);
+	init_pair(YellowBlack, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(BlueBlack, COLOR_BLUE, COLOR_BLACK);
+	init_pair(BlackYellow, COLOR_BLACK, COLOR_YELLOW);
 
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 

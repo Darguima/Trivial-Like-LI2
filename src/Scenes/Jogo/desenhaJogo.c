@@ -12,7 +12,8 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa) {
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa)
+{
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
@@ -21,6 +22,12 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa) 
 			{
 			case Parede:
 				mvwaddch(window, y, x, '#');
+				break;
+
+			case Moeda:
+				wattron(window, COLOR_PAIR(BlackYellow));
+				mvwaddch(window, y, x, 'c');
+				wattroff(window, COLOR_PAIR(BlackYellow));
 				break;
 
 			default:
@@ -35,7 +42,9 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
 {
 	desenhaMapa(window, x, y, mapa);
 
+	wattron(window, COLOR_PAIR(BlueBlack));
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');
+	wattroff(window, COLOR_PAIR(BlueBlack));
 
 	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 	wrefresh(window);

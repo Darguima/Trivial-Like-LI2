@@ -12,16 +12,18 @@ typedef enum scene
 	Sair,
 } Scene;
 
+typedef enum colors
+{
+	WhiteBlack,
+	YellowBlack,
+	BlueBlack,
+	BlackYellow,
+} Colors;
+
 typedef struct coordenadas
 {
 	int x, y;
 } Coordenadas;
-
-typedef struct moeda
-{
-	int valor; // valor da moeda
-	Coordenadas posicao;
-} Moeda;
 
 /* Diferentes armas que o player e mobs pode ter */
 typedef enum catalogoArmas
@@ -94,7 +96,6 @@ typedef struct jogoAtual
 	StatusJogador jogador;
 	StatusMobs *mobs;
 	Arma *armas;
-	Moeda *moedas;
 } JogoAtual;
 
 typedef enum elementosDoMapa
@@ -106,6 +107,7 @@ typedef enum elementosDoMapa
 	Parede,						/* # */
 	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
+	Moeda,						/* c */
 } ElementosDoMapa;
 
 typedef struct terminal

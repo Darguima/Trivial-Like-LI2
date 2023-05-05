@@ -22,7 +22,6 @@ int is_pos_free(Mapa mapa, int x, int y)
 
 void povoarMapa(int linhas, int colunas, int **mapa)
 {
-	srand(time(NULL));
 	for (int i = 0; i < linhas; i++)
 	{
 		for (int n = 0; n < (colunas); n++)
@@ -164,13 +163,33 @@ void applyCelular(int x, int y, int **mapa)
 	return;
 }
 
+void adicionarMoedas(State *state) {
+	int offset = (rand() % 5) - 2;
+	for (int moedas_geradas = 0; moedas_geradas < 10 + offset; moedas_geradas++)
+	{
+		int pos_x, pos_y;
+		
+		do {
+			pos_x = (rand() % (state->mapa.width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+
+		state->mapa.matrix[pos_x][pos_y] = Moeda;
+	}
+	
+	
+}
+
 void geraMapa(State *state, int ncols, int nrows)
 {
+	srand(time(NULL));
+	
 	int largura_mapa = ncols - 40;
 	int altura_mapa = nrows - 10;
 
 	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
+	adicionarMoedas(state);
 
 	int pos_x = 1;
   int pos_y = 1;
