@@ -11,19 +11,21 @@
  */
 #define UNUSED(x) (void)(x)
 
-void eventosSair(State *state) {
+void eventosSair(State *state)
+{
 	UNUSED(state);
-	
+
 	int key = getch();
 
-	switch(key) {
-		case 'q':
-			state->sceneAtual = MenuInicial;
-			break;
+	switch (key)
+	{
+	case 'q':
+		state->sceneAtual = MenuInicial;
+		break;
 
-		case 's':
-			endwin();
-			exit(0);
-			break;
+	case 's':
+		endwin();
+		exit(0);
+		break;
 	}
 }

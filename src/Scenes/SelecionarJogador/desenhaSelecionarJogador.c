@@ -11,11 +11,12 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaSelecionarJogador(WINDOW* window, State* state) {
+void desenhaSelecionarJogador(WINDOW *window, State *state)
+{
   UNUSED(window);
   UNUSED(state);
 
-	geraMapa(state->mapa.width,state->mapa.height,state->mapa.matrix);
+  geraMapa(state->mapa.width, state->mapa.height, state->mapa.matrix);
 
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);
@@ -26,7 +27,7 @@ void desenhaSelecionarJogador(WINDOW* window, State* state) {
 
   refresh();
 
-  mvaddstr( y , x-17, "Neste menu vai ser possivel escolher o save");
-  mvaddstr(nrows -4 , 2, "Pressione j para jogar");
-  mvaddstr( nrows - 2 ,2 , "Pressione q para voltar");
+  mvaddstr(y, x - 17, "Neste menu vai ser possivel escolher o save");
+  mvaddstr(nrows - 4, 2, "Pressione j para jogar");
+  mvaddstr(nrows - 2, 2, "Pressione q para voltar");
 }
