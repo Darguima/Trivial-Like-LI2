@@ -16,7 +16,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   UNUSED(window);
   UNUSED(state);
 
-  geraMapa(state, state->mapa.width, state->mapa.height);
+  geraMapa(state, state->mapa.terminal.width, state->mapa.terminal.height);
 
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);

@@ -108,8 +108,15 @@ typedef enum elementosDoMapa
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
 } ElementosDoMapa;
 
+typedef struct terminal
+{
+	int height;
+	int width;
+} Terminal;
+
 typedef struct mapa
 {
+	Terminal terminal;
 	int height;
 	int width;
 	int **matrix;

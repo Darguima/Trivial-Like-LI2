@@ -17,7 +17,7 @@ int isOk(int x, int y, int xmax, int ymax)
 
 int is_pos_free(Mapa mapa, int x, int y)
 {
-	return isOk(x, y, mapa.width - 40, mapa.height - 10) && (mapa.matrix[x][y] != Parede);
+	return isOk(x, y, mapa.width, mapa.height) && (mapa.matrix[x][y] != Parede);
 }
 
 void povoarMapa(int linhas, int colunas, int **mapa)

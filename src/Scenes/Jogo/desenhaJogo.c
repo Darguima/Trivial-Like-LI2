@@ -48,12 +48,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	UNUSED(window);
 
 	// fronteira menu esquerdo
-	WINDOW *l_win = newwin(state->mapa.height - 10, 20, 5, 0);
+	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
 	box(l_win, 0, 0);
 	wrefresh(l_win);
 
 	// fronteira menu direito
-	WINDOW *r_win = newwin(state->mapa.height - 10, 20, 5, state->mapa.width - 20);
+	WINDOW *r_win = newwin(state->mapa.height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
 	wrefresh(r_win);
 
@@ -85,6 +85,6 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(16, 10, "%d", state->jogoAtual.jogador.dinheiro);
 
 	// num mapa atual
-	mvprintw(3, (state->mapa.width - 43) / 2, "%s", "N U M E R O   M A P A    A T U A L   :   ");
+	mvprintw(3, (state->mapa.terminal.width - 43) / 2, "%s", "N U M E R O   M A P A    A T U A L   :   ");
 	mvprintw(3, 115, "%d", state->jogoAtual.jogador.numMapaAtual);
 }
