@@ -12,24 +12,31 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
-{
-	for (int i = 0; i < x; i++)
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa) {
+	for (int x = 0; x < largura_mapa; x++)
 	{
-		for (int n = 0; n < y; n++)
+		for (int y = 0; y < altura_mapa; y++)
 		{
-			if (mapa[i][n] == 1)
+			switch (mapa[x][y])
 			{
-				mvwaddch(window, n, i, '#');
-			}
-			else
-			{
-				mvwaddch(window, n, i, ' ');
+			case Parede:
+				mvwaddch(window, y, x, '#');
+				break;
+
+			default:
+				mvwaddch(window, y, x, ' ');
+				break;
 			}
 		}
 	}
+}
+
+void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
+{
+	desenhaMapa(window, x, y, mapa);
 
 	mvwaddch(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y, '@');
+
 	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 	wrefresh(window);
 

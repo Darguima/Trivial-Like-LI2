@@ -24,7 +24,6 @@
 int main()
 {
 	WINDOW *window = initscr();
-	
 
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);

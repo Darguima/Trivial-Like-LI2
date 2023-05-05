@@ -1,7 +1,6 @@
 #include <ncurses.h>
 
 #include "../../state.h"
-#include "../Jogo/desenhaJogo.h"
 
 void eventosMenuInicial(State *state)
 {

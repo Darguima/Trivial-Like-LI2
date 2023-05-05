@@ -24,7 +24,7 @@ void povoarMapa(int linhas, int colunas, int **mapa)
 		{
 			if (i == 0 || i == linhas - 1 || n == 0 || (i == linhas - 1 && n == colunas - 1) || n == colunas - 1)
 			{
-				mapa[i][n] = 1;
+				mapa[i][n] = Parede;
 			}
 			else
 			{
@@ -32,11 +32,11 @@ void povoarMapa(int linhas, int colunas, int **mapa)
 				int temp = rand() % 100;
 				if (temp <= 42)
 				{
-					mapa[i][n] = 1;
+					mapa[i][n] = Parede;
 				}
 				else
 				{
-					mapa[i][n] = 0;
+					mapa[i][n] = Vazio;
 				}
 			}
 		}
@@ -75,7 +75,7 @@ void applyCelular(int x, int y, int **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == 1)
+							if (auxMap[a][b] == Parede)
 							{
 								window_count++;
 							}
@@ -93,7 +93,7 @@ void applyCelular(int x, int y, int **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == 1)
+							if (auxMap[a][b] == Parede)
 							{
 								window++;
 							}
@@ -107,11 +107,11 @@ void applyCelular(int x, int y, int **mapa)
 
 				if (window_count >= 5 || window <= 2)
 				{
-					mapa[s][j] = 1;
+					mapa[s][j] = Parede;
 				}
 				else
 				{
-					mapa[s][j] = 0;
+					mapa[s][j] = Vazio;
 				}
 			}
 		}
@@ -132,7 +132,7 @@ void applyCelular(int x, int y, int **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == 1)
+							if (auxMap[a][b] == Parede)
 							{
 								window_count++;
 							}
@@ -146,11 +146,11 @@ void applyCelular(int x, int y, int **mapa)
 
 				if (window_count >= 5)
 				{
-					mapa[s][j] = 1;
+					mapa[s][j] = Parede;
 				}
 				else
 				{
-					mapa[s][j] = 0;
+					mapa[s][j] = Vazio;
 				}
 			}
 		}
