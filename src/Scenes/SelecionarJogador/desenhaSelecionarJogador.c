@@ -1,6 +1,7 @@
 #include <ncurses.h>
 
 #include "../../state.h"
+#include "../../GeraMapa/geraMapa.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -13,6 +14,8 @@
 void desenhaSelecionarJogador(WINDOW* window, State* state) {
   UNUSED(window);
   UNUSED(state);
+
+	geraMapa(state->mapa.width,state->mapa.height,state->mapa.matrix);
 
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);

@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <time.h>
-
 #include "state.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
@@ -22,13 +21,15 @@
 #include "Scenes/Sair/desenhaSair.h"
 #include "Scenes/Sair/eventosSair.h"
 
-int main() {
-	State state = criarEstado();
+int main()
+{
 
 	WINDOW *window = initscr();
 
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
+
+	State state = criarEstado(ncols, nrows);
 
 	/* Configuring Window */
 	srand48(time(NULL));
@@ -45,10 +46,14 @@ int main() {
 	init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
 
-	Scene sceneAnterior = state.sceneAtual;
-	while(1) {
+	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
+
+	Scene sceneAnterior = state.sceneAtual;	
+	while (1)
+	{
 		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
-		if (state.sceneAtual != sceneAnterior) {
+		if (state.sceneAtual != sceneAnterior)
+		{
 			for (int x = 0; x < ncols; x++)
 				for (int y = 0; y < nrows; y++)
 					mvaddch(y, x, ' ');
@@ -58,37 +63,38 @@ int main() {
 
 		switch (state.sceneAtual)
 		{
-			case MenuInicial:
-				desenhaMenuInicial(window, &state);
-				eventosMenuInicial(&state);
-				break;
-			
-			case SelecionarJogador:
-				desenhaSelecionarJogador(window, &state);
-				eventosSelecionarJogador(&state);
-				break;
-			
-			case Jogo:
-				desenhaJogo(window, &state);
-				eventosJogo(&state);
-				break;
+		case MenuInicial:
+			desenhaMenuInicial(window, &state);
+			eventosMenuInicial(&state);
+			break;
 
-			case Controlos:
-				desenhaControlos(window, &state);
-				eventosControlos(&state);
-				break;
-			
-			case Sobre:
-				desenhaSobre(window, &state);
-				eventosSobre(&state);
-				break;
+		case SelecionarJogador:
+			desenhaSelecionarJogador(window, &state);
+			eventosSelecionarJogador(&state);
+			break;
 
-			case Sair:
-				desenhaSair(window, &state);
-				eventosSair(&state);
-				break;
+		case Jogo:
+			wrefresh(window);
+			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10, state.mapa.matrix);
+			eventosJogo(&state);
+			break;
+
+		case Controlos:
+			desenhaControlos(window, &state);
+			eventosControlos(&state);
+			break;
+
+		case Sobre:
+			desenhaSobre(window, &state);
+			eventosSobre(&state);
+			break;
+
+		case Sair:
+			desenhaSair(window, &state);
+			eventosSair(&state);
+			break;
 		}
-		
+
 		move(0, 0);
 	}
 

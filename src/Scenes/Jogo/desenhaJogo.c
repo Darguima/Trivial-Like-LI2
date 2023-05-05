@@ -1,21 +1,29 @@
 #include <ncurses.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "../../state.h"
 
-void desenhaJogo(WINDOW* window, State* state) {
-  int nrows, ncols;
-	getmaxyx(window, nrows, ncols);
+void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
+{
+	for (int i = 0; i < x; i++)
+	{
+		for (int n = 0; n < y; n++)
+		{
+			if (mapa[i][n] == 1)
+			{
+				mvwaddch(window, n, i, '#');
+			}
+			else
+			{
+				mvwaddch(window, n, i, ' ');
+			}
+		}
+	}
 
-  attron(COLOR_PAIR(COLOR_BLUE));
-  for(int i = 0 ; i < nrows ; i++) {
-    for (int n = 0 ; n < ncols ; n++) {
-      mvaddch(i, n, '#' | A_DIM);
-    }
-  }
-  attroff(COLOR_PAIR(COLOR_BLUE));
+	mvwaddch(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y, '@');
+	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+	wrefresh(window);
 
-
-  attron(COLOR_PAIR(COLOR_WHITE));
-  mvaddch(state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y, 'p');
-  attroff(COLOR_PAIR(COLOR_WHITE));
+	return;
 }
