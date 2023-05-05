@@ -12,8 +12,7 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa)
-{
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa) {
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
@@ -38,7 +37,7 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa)
 	}
 }
 
-void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
+void desenhaJogo(WINDOW *window, State *state, int x, int y, ElementosDoMapa **mapa)
 {
 	desenhaMapa(window, x, y, mapa);
 

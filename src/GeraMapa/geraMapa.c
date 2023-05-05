@@ -20,7 +20,7 @@ int is_pos_free(Mapa mapa, int x, int y)
 	return isOk(x, y, mapa.width, mapa.height) && (mapa.matrix[x][y] != Parede);
 }
 
-void povoarMapa(int linhas, int colunas, int **mapa)
+void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 {
 	for (int i = 0; i < linhas; i++)
 	{
@@ -48,7 +48,7 @@ void povoarMapa(int linhas, int colunas, int **mapa)
 	return;
 }
 
-void copyAll(int x, int y, int aqui[x][y], int **ali)
+void copyAll(int x, int y, int aqui[x][y], ElementosDoMapa **ali)
 {
 	for (int i = 0; i < x; i++)
 	{
@@ -60,7 +60,7 @@ void copyAll(int x, int y, int aqui[x][y], int **ali)
 	return;
 }
 
-void applyCelular(int x, int y, int **mapa)
+void applyCelular(int x, int y, ElementosDoMapa **mapa)
 {
 	for (int k = 0; k < 3; k++)
 	{

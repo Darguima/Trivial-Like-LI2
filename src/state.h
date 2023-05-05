@@ -121,7 +121,7 @@ typedef struct mapa
 	Terminal terminal;
 	int height;
 	int width;
-	int **matrix;
+	ElementosDoMapa **matrix;
 } Mapa;
 
 typedef struct state
