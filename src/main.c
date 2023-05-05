@@ -23,17 +23,18 @@
 
 int main()
 {
-
 	WINDOW *window = initscr();
+	
 
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
-
 	State state = criarEstado(ncols, nrows);
 
 	/* Configuring Window */
 	srand48(time(NULL));
 	start_color();
+	// Desativa o cursor do ecrã
+	curs_set(0);
 
 	cbreak();
 	noecho();
@@ -48,7 +49,8 @@ int main()
 
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 
-	Scene sceneAnterior = state.sceneAtual;	
+	Scene sceneAnterior = state.sceneAtual;
+	
 	while (1)
 	{
 		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
@@ -75,6 +77,7 @@ int main()
 
 		case Jogo:
 			wrefresh(window);
+			desenhaMenusLaterais(window, &state);
 			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10, state.mapa.matrix);
 			eventosJogo(&state);
 			break;

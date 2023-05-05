@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include "state.h"
 
-const Arma punhos = {Punhos, 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-const Arma garras = {Garras, 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-const Arma espadaOxidada = {EspadaOxidada, 25, 75, "Espada que pertenceu a um soldado caído em combate."};
-const Arma espadaLonga = {EspadaLonga, 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-const Arma arco = {Arco, 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-const Arma acido = {Acido, 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
-const Arma cetro = {Cetro, 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+const Arma punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
+const Arma garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
+const Arma espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
+const Arma espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
+const Arma arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
+const Arma acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+const Arma cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
 const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
