@@ -73,6 +73,7 @@ int main() {
 			
 			case Jogo:
 			    wrefresh(window);
+				desenhaMenusLaterais(window,&state);
 				desenhaJogo(win, &state,ncols-40,nrows-10,state.mapa.matrix);
 				eventosJogo(&state);
 				//wrefresh(window);

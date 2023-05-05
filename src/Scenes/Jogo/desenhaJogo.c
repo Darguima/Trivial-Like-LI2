@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../../state.h"
+#define UNUSED(x) (void)(x)
 
 
 int isok (int x , int y , int xmax, int ymax) {
@@ -142,4 +143,78 @@ for (int i = 0 ; i<x ; i++) {
   
  
 	return ;
+}
+void desenhaMenusLaterais(WINDOW* window , State* state){
+	
+	
+	//fronteira menu esquerdo
+	WINDOW *l_win = newwin(45, 20, 5, 0);
+	box(l_win,0,0);
+	wrefresh(l_win);
+    //fronteira menu direito
+	WINDOW *r_win = newwin(45, 20, 5, 184);
+	box(r_win,0,0);
+	wrefresh(r_win);
+	//vida
+	mvprintw(7, 1 ,"%s", "VIDA:");
+	mvprintw(7, 6 ,"%d", state->jogoAtual.jogador.vida);
+	if (state->jogoAtual.jogador.vida > 96)
+	{
+		mvprintw(8, 1 ,"%s", "#################");
+	}
+	else if(state->jogoAtual.jogador.vida != 0)
+	{
+		for (int i = 0; i < (state->jogoAtual.jogador.vida / 6)+1; i++)
+	{
+		mvprintw(8, 1+i ,"%s", "#");
+	}
+	}
+	
+	
+	
+	
+
+	//arma principal
+	mvprintw(10, 1 ,"%s", "ARMA PRINCIPAL:");
+	if(state->jogoAtual.jogador.armaPrincipal == Espada){
+	    mvprintw(11, 1 ,"%s","ESPADA");
+	}
+	if(state->jogoAtual.jogador.armaPrincipal == Arco){
+	    mvprintw(11, 1 ,"%s","ARCO");
+	}
+	if(state->jogoAtual.jogador.armaPrincipal == Nada){
+	    mvprintw(11, 1 ,"%s","NADA");
+	}
+    
+	//arma secundaria
+	mvprintw(13, 1 ,"%s", "ARMA SECUNDARIA:");
+	if(state->jogoAtual.jogador.armaSecundaria == Espada){
+	    mvprintw(14, 1 ,"%s","ESPADA");
+	}
+	if(state->jogoAtual.jogador.armaSecundaria == Arco){
+	    mvprintw(14, 1 ,"%s","ARCO");
+	}
+	if(state->jogoAtual.jogador.armaSecundaria == Nada){
+	    mvprintw(14, 1 ,"%s","NADA");
+	}
+
+	//dinheiro
+	mvprintw(16, 1 ,"%s", "DINHEIRO:");
+	mvprintw(16, 10 ,"%d", state->jogoAtual.jogador.dinheiro);
+
+
+	//num mapa atual
+	mvprintw(3, 75 ,"%s", "N U M E R O   M A P A    A T U A L   :   ");
+	mvprintw(3, 115 ,"%d", state->jogoAtual.jogador.numMapaAtual);
+
+
+
+
+	//mover cursor para jogador
+	wmove(window,state->jogoAtual.jogador.posicao.x,state->jogoAtual.jogador.posicao.y);
+	wrefresh(window);
+	
+
+
+    
 }

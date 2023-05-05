@@ -11,6 +11,7 @@ void eventosJogo(State *state) {
 	int key = getch();
 
 	switch(key) {
+		
 		case KEY_A1:
 		case '7': 
 			mover_jogador(state, -1, -1);
