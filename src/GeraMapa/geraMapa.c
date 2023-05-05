@@ -15,6 +15,11 @@ int isOk(int x, int y, int xmax, int ymax)
 	}
 }
 
+int is_pos_free(Mapa mapa, int x, int y)
+{
+	return isOk(x, y, mapa.width - 40, mapa.height - 10) && (mapa.matrix[x][y] != Parede);
+}
+
 void povoarMapa(int linhas, int colunas, int **mapa)
 {
 	srand(time(NULL));
@@ -159,11 +164,40 @@ void applyCelular(int x, int y, int **mapa)
 	return;
 }
 
-void geraMapa(int ncols, int nrows, int **mapa)
+void geraMapa(State *state, int ncols, int nrows)
 {
+	int largura_mapa = ncols - 40;
+	int altura_mapa = nrows - 10;
 
-	povoarMapa(ncols - 40, nrows - 10, mapa);
-	applyCelular(ncols - 40, nrows - 10, mapa);
+	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
+	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
+
+	int pos_x = 1;
+  int pos_y = 1;
+
+	int radius, x_offset = 0, y_offset = 0;
+
+	for (radius = 1; radius < altura_mapa; radius++)
+	{
+		for (
+			x_offset = radius, y_offset = 0;
+			y_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+			y_offset++
+		);
+
+		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset)) break;
+
+		for (
+			y_offset = radius, x_offset = 0;
+			x_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+			x_offset++
+		);
+
+		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset)) break;
+	}
+
+  state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
+  state->jogoAtual.jogador.posicao.y = pos_y + y_offset;
 
 	return;
 }

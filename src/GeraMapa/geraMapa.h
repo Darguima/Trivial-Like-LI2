@@ -2,4 +2,6 @@
 
 #include "../state.h"
 
-void geraMapa(int ncols, int nrows, int **mapa);
+int isOk(int x, int y, int xmax, int ymax);
+int is_pos_free(Mapa mapa, int x, int y);
+void geraMapa(State *state, int ncols, int nrows);

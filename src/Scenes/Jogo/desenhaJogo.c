@@ -35,7 +35,7 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
 {
 	desenhaMapa(window, x, y, mapa);
 
-	mvwaddch(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y, '@');
+	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');
 
 	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 	wrefresh(window);

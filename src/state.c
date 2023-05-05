@@ -54,6 +54,10 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
+	
+	state.jogoAtual.mobs = malloc(10 * sizeof(StatusMobs));
+	state.jogoAtual.armas = malloc(2 * sizeof(Arma));
+	state.jogoAtual.moedas = malloc(10 * sizeof(Moeda));
 
 	state.mapa.width = colunas;
 	state.mapa.height = linhas;

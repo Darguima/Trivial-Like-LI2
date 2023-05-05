@@ -92,6 +92,9 @@ typedef struct controlosMenu
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
+	StatusMobs *mobs;
+	Arma *armas;
+	Moeda *moedas;
 } JogoAtual;
 
 typedef enum elementosDoMapa
