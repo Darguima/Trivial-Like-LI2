@@ -27,13 +27,13 @@ const Mob catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1,
 State criarEstado(int colunas, int linhas)
 {
 	State state;
-	int **matrix;
+	ElementosDoMapa **matrix;
 
 	// Allocate memory for the matrix
-	matrix = (int **)malloc(colunas * sizeof(int *));
+	matrix = (ElementosDoMapa **) malloc(colunas * sizeof(ElementosDoMapa*));
 	for (int i = 0; i < colunas; i++)
 	{
-		matrix[i] = (int *)malloc(linhas * sizeof(int));
+		matrix[i] = (ElementosDoMapa *) malloc(linhas * sizeof(ElementosDoMapa));
 	}
 
 	// Fill the matrix with values
