@@ -1,35 +1,16 @@
 #ifndef ___State_H___
 #define ___State_H___
 
+/* São as diferentes páginas que podem aparecer ao longo do jogo */
 typedef enum scene
-{										 /* São as diferentes páginas que podem aparecer ao longo do jogo */
+{
 	MenuInicial,			 /* Primeira página que aparece no jogo */
 	SelecionarJogador, /* Transição entre Menu Inicial e Jogo (para escolher o jogador) */
 	Jogo,							 /* O jogo em si, com o status do jogador, mapa e inventário */
 	Controlos,
 	Sobre,
-	Sair
+	Sair,
 } Scene;
-
-typedef enum catalogoArmas
-{ /* Diferentes armas que o player pode ter */
-	Punhos,
-	Garras,
-	EspadaOxidada,
-	EspadaLonga,
-	Arco,
-	Acido,
-	Cetro,
-	/* Adicionar mais no futuro */
-} CatalogoArmas;
-
-typedef struct arma
-{
-	CatalogoArmas tipoArma; // recebe um tipo de arma
-	int dano;								// dano da arma
-	int probA;							// isto é a probabilidade de o ataque acertar no objetivo, de 0 a 100
-	char *mensagem;					// texto que a arma mostra quando se dá inspect no inventário (feature que pode ser implementada ou não)
-} Arma;
 
 typedef struct coordenadas
 {
@@ -42,18 +23,25 @@ typedef struct moeda
 	Coordenadas posicao;
 } Moeda;
 
-typedef struct statusJogador
+/* Diferentes armas que o player e mobs pode ter */
+typedef enum catalogoArmas
 {
-	Coordenadas posicao;
-	char *username;
-	int vida; // valor entre 0 e 100
-	Arma armaPrincipal;
-	Arma armaSecundaria;
-	int dinheiro;
-	int numMapaAtual; /* Quantas mapas já foram passados */
-	char *mensagem;		/* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
-	Arma *inventario;
-} StatusJogador;
+	Punhos,
+	Garras,
+	EspadaOxidada,
+	EspadaLonga,
+	Arco,
+	Acido,
+	Cetro,
+} CatalogoArmas;
+
+typedef struct arma
+{
+	CatalogoArmas tipoArma;
+	int dano;
+	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 1
+	char *mensagem;		 // texto que descreve a arma
+} Arma;
 
 typedef enum catalogoMobs
 {										// o tipo do mob a chamar
@@ -77,18 +65,21 @@ typedef struct mob
 typedef struct statusMob
 {
 	Coordenadas posicao;
-	Mob mob;
-} StatusMob;
+	Mob mob; // qual o mob e as suas características
+} StatusMobs;
 
-typedef enum elementosDoMapa
+typedef struct statusJogador
 {
-	Jogador,					/* @ */
-	Mobs,							/* M - com foreground ou background vermelho */
-	NPC,							/* & */
-	Paredes,					/* # */
-	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
-	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
-} ElementosDoMapa;
+	Coordenadas posicao;
+	char *username;
+	int vida; // valor entre 0 e 100
+	Arma armaPrincipal;
+	Arma armaSecundaria;
+	int dinheiro;
+	int numMapaAtual; /* Quantas mapas já foram passados */
+	char *mensagem;		/* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
+	Arma *inventario;
+} StatusJogador;
 
 typedef struct controlosMenu
 {
@@ -100,8 +91,18 @@ typedef struct controlosMenu
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
-	ElementosDoMapa *Mapa;
 } JogoAtual;
+
+typedef enum elementosDoMapa
+{
+	Vazio,						/*   */
+	Jogador,					/* @ */
+	Mobs,							/* M - com foreground ou background vermelho */
+	NPC,							/* & */
+	Paredes,					/* # */
+	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
+	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
+} ElementosDoMapa;
 
 typedef struct mapa
 {
@@ -113,9 +114,12 @@ typedef struct mapa
 typedef struct state
 {
 	Scene sceneAtual;
-	JogoAtual jogoAtual;
+
 	ControlosMenu controloMenu;
+
+	JogoAtual jogoAtual;
 	Mapa mapa;
+
 } State;
 
 State criarEstado(int colunas, int linhas);

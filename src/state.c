@@ -9,7 +9,7 @@ const Arma arco = {Arco, 45, 30, "Um arco bastante flexível que causa muito dan
 const Arma acido = {Acido, 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
 const Arma cetro = {Cetro, 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
-const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, arco, acido, cetro};
+const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
 const Mob esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
 const Mob esqueleto2 = {Esqueleto, punhos, 50, 3};
