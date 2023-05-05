@@ -17,11 +17,11 @@ void eventosSair(State *state) {
 	int key = getch();
 
 	switch(key) {
-		case 'v':
+		case 'q':
 			state->sceneAtual = MenuInicial;
 			break;
 
-		case 'q':
+		case 's':
 			endwin();
 			exit(0);
 			break;
