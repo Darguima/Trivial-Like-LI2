@@ -3,21 +3,26 @@
 #include "../../state.h"
 #include "../Jogo/desenhaJogo.h"
 
-void eventosMenuInicial(State *state) {
+void eventosMenuInicial(State *state)
+{
 	int key = getch();
 
-	switch(key) {
-		case 'j': 
-		gerarMapa (state->mapa.width,state->mapa.height,state->mapa.matrix);
-			state->sceneAtual = SelecionarJogador; break;
-		
-		case 'c': 
-			state->sceneAtual = Controlos; break;
+	switch (key)
+	{
+	case '1':
+		state->sceneAtual = SelecionarJogador;
+		break;
 
-		case 's': 
-			state->sceneAtual = Sobre; break;
+	case '2':
+		state->sceneAtual = Controlos;
+		break;
 
-		case 'q':
-			state->sceneAtual = Sair; break;
+	case '3':
+		state->sceneAtual = Sobre;
+		break;
+
+	case '4':
+		state->sceneAtual = Sair;
+		break;
 	}
 }
