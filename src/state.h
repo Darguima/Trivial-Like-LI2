@@ -27,6 +27,32 @@ typedef struct coordenadas
 	int x, y;
 } Coordenadas;
 
+typedef enum catalogoObjetos
+{
+	pocaoVidaD, // poção de vida que recupera toda a vida
+	pocaoVidaG, // poção de vida Grande (60 vida)
+	pocaoVidaP, // poção de vida Pequena (25 vida)
+	pocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
+	pocaoMagica, // poção que recupera toda a vida e aumenta a vida máxima
+	portalDeBolso, // um portal que envia o jogador ao próximo mapa
+
+}CatalogoObjetos;
+
+typedef struct objeto
+{
+	CatalogoObjetos objeto;
+	char *nomeObjeto; // nome para ser mostrado no inventário
+	char *mensagem; // mensagem mostrada ao pegar no objeto
+	
+}Objeto;
+
+// o inventario tem um limite de 10 items
+typedef struct inventarioS
+{
+	CatalogoObjetos objetos[10]; 
+}InventarioS;
+
+
 /* Diferentes armas que o player e mobs pode ter */
 typedef enum catalogoArmas
 {
@@ -89,7 +115,7 @@ typedef struct statusJogador
 	Arma armaSecundaria;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
-	Arma *inventario;
+	InventarioS *inventario;
 } StatusJogador;
 
 typedef struct controlosMenu
@@ -173,5 +199,16 @@ extern Mob const zombie1;
 extern int const mobsNoMapaLength;
 extern int const catalogoMobsLength;
 extern Mob const catalogoMobs[];
+
+extern Objeto const pocaoVidaD;
+extern Objeto const pocaoVidaG;
+extern Objeto const pocaoVidaP;
+extern Objeto const pocaoAumentoVida;
+extern Objeto const pocaoMagica;
+extern Objeto const portalDeBolso;
+
+extern int const objetosNoMapaLength;
+extern int const catalogoObjetosLength;
+extern Objeto const catalogoObjetos[];
 
 #endif

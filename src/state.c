@@ -28,6 +28,18 @@ int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
+Objeto const pocaoVidaD       = {PocaoVidaD,"Poção de Vida Definitiva","Recupera toda a vida" }; 
+Objeto const pocaoVidaG       = {PocaoVidaG,"Poção de Vida Grande", "Recupera 70 pontos de vida" };
+Objeto const pocaoVidaP       = {PocaoVidaP,"Poção de Vida Pequena", "Recupera 40 pontos de vida" };
+Objeto const pocaoAumentoVida = {PocaoAumentoVida,"Poção de Aumento de Vida", "Aumenta a vida máxima em 25 pontos" };
+Objeto const pocaoMagica      = {PocaoMagica,"Poção Mágica", "Recupera toda a vida e aumenta a vida máxima em 15 pontos" };
+Objeto const portalDeBolso    = {PortalDeBolso,"portalDeBolso", "Portal de uma só utilização que muda para o mapa seguinte, amentando a vida máxima em 5 pontos" };
+
+int const objetosNoMapaLength = 2;
+int const catalogoObjetosLength = 6;
+Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG,pocaoVidaP,pocaoAumentoVida,pocaoMagica,portalDeBolso,}
+
+
 State criarEstado(int colunas, int linhas)
 {
 	State state;
