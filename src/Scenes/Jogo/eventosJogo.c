@@ -23,15 +23,28 @@ void eventosJogo(State *state)
 	int key = getch();
 
 	ArmaNoMapa *armaSobreposta;
+	MobNoMapa *mob_sobreposto;
 
 	switch (key)
 	{
 	/* Interação com mapa */
+
+	// Pegar arma
 	case 'p':
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->available) {
 			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
 			armaSobreposta->available = 0;
+		}
+		break;
+	
+	// lutar com mob
+	case 'l':
+		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0) {
+			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
+
+			mob_sobreposto->mob.vida -= dano;
+			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
 		}
 		break;
 

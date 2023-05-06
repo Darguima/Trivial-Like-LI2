@@ -19,6 +19,7 @@ typedef enum colors
 	BlueBlack,
 	GreenBlack,
 	BlackYellow,
+	BlackRed,
 } Colors;
 
 typedef struct coordenadas

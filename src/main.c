@@ -31,6 +31,7 @@ int main()
 
 	/* Configuring Window */
 	srand48(time(NULL));
+	srand(time(NULL));
 	// Desativa o cursor do ecrã
 	curs_set(0);
 
@@ -47,6 +48,7 @@ int main()
 	init_pair(BlueBlack, COLOR_BLUE, COLOR_BLACK);
 	init_pair(GreenBlack, COLOR_GREEN, COLOR_BLACK);
 	init_pair(BlackYellow, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(BlackRed, COLOR_BLACK, COLOR_RED);
 
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 

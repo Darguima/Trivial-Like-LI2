@@ -199,10 +199,26 @@ void adicionarArmas(State *state)
 	}
 }
 
+void adicionarMobs(State *state)
+{
+	for (int mobs_gerados = 0; mobs_gerados < mobsNoMapaLength; mobs_gerados++)
+	{
+		int pos_x, pos_y;
+
+		do
+		{
+			pos_x = (rand() % (state->mapa.width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+
+		Coordenadas pos = {pos_x, pos_y};
+		state->jogoAtual.mobs[mobs_gerados].posicao = pos;
+		state->jogoAtual.mobs[mobs_gerados].mob = catalogoMobs[rand() % catalogoMobsLength];
+	}
+}
+
 void geraMapa(State *state, int ncols, int nrows)
 {
-	srand(time(NULL));
-
 	int largura_mapa = ncols - 40;
 	int altura_mapa = nrows - 10;
 
@@ -210,6 +226,7 @@ void geraMapa(State *state, int ncols, int nrows)
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
 	adicionarMoedas(state);
 	adicionarArmas(state);
+	adicionarMobs(state);
 
 	int pos_x = 1;
 	int pos_y = 1;

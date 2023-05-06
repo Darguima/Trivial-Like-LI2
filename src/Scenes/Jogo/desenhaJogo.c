@@ -40,7 +40,7 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoM
 
 void desenhaArmas(WINDOW *window, State *state)
 {
-	for (int arma = 0; arma < 2; arma++)
+	for (int arma = 0; arma < armasNoMapaLength; arma++)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
@@ -52,10 +52,25 @@ void desenhaArmas(WINDOW *window, State *state)
 	}
 }
 
+void desenhaMobs(WINDOW *window, State *state)
+{
+	for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
+	{
+		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
+
+		if (!(mobAtual.mob.vida > 0)) continue;
+
+		wattron(window, COLOR_PAIR(BlackRed));
+		mvwaddch(window, mobAtual.posicao.y, mobAtual.posicao.x, 'M');
+		wattroff(window, COLOR_PAIR(BlackRed));
+	}
+}
+
 void desenhaJogo(WINDOW *window, State *state, int x, int y, ElementosDoMapa **mapa)
 {
 	desenhaMapa(window, x, y, mapa);
 	desenhaArmas(window, state);
+	desenhaMobs(window, state);
 
 	wattron(window, COLOR_PAIR(BlueBlack));
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');
