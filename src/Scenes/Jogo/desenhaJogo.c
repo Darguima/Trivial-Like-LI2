@@ -12,7 +12,8 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa) {
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa)
+{
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
@@ -37,14 +38,17 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoM
 	}
 }
 
-void desenhaArmas(WINDOW *window, State *state) {
+void desenhaArmas(WINDOW *window, State *state)
+{
 	for (int arma = 0; arma < 2; arma++)
 	{
-			ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
+		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-			wattron(window, COLOR_PAIR(GreenBlack));
-			mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
-			wattroff(window, COLOR_PAIR(GreenBlack));
+		if (!armaAtual.available) continue;
+
+		wattron(window, COLOR_PAIR(GreenBlack));
+		mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
+		wattroff(window, COLOR_PAIR(GreenBlack));
 	}
 }
 
@@ -106,5 +110,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 
 	// num mapa atual
 	mvprintw(3, (state->mapa.terminal.width - 43) / 2, "%s", "N U M E R O   M A P A    A T U A L   :   ");
-	mvprintw(3, 115, "%d", state->jogoAtual.jogador.numMapaAtual);
+	mvprintw(3, ((state->mapa.terminal.width - 43) / 2) + 43, "%d", state->jogoAtual.jogador.numMapaAtual);
+
+	// mensagem
+	mvprintw(state->mapa.terminal.height - 3, 15, "Msg: %s", state->jogoAtual.mensagem_descricao);
+	mvprintw(state->mapa.terminal.height - 2, 9, "Interagir: %s", state->jogoAtual.mensagem_controlos);
 }

@@ -9,6 +9,7 @@ Arma const arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa m
 Arma const acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
 Arma const cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
+int const armasNoMapaLength = 2;
 int const catalogoArmasLength = 7;
 Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
@@ -23,6 +24,7 @@ Mob const aranha1 = {Aranha, acido, 40, 10};
 Mob const aranha2 = {Aranha, acido, 60, 8};
 Mob const zombie1 = {Zombie, garras, 100, 2};
 
+int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
@@ -51,14 +53,15 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.posicao.x = 3;
 	state.jogoAtual.jogador.posicao.y = 3;
 	state.jogoAtual.jogador.numMapaAtual = 1;
-	state.jogoAtual.jogador.mensagem = NULL;
 	state.jogoAtual.jogador.inventario = NULL;
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 
-	state.jogoAtual.mobs = malloc(10 * sizeof(MobNoMapa));
-	state.jogoAtual.armas = malloc(2 * sizeof(ArmaNoMapa));
+	state.jogoAtual.mobs = malloc(mobsNoMapaLength * sizeof(MobNoMapa));
+	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));
+	state.jogoAtual.mensagem_descricao = "Procura a Porta!!";
+	state.jogoAtual.mensagem_controlos = "Usa as setas para te moveres";
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

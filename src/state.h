@@ -50,6 +50,7 @@ typedef struct arma
 typedef struct armaNoMapa
 {
 	Coordenadas posicao;
+	int available; /* 1 if still available on a map; 0 if was already collected */
 	Arma arma;
 } ArmaNoMapa;
 
@@ -87,7 +88,6 @@ typedef struct statusJogador
 	Arma armaSecundaria;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
-	char *mensagem;		/* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
 	Arma *inventario;
 } StatusJogador;
 
@@ -103,6 +103,8 @@ typedef struct jogoAtual
 	StatusJogador jogador;
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
+	char *mensagem_descricao;						 /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 } JogoAtual;
 
 typedef enum elementosDoMapa
@@ -152,6 +154,7 @@ extern Arma const arco;
 extern Arma const acido;
 extern Arma const cetro;
 
+extern int const armasNoMapaLength;
 extern int const catalogoArmasLength;
 extern Arma const catalogoArmas[];
 
@@ -166,6 +169,7 @@ extern Mob const aranha1;
 extern Mob const aranha2;
 extern Mob const zombie1;
 
+extern int const mobsNoMapaLength;
 extern int const catalogoMobsLength;
 extern Mob const catalogoMobs[];
 

@@ -2,7 +2,7 @@
 
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
-#include "./atualizarMapa.h"
+#include "./atualizarAposMovimento.h"
 
 void mover_jogador(State *state, int dx, int dy)
 {
@@ -15,15 +15,27 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
 
-	atualizar_mapa(state);
+	atualizarAposMovimento(state);
 }
 
 void eventosJogo(State *state)
 {
 	int key = getch();
 
+	ArmaNoMapa *armaSobreposta;
+
 	switch (key)
 	{
+	/* Interação com mapa */
+	case 'p':
+		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->available) {
+			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
+			// Adicionar Arma ao inventário
+			armaSobreposta->available = 0;
+		}
+		break;
+
+	/* Setas */
 	case KEY_A1:
 	case '7':
 		mover_jogador(state, -1, -1);
@@ -36,7 +48,7 @@ void eventosJogo(State *state)
 
 	case KEY_A3:
 	case '9':
-		mover_jogador(state, -1, +1);
+		mover_jogador(state, +1, -1);
 		break;
 
 	case KEY_LEFT:
@@ -51,7 +63,7 @@ void eventosJogo(State *state)
 
 	case KEY_C1:
 	case '1':
-		mover_jogador(state, +1, -1);
+		mover_jogador(state, -1, +1);
 		break;
 
 	case KEY_DOWN:
