@@ -40,12 +40,19 @@ void eventosJogo(State *state)
 	
 	// lutar com mob
 	case 'l':
+
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0) {
 			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
 		}
+    // Se a vida ficar a 0, o jogo acaba
+		if (state->jogoAtual.jogador.vida <= 0)
+		{
+			state->sceneAtual = GameOver;
+		}
+		
 		break;
 
 	/* Setas */
