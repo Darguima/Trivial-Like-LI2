@@ -2,6 +2,7 @@
 
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
+#include "./atualizarMapa.h"
 
 void mover_jogador(State *state, int dx, int dy)
 {
@@ -13,6 +14,8 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
+
+	atualizar_mapa(state);
 }
 
 void eventosJogo(State *state)
