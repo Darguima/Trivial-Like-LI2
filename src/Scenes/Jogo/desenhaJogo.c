@@ -24,9 +24,9 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoM
 				break;
 
 			case Moeda:
-				wattron(window, COLOR_PAIR(BlackYellow));
+				wattron(window, COLOR_PAIR(YellowBlack));
 				mvwaddch(window, y, x, 'c');
-				wattroff(window, COLOR_PAIR(BlackYellow));
+				wattroff(window, COLOR_PAIR(YellowBlack));
 				break;
 
 			default:
@@ -37,9 +37,21 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoM
 	}
 }
 
+void desenhaArmas(WINDOW *window, State *state) {
+	for (int arma = 0; arma < 2; arma++)
+	{
+			ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
+
+			wattron(window, COLOR_PAIR(GreenBlack));
+			mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
+			wattroff(window, COLOR_PAIR(GreenBlack));
+	}
+}
+
 void desenhaJogo(WINDOW *window, State *state, int x, int y, ElementosDoMapa **mapa)
 {
 	desenhaMapa(window, x, y, mapa);
+	desenhaArmas(window, state);
 
 	wattron(window, COLOR_PAIR(BlueBlack));
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');

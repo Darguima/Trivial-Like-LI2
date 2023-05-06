@@ -1,28 +1,30 @@
 #include <stdlib.h>
 #include "state.h"
 
-const Arma punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-const Arma garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-const Arma espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
-const Arma espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-const Arma arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-const Arma acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
-const Arma cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+Arma const punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
+Arma const garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
+Arma const espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
+Arma const espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
+Arma const arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
+Arma const acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+Arma const cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
-const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
+int const catalogoArmasLength = 7;
+Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
-const Mob esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
-const Mob esqueleto2 = {Esqueleto, punhos, 50, 3};
-const Mob soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 70, 4};
-const Mob vampiro1 = {Vampiro, garras, 150, 8};
-const Mob vampiro2 = {Vampiro, cetro, 60, 10};
-const Mob mutante1 = {Mutante, punhos, 40, 2};
-const Mob mutante2 = {Mutante, punhos, 20, 2};
-const Mob aranha1 = {Aranha, acido, 40, 10};
-const Mob aranha2 = {Aranha, acido, 60, 8};
-const Mob zombie1 = {Zombie, garras, 100, 2};
+Mob const esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
+Mob const esqueleto2 = {Esqueleto, punhos, 50, 3};
+Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 70, 4};
+Mob const vampiro1 = {Vampiro, garras, 150, 8};
+Mob const vampiro2 = {Vampiro, cetro, 60, 10};
+Mob const mutante1 = {Mutante, punhos, 40, 2};
+Mob const mutante2 = {Mutante, punhos, 20, 2};
+Mob const aranha1 = {Aranha, acido, 40, 10};
+Mob const aranha2 = {Aranha, acido, 60, 8};
+Mob const zombie1 = {Zombie, garras, 100, 2};
 
-const Mob catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
+int const catalogoMobsLength = 10;
+Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
 State criarEstado(int colunas, int linhas)
 {
@@ -30,10 +32,10 @@ State criarEstado(int colunas, int linhas)
 	ElementosDoMapa **matrix;
 
 	// Allocate memory for the matrix
-	matrix = (ElementosDoMapa **) malloc(colunas * sizeof(ElementosDoMapa*));
+	matrix = (ElementosDoMapa **)malloc(colunas * sizeof(ElementosDoMapa *));
 	for (int i = 0; i < colunas; i++)
 	{
-		matrix[i] = (ElementosDoMapa *) malloc(linhas * sizeof(ElementosDoMapa));
+		matrix[i] = (ElementosDoMapa *)malloc(linhas * sizeof(ElementosDoMapa));
 	}
 
 	// Fill the matrix with values
@@ -54,9 +56,9 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
-	
-	state.jogoAtual.mobs = malloc(10 * sizeof(StatusMobs));
-	state.jogoAtual.armas = malloc(2 * sizeof(Arma));
+
+	state.jogoAtual.mobs = malloc(10 * sizeof(MobNoMapa));
+	state.jogoAtual.armas = malloc(2 * sizeof(ArmaNoMapa));
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

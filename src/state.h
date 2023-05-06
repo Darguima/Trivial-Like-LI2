@@ -17,6 +17,7 @@ typedef enum colors
 	WhiteBlack,
 	YellowBlack,
 	BlueBlack,
+	GreenBlack,
 	BlackYellow,
 } Colors;
 
@@ -46,6 +47,12 @@ typedef struct arma
 	char *mensagem;		 // texto que descreve a arma
 } Arma;
 
+typedef struct armaNoMapa
+{
+	Coordenadas posicao;
+	Arma arma;
+} ArmaNoMapa;
+
 typedef enum catalogoMobs
 {										// o tipo do mob a chamar
 	Esqueleto,				/* E */
@@ -65,11 +72,11 @@ typedef struct mob
 	int raioVisao; // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
 } Mob;
 
-typedef struct statusMob
+typedef struct mobNoMapa
 {
 	Coordenadas posicao;
-	Mob mob; // qual o mob e as suas características
-} StatusMobs;
+	Mob mob;
+} MobNoMapa;
 
 typedef struct statusJogador
 {
@@ -94,8 +101,8 @@ typedef struct controlosMenu
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
-	StatusMobs *mobs;
-	Arma *armas;
+	MobNoMapa *mobs;
+	ArmaNoMapa *armas;
 } JogoAtual;
 
 typedef enum elementosDoMapa
@@ -136,5 +143,30 @@ typedef struct state
 } State;
 
 State criarEstado(int colunas, int linhas);
+
+extern Arma const punhos;
+extern Arma const garras;
+extern Arma const espadaOxidada;
+extern Arma const espadaLonga;
+extern Arma const arco;
+extern Arma const acido;
+extern Arma const cetro;
+
+extern int const catalogoArmasLength;
+extern Arma const catalogoArmas[];
+
+extern Mob const esqueleto1;
+extern Mob const esqueleto2;
+extern Mob const soldadoEsqueleto1;
+extern Mob const vampiro1;
+extern Mob const vampiro2;
+extern Mob const mutante1;
+extern Mob const mutante2;
+extern Mob const aranha1;
+extern Mob const aranha2;
+extern Mob const zombie1;
+
+extern int const catalogoMobsLength;
+extern Mob const catalogoMobs[];
 
 #endif

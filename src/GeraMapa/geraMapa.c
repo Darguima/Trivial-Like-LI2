@@ -163,60 +163,81 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 	return;
 }
 
-void adicionarMoedas(State *state) {
+void adicionarMoedas(State *state)
+{
 	int offset = (rand() % 5) - 2;
 	for (int moedas_geradas = 0; moedas_geradas < 10 + offset; moedas_geradas++)
 	{
 		int pos_x, pos_y;
-		
-		do {
+
+		do
+		{
 			pos_x = (rand() % (state->mapa.width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.height - 2)) + 1;
 		} while (!is_pos_free(state->mapa, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y] = Moeda;
 	}
-	
-	
+}
+
+void adicionarArmas(State *state)
+{
+	for (int armas_geradas = 0; armas_geradas < 2; armas_geradas++)
+	{
+		int pos_x, pos_y;
+
+		do
+		{
+			pos_x = (rand() % (state->mapa.width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+
+		Coordenadas pos = {pos_x, pos_y};
+		state->jogoAtual.armas[armas_geradas].posicao = pos;
+		state->jogoAtual.armas[armas_geradas].arma = catalogoArmas[rand() % catalogoArmasLength];
+	}
 }
 
 void geraMapa(State *state, int ncols, int nrows)
 {
 	srand(time(NULL));
-	
+
 	int largura_mapa = ncols - 40;
 	int altura_mapa = nrows - 10;
 
 	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
 	adicionarMoedas(state);
+	adicionarArmas(state);
 
 	int pos_x = 1;
-  int pos_y = 1;
+	int pos_y = 1;
 
 	int radius, x_offset = 0, y_offset = 0;
 
 	for (radius = 1; radius < altura_mapa; radius++)
 	{
 		for (
-			x_offset = radius, y_offset = 0;
-			y_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
-			y_offset++
-		);
+				x_offset = radius, y_offset = 0;
+				y_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				y_offset++)
+			;
 
-		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset)) break;
+		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset))
+			break;
 
 		for (
-			y_offset = radius, x_offset = 0;
-			x_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
-			x_offset++
-		);
+				y_offset = radius, x_offset = 0;
+				x_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				x_offset++)
+			;
 
-		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset)) break;
+		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset))
+			break;
 	}
 
-  state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
-  state->jogoAtual.jogador.posicao.y = pos_y + y_offset;
+	state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
+	state->jogoAtual.jogador.posicao.y = pos_y + y_offset;
 
 	return;
 }
