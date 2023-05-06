@@ -10,6 +10,7 @@ typedef enum scene
 	Controlos,
 	Sobre,
 	Sair,
+	GameOver,
 } Scene;
 
 typedef enum colors
