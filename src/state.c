@@ -50,6 +50,7 @@ State criarEstado(int colunas, int linhas)
 	state.controloMenu.help = 0;
 
 	state.jogoAtual.jogador.vida = 100;
+	state.jogoAtual.jogador.vidaMaxima = 100;
 	state.jogoAtual.jogador.username = NULL;
 	state.jogoAtual.jogador.posicao.x = 3;
 	state.jogoAtual.jogador.posicao.y = 3;

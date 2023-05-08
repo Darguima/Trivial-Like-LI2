@@ -51,6 +51,7 @@ void eventosJogo(State *state)
 		if (state->jogoAtual.jogador.vida <= 0)
 		{
 			state->sceneAtual = GameOver;
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
 		}
 		
 		break;

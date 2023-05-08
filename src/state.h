@@ -85,7 +85,8 @@ typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida; // valor entre 0 e 100
+	int vida; // valor entre 0 e ...
+	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
 	int dinheiro;
