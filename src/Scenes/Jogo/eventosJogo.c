@@ -1,5 +1,5 @@
 #include <ncurses.h>
-
+#include <unistd.h>
 #include "../../state.h"
 #include "geraMapa.h"
 void mover_jogador(State *state, int dx, int dy)

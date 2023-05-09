@@ -73,10 +73,10 @@ int main() {
 			
 			case Jogo:
 			    wrefresh(window);
-				//visao(ncols-40,nrows-10,state.mapa.matrix,state.jogoAtual.jogador.posicao.x,state.jogoAtual.jogador.posicao.y);
 				desenhaJogo(win, &state,ncols-40,nrows-10,state.mapa.matrix);
+		
 				eventosJogo(&state);
-				//visao(ncols-40,nrows-10,state.mapa.matrix,state.jogoAtual.jogador.posicao.x,state.jogoAtual.jogador.posicao.y);
+				
 				
 				
 				break;
