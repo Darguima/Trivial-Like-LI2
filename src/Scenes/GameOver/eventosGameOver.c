@@ -3,15 +3,9 @@
 
 #include "../../state.h"
 
-/*
- * Enquanto os dois parametros da funcao não forem usados
- * esta macro é importante para prevenir o warning:
- * unused parameter window/state.
- * Quando forem as duas usadas pode ser removida
- */
 #define UNUSED(x) (void)(x)
 
-void eventosSair(State *state)
+void eventosGameOver(State *state)
 {
 	UNUSED(state);
 
@@ -19,7 +13,7 @@ void eventosSair(State *state)
 
 	switch (key)
 	{
-	case 'q':
+	case 'm':
 		state->sceneAtual = MenuInicial;
 		break;
 
