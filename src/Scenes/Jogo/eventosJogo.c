@@ -22,19 +22,23 @@ void mover_jogador(State *state, int dx, int dy)
 	atualizarAposMovimento(state);
 }
 
+// a função reageVida verifica se o jogador tá morto para dar GameOver
+void reageVida(State *state)
+{
+	if (state->jogoAtual.jogador.vida <= 0)
+	{
+		// Se a vida ficar a 0, o jogo acaba
+		state->sceneAtual = GameOver;
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+	}
+}
+
 void eventosJogo(State *state)
 {
 	int key = getch();
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
-
-	// Se a vida ficar a 0, o jogo acaba
-	if (state->jogoAtual.jogador.vida <= 0)
-	{
-		state->sceneAtual = GameOver;
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
-	}
 
 	switch (key)
 	{
@@ -48,6 +52,7 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
+
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -55,10 +60,14 @@ void eventosJogo(State *state)
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
+
+			reageVida(state); // verifica se o jogador tem vida 0
 		}
+
 		break;
 
 	case 'x':
+	
 		// Pegar arma secundária
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
 		{
@@ -66,6 +75,7 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
+		
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -73,7 +83,10 @@ void eventosJogo(State *state)
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
+			
+			reageVida(state); // verifica se o jogador tem vida 0
 		}
+		
 
 		break;
 
