@@ -138,8 +138,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(21, 9, "%d", state->jogoAtual.jogador.dinheiro);
 
 	// num mapa atual
-	mvprintw(3, (state->mapa.terminal.width - 43) / 2 + 7, "%s", "M A P A    A T U A L   :   ");
-	mvprintw(3, ((state->mapa.terminal.width - 43) / 2) + 35, "%d", state->jogoAtual.jogador.numMapaAtual);
+	mvprintw(3, (state->mapa.terminal.width - 30) / 2, "M A P A  A T U A L : %d", state->jogoAtual.jogador.numMapaAtual);
 
 	// mensagem
 	mvprintw(state->mapa.terminal.height - 4, 20, "%s", state->jogoAtual.mensagem_descricao);
