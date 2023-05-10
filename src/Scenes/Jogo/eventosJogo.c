@@ -14,7 +14,9 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-
+	// limpa o menu lateral antes de desenhar novamente
+	mvprintw(state->mapa.terminal.height - 4, 20, "%s", "                                                                                                                                      ");
+	mvprintw(state->mapa.terminal.height - 2, 20, "%s", "                                                                                                                                      ");
 	atualizarAposMovimento(state);
 }
 
@@ -30,16 +32,16 @@ void eventosJogo(State *state)
 	/* Interação com mapa */
 
 	// Pegar arma
-	case 'p':
-		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->available) {
+	case 'e':
+		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel) {
 			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
-			armaSobreposta->available = 0;
+			armaSobreposta->disponivel = 0;
 		}
 		break;
 	
 	// lutar com mob
-	case 'l':
+	case 'x':
 
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0) {
 			int dano = state->jogoAtual.jogador.armaPrincipal.dano;

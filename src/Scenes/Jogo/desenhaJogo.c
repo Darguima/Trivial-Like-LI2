@@ -44,7 +44,7 @@ void desenhaArmas(WINDOW *window, State *state)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-		if (!armaAtual.available) continue;
+		if (!armaAtual.disponivel) continue;
 
 		wattron(window, COLOR_PAIR(GreenBlack));
 		mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
@@ -128,6 +128,6 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(3, ((state->mapa.terminal.width - 43) / 2) + 43, "%d", state->jogoAtual.jogador.numMapaAtual);
 
 	// mensagem
-	mvprintw(state->mapa.terminal.height - 3, 15, "Msg: %s", state->jogoAtual.mensagem_descricao);
-	mvprintw(state->mapa.terminal.height - 2, 9, "Interagir: %s", state->jogoAtual.mensagem_controlos);
+	mvprintw(state->mapa.terminal.height - 4, 20, "%s", state->jogoAtual.mensagem_descricao);
+	mvprintw(state->mapa.terminal.height - 2, 20, "%s", state->jogoAtual.mensagem_controlos);
 }

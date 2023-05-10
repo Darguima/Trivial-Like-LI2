@@ -52,7 +52,7 @@ typedef struct arma
 typedef struct armaNoMapa
 {
 	Coordenadas posicao;
-	int available; /* 1 if still available on a map; 0 if was already collected */
+	int disponivel; /* 1 se está disponível no a mapa; 0 se a arma já foi apanhada */
 	Arma arma;
 } ArmaNoMapa;
 

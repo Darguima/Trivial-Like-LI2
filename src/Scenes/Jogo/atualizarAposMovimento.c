@@ -8,7 +8,7 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
   if (elementoMapa != Moeda)
     return;
 
-  state->jogoAtual.mensagem_descricao = "Parabéns, encontraste uma moeda!!";
+  state->jogoAtual.mensagem_descricao = "Encontraste uma moeda!";
   state->jogoAtual.mensagem_controlos = "A moeda é automaticamente recolhida";
 
   state->mapa.matrix[pos_x][pos_y] = Vazio;
@@ -35,10 +35,10 @@ int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
 void atualizarArmas(State *state)
 {
   ArmaNoMapa *armaSobreposta;
-  if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->available)
+  if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
   {
     state->jogoAtual.mensagem_descricao = armaSobreposta->arma.mensagem;
-    state->jogoAtual.mensagem_controlos = "Pressiona 'p' para pegar";
+    state->jogoAtual.mensagem_controlos = "Pressiona 'e' para pegar.";
   }
 }
 
@@ -85,8 +85,8 @@ void atualizarMobs(State *state)
   MobNoMapa *mobSobreposto;
   if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
   {
-    state->jogoAtual.mensagem_descricao = "A lutar com um mob!!";
-    state->jogoAtual.mensagem_controlos = "Pressiona 'l' para lutar.";
+    state->jogoAtual.mensagem_descricao = "Em combate!";
+    state->jogoAtual.mensagem_controlos = "Pressiona 'x' para atacar.";
   }
 }
 
@@ -95,8 +95,8 @@ void atualizarAposMovimento(State *state)
   int pos_x = state->jogoAtual.jogador.posicao.x;
   int pos_y = state->jogoAtual.jogador.posicao.y;
 
-  state->jogoAtual.mensagem_descricao = "Procura a Porta!!";
-  state->jogoAtual.mensagem_controlos = "Usa as setas para te moveres";
+  state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
+  state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);

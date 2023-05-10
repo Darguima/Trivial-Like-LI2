@@ -194,7 +194,7 @@ void adicionarArmas(State *state)
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.armas[armas_geradas].posicao = pos;
-		state->jogoAtual.armas[armas_geradas].available = 1;
+		state->jogoAtual.armas[armas_geradas].disponivel = 1;
 		state->jogoAtual.armas[armas_geradas].arma = catalogoArmas[rand() % catalogoArmasLength];
 	}
 }
