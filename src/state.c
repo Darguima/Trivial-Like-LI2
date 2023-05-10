@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "state.h"
 
+
 const Arma punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
 const Arma garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
 const Arma espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
@@ -10,7 +11,6 @@ const Arma acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos mon
 const Arma cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
 const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
-
 const Mob esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
 const Mob esqueleto2 = {Esqueleto, punhos, 50, 3};
 const Mob soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 70, 4};
@@ -45,7 +45,7 @@ State criarEstado(int colunas, int linhas)
 	state.controloMenu.help = 0;
 
 	state.jogoAtual.jogador.vida = 100;
-	state.jogoAtual.jogador.username = NULL;
+	state.jogoAtual.jogador.username = "Joao";
 	state.jogoAtual.jogador.posicao.x = 3;
 	state.jogoAtual.jogador.posicao.y = 3;
 	state.jogoAtual.jogador.numMapaAtual = 1;
@@ -54,6 +54,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
+	state.jogoAtual.jogador.n=0;
 
 	state.mapa.width = colunas;
 	state.mapa.height = linhas;

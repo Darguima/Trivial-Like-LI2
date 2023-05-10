@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include <time.h>
 #include "state.h"
+#include <json-c/json.h>
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"
@@ -49,7 +50,7 @@ int main()
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 
 	Scene sceneAnterior = state.sceneAtual;
-	
+
 	while (1)
 	{
 		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
@@ -72,6 +73,7 @@ int main()
 		case SelecionarJogador:
 			desenhaSelecionarJogador(window, &state);
 			eventosSelecionarJogador(&state);
+			
 			break;
 
 		case Jogo:
@@ -79,6 +81,7 @@ int main()
 			desenhaMenusLaterais(window, &state);
 			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10, state.mapa.matrix);
 			eventosJogo(&state);
+
 			break;
 
 		case Controlos:
