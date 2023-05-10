@@ -27,35 +27,50 @@ void eventosJogo(State *state)
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
 
+	// Se a vida ficar a 0, o jogo acaba
+		if (state->jogoAtual.jogador.vida <= 0)
+		{
+			state->sceneAtual = GameOver;
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		}
+
 	switch (key)
 	{
 	/* Interação com mapa */
 
-	// Pegar arma
-	case 'e':
+	
+	case 'z':
+	// Pegar arma principal
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel) {
 			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-		break;
-	
-	// lutar com mob
-	case 'x':
-
+	// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0) {
 			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
 		}
-    // Se a vida ficar a 0, o jogo acaba
-		if (state->jogoAtual.jogador.vida <= 0)
-		{
-			state->sceneAtual = GameOver;
-			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		break;
+	
+	
+	case 'x':
+	// Pegar arma secundária
+		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel) {
+			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
+			// Adicionar Arma ao inventário
+			armaSobreposta->disponivel = 0;
 		}
-		
+	// Atacar com secundária
+		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0) {
+			int dano = state->jogoAtual.jogador.armaSecundaria.dano;
+
+			mob_sobreposto->mob.vida -= dano;
+			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
+		}
+	
 		break;
 
 	/* Setas */

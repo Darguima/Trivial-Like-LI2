@@ -44,7 +44,8 @@ void desenhaArmas(WINDOW *window, State *state)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-		if (!armaAtual.disponivel) continue;
+		if (!armaAtual.disponivel)
+			continue;
 
 		wattron(window, COLOR_PAIR(GreenBlack));
 		mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
@@ -58,7 +59,8 @@ void desenhaMobs(WINDOW *window, State *state)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
-		if (!(mobAtual.mob.vida > 0)) continue;
+		if (!(mobAtual.mob.vida > 0))
+			continue;
 
 		wattron(window, COLOR_PAIR(BlackRed));
 		mvwaddch(window, mobAtual.posicao.y, mobAtual.posicao.x, 'M');
@@ -112,20 +114,32 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	}
 
 	// arma principal
-	mvprintw(10, 1, "%s", "ARMA PRINCIPAL:");
-	mvprintw(11, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
+	attron(A_BOLD);
+	mvprintw(11, 1, "%s", "PRINCIPAL ");
+	attroff(A_BOLD);
+	mvprintw(11, 12, "[Z]:");
+	mvprintw(12, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
+	mvprintw(13, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
+	mvprintw(14, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
 
 	// arma secundaria
-	mvprintw(13, 1, "%s", "ARMA SECUNDARIA:");
-	mvprintw(14, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
+	attron(A_BOLD);
+	mvprintw(16, 1, "%s", "SECUNDARIA ");
+	attroff(A_BOLD);
+	mvprintw(16, 12, "[X]:");
+	mvprintw(17, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
+	mvprintw(18, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
+	mvprintw(19, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
 
 	// dinheiro
-	mvprintw(16, 1, "%s", "DINHEIRO:");
-	mvprintw(16, 10, "%d", state->jogoAtual.jogador.dinheiro);
+	attron(A_BOLD);
+	mvprintw(21, 1, "%s", "MOEDAS:");
+	attroff(A_BOLD);
+	mvprintw(21, 9, "%d", state->jogoAtual.jogador.dinheiro);
 
 	// num mapa atual
-	mvprintw(3, (state->mapa.terminal.width - 43) / 2, "%s", "N U M E R O   M A P A    A T U A L   :   ");
-	mvprintw(3, ((state->mapa.terminal.width - 43) / 2) + 43, "%d", state->jogoAtual.jogador.numMapaAtual);
+	mvprintw(3, (state->mapa.terminal.width - 43) / 2, "%s", "M A P A    A T U A L   :   ");
+	mvprintw(3, ((state->mapa.terminal.width - 43) / 2) + 39, "%d", state->jogoAtual.jogador.numMapaAtual);
 
 	// mensagem
 	mvprintw(state->mapa.terminal.height - 4, 20, "%s", state->jogoAtual.mensagem_descricao);

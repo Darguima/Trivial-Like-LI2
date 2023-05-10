@@ -38,7 +38,7 @@ void atualizarArmas(State *state)
   if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
   {
     state->jogoAtual.mensagem_descricao = armaSobreposta->arma.mensagem;
-    state->jogoAtual.mensagem_controlos = "Pressiona 'e' para pegar.";
+    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para usar como primária, [X] como secundária.";
   }
 }
 
@@ -86,7 +86,7 @@ void atualizarMobs(State *state)
   if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
   {
     state->jogoAtual.mensagem_descricao = "Em combate!";
-    state->jogoAtual.mensagem_controlos = "Pressiona 'x' para atacar.";
+    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";
   }
 }
 
