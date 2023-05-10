@@ -10,6 +10,7 @@ typedef enum scene
 	Controlos,
 	Sobre,
 	Sair,
+	GameOver,
 } Scene;
 
 typedef enum colors
@@ -77,7 +78,7 @@ typedef struct arma
 typedef struct armaNoMapa
 {
 	Coordenadas posicao;
-	int available; /* 1 if still available on a map; 0 if was already collected */
+	int disponivel; /* 1 se está disponível no a mapa; 0 se a arma já foi apanhada */
 	Arma arma;
 } ArmaNoMapa;
 
@@ -110,7 +111,8 @@ typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida; // valor entre 0 e 100
+	int vida; // valor entre 0 e ...
+	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
 	int dinheiro;

@@ -1,28 +1,28 @@
 #include <stdlib.h>
 #include "state.h"
 
-Arma const punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-Arma const garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-Arma const espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
-Arma const espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-Arma const arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-Arma const acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+Arma const punhos = {Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
+Arma const garras = {Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
+Arma const espadaOxidada = {EspadaOxidada, "Espada Oxidada", 20, 75, "Espada que pertenceu a um soldado caído em combate."};
+Arma const espadaLonga = {EspadaLonga, "Espada Longa", 25, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
+Arma const arco = {Arco, "Arco", 40, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
+Arma const acido = {Acido, "Acido", 20, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
 Arma const cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
 int const armasNoMapaLength = 2;
 int const catalogoArmasLength = 7;
 Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
-Mob const esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
-Mob const esqueleto2 = {Esqueleto, punhos, 50, 3};
-Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 70, 4};
-Mob const vampiro1 = {Vampiro, garras, 150, 8};
-Mob const vampiro2 = {Vampiro, cetro, 60, 10};
-Mob const mutante1 = {Mutante, punhos, 40, 2};
-Mob const mutante2 = {Mutante, punhos, 20, 2};
-Mob const aranha1 = {Aranha, acido, 40, 10};
-Mob const aranha2 = {Aranha, acido, 60, 8};
-Mob const zombie1 = {Zombie, garras, 100, 2};
+Mob const esqueleto1 = {Esqueleto, espadaOxidada, 40, 3};
+Mob const esqueleto2 = {Esqueleto, punhos, 40, 3};
+Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 60, 4};
+Mob const vampiro1 = {Vampiro, garras, 70, 8};
+Mob const vampiro2 = {Vampiro, cetro, 50, 10};
+Mob const mutante1 = {Mutante, punhos, 30, 2};
+Mob const mutante2 = {Mutante, punhos, 10, 2};
+Mob const aranha1 = {Aranha, acido, 30, 10};
+Mob const aranha2 = {Aranha, acido, 40, 8};
+Mob const zombie1 = {Zombie, garras, 70, 2};
 
 int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;
@@ -61,6 +61,7 @@ State criarEstado(int colunas, int linhas)
 	state.controloMenu.help = 0;
 
 	state.jogoAtual.jogador.vida = 100;
+	state.jogoAtual.jogador.vidaMaxima = 100;
 	state.jogoAtual.jogador.username = NULL;
 	state.jogoAtual.jogador.posicao.x = 3;
 	state.jogoAtual.jogador.posicao.y = 3;
@@ -72,8 +73,8 @@ State criarEstado(int colunas, int linhas)
 
 	state.jogoAtual.mobs = malloc(mobsNoMapaLength * sizeof(MobNoMapa));
 	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));
-	state.jogoAtual.mensagem_descricao = "Procura a Porta!!";
-	state.jogoAtual.mensagem_controlos = "Usa as setas para te moveres";
+	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
+	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

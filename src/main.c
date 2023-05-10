@@ -21,6 +21,9 @@
 #include "Scenes/Sair/desenhaSair.h"
 #include "Scenes/Sair/eventosSair.h"
 
+#include "Scenes/GameOver/desenhaGameOver.h"
+#include "Scenes/GameOver/eventosGameOver.h"
+
 int main()
 {
 	WINDOW *window = initscr();
@@ -99,6 +102,10 @@ int main()
 			desenhaSair(window, &state);
 			eventosSair(&state);
 			break;
+
+		case GameOver:
+			desenhaGameOver(window, &state);
+			eventosGameOver(&state);
 		}
 
 		move(0, 0);
