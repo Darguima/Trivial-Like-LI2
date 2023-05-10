@@ -17,7 +17,7 @@ int isOk(int x, int y, int xmax, int ymax)
 
 int is_pos_free(Mapa mapa, int x, int y)
 {
-	return isOk(x, y, mapa.width, mapa.height) && mapa.matrix[x][y] != Parede && mapa.matrix[x][y] != ParedeNaoVisivel;
+	return isOk(x, y, mapa.width, mapa.height) && mapa.matrix[x][y].tipo != Parede;
 }
 
 void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
@@ -26,9 +26,11 @@ void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 	{
 		for (int n = 0; n < (colunas); n++)
 		{
+			mapa[i][n].visivel = 1;
+
 			if (i == 0 || i == linhas - 1 || n == 0 || (i == linhas - 1 && n == colunas - 1) || n == colunas - 1)
 			{
-				mapa[i][n] = Parede;
+				mapa[i][n].tipo = Parede;
 			}
 			else
 			{
@@ -36,11 +38,11 @@ void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 				int temp = rand() % 100;
 				if (temp <= 42)
 				{
-					mapa[i][n] = Parede;
+					mapa[i][n].tipo = Parede;
 				}
 				else
 				{
-					mapa[i][n] = Vazio;
+					mapa[i][n].tipo = Vazio;
 				}
 			}
 		}
@@ -48,7 +50,7 @@ void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 	return;
 }
 
-void copyAll(int x, int y, int aqui[x][y], ElementosDoMapa **ali)
+void copyAll(int x, int y, ElementosDoMapa aqui[x][y], ElementosDoMapa **ali)
 {
 	for (int i = 0; i < x; i++)
 	{
@@ -64,7 +66,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 {
 	for (int k = 0; k < 3; k++)
 	{
-		int auxMap[x][y];
+		ElementosDoMapa auxMap[x][y];
 		copyAll(x, y, auxMap, mapa);
 		for (int s = 1; s < x; s++)
 		{
@@ -79,7 +81,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == Parede)
+							if (auxMap[a][b].tipo == Parede)
 							{
 								window_count++;
 							}
@@ -97,7 +99,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == Parede)
+							if (auxMap[a][b].tipo == Parede)
 							{
 								window++;
 							}
@@ -111,18 +113,18 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 
 				if (window_count >= 5 || window <= 2)
 				{
-					mapa[s][j] = Parede;
+					mapa[s][j].tipo = Parede;
 				}
 				else
 				{
-					mapa[s][j] = Vazio;
+					mapa[s][j].tipo = Vazio;
 				}
 			}
 		}
 	}
 	for (int k = 0; k < 2; k++)
 	{
-		int auxMap[x][y];
+		ElementosDoMapa auxMap[x][y];
 		copyAll(x, y, auxMap, mapa);
 		for (int s = 1; s < x; s++)
 		{
@@ -136,7 +138,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 						if (isOk(a, b, x, y))
 						{
 
-							if (auxMap[a][b] == Parede)
+							if (auxMap[a][b].tipo == Parede)
 							{
 								window_count++;
 							}
@@ -150,11 +152,11 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 
 				if (window_count >= 5)
 				{
-					mapa[s][j] = Parede;
+					mapa[s][j].tipo = Parede;
 				}
 				else
 				{
-					mapa[s][j] = Vazio;
+					mapa[s][j].tipo = Vazio;
 				}
 			}
 		}
@@ -176,7 +178,7 @@ void adicionarMoedas(State *state)
 			pos_y = (rand() % (state->mapa.height - 2)) + 1;
 		} while (!is_pos_free(state->mapa, pos_x, pos_y));
 
-		state->mapa.matrix[pos_x][pos_y] = Moeda;
+		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
 	}
 }
 

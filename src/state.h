@@ -85,7 +85,7 @@ typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida; // valor entre 0 e ...
+	int vida;				// valor entre 0 e ...
 	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
@@ -106,11 +106,11 @@ typedef struct jogoAtual
 	StatusJogador jogador;
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
-	char *mensagem_descricao;						 /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 } JogoAtual;
 
-typedef enum elementosDoMapa
+typedef enum elementosDoMapaCatalogo
 {
 	Vazio,						/*   */
 	Jogador,					/* @ */
@@ -121,7 +121,12 @@ typedef enum elementosDoMapa
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
 	Moeda,						/* c */
 
-	ParedeNaoVisivel,	/*   */
+} ElementosDoMapaCatalogo;
+
+typedef struct elementosDoMapa
+{
+	ElementosDoMapaCatalogo tipo;
+	int visivel; // 1 para visivel
 } ElementosDoMapa;
 
 typedef struct terminal

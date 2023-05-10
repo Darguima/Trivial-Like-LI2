@@ -1,9 +1,6 @@
 #include <ncurses.h>
-#include <time.h>
-#include <stdlib.h>
-#include <math.h>
+#include "./visao.h"
 #include "../../state.h"
-#include "../../GeraMapa/geraMapa.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -13,60 +10,23 @@
  */
 #define UNUSED(x) (void)(x)
 
-void visao(int largura, int altura, ElementosDoMapa **mapa, int posX, int posY)
-{
-	for (int x = 0; x < largura; x++)
-	{
-		for (int y = 0; y < altura; y++)
-		{
-			if (mapa[x][y] == Parede)
-			{
-				mapa[x][y] = ParedeNaoVisivel;
-			}
-		}
-	}
-
-	// Enquanto anguloRad for menor que 2 pi adicionar um grau deg
-	for (float anguloRad = 0; anguloRad <= 6.5; anguloRad += 0.017453)
-	{
-		for (int raio = 1; raio <= 20; raio++)
-		{
-			int blocoX, blocoY;
-
-			blocoX = (posX + (raio * cos(anguloRad)));
-			blocoY = (posY - (raio * sin(anguloRad)));
-
-			if (!isOk(blocoX, blocoY, largura, altura))
-			{
-				break;
-			}
-
-			else if (mapa[blocoX][blocoY] == Parede || mapa[blocoX][blocoY] == ParedeNaoVisivel)
-			{
-				mapa[blocoX][blocoY] = Parede;
-				break;
-			}
-		}
-	}
-	return;
-}
-
 void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa)
 {
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
 		{
-			switch (mapa[x][y])
+			if (mapa[x][y].visivel == 0) {
+				mvwaddch(window, y, x, ' ');
+				continue;
+			}
+			
+			switch (mapa[x][y].tipo)
 			{
 			case Parede:
 				mvwaddch(window, y, x, '#');
 				break;
 			
-			case ParedeNaoVisivel:
-				mvwaddch(window, y, x, ' ');
-				break;
-
 			case Moeda:
 				wattron(window, COLOR_PAIR(YellowBlack));
 				mvwaddch(window, y, x, 'c');
@@ -87,7 +47,7 @@ void desenhaArmas(WINDOW *window, State *state)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-		if (!armaAtual.disponivel)
+		if (!armaAtual.disponivel || state->mapa.matrix[armaAtual.posicao.x][armaAtual.posicao.y].visivel == 0)
 			continue;
 
 		wattron(window, COLOR_PAIR(GreenBlack));
@@ -102,7 +62,7 @@ void desenhaMobs(WINDOW *window, State *state)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
-		if (!(mobAtual.mob.vida > 0))
+		if (!(mobAtual.mob.vida > 0) || state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 0)
 			continue;
 
 		wattron(window, COLOR_PAIR(BlackRed));
