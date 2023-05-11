@@ -6,8 +6,7 @@ void eventosMenuInicial(State *state)
 {
 	int key = getch();
 
-	switch (key)
-	{
+	switch(key) {
 	case '1':
 		state->sceneAtual = SelecionarJogador;
 		break;

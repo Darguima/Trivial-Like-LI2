@@ -1,8 +1,5 @@
 #include <ncurses.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "./visao.h"
 #include "../../state.h"
 #include "./atualizarAposMovimento.h"
 /*
@@ -13,18 +10,23 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa)
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
 {
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
 		{
-			switch (mapa[x][y])
+			if (state->mapa.matrix[x][y].visivel == 0) {
+				mvwaddch(window, y, x, ' ');
+				continue;
+			}
+			
+			switch (state->mapa.matrix[x][y].tipo)
 			{
 			case Parede:
 				mvwaddch(window, y, x, '#');
 				break;
-
+			
 			case Moeda:
 				wattron(window, COLOR_PAIR(YellowBlack));
 				mvwaddch(window, y, x, 'c');
@@ -45,7 +47,7 @@ void desenhaArmas(WINDOW *window, State *state)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-		if (!armaAtual.disponivel)
+		if (!armaAtual.disponivel || state->mapa.matrix[armaAtual.posicao.x][armaAtual.posicao.y].visivel == 0)
 			continue;
 
 		wattron(window, COLOR_PAIR(GreenBlack));
@@ -60,7 +62,7 @@ void desenhaMobs(WINDOW *window, State *state)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
-		if (!(mobAtual.mob.vida > 0))
+		if (!(mobAtual.mob.vida > 0) || state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 0)
 			continue;
 
 		wattron(window, COLOR_PAIR(BlackRed));
@@ -69,9 +71,13 @@ void desenhaMobs(WINDOW *window, State *state)
 	}
 }
 
-void desenhaJogo(WINDOW *window, State *state, int x, int y, ElementosDoMapa **mapa)
+void desenhaJogo(WINDOW *window, State *state, int x, int y)
 {
-	desenhaMapa(window, x, y, mapa);
+	ElementosDoMapa **mapa = state->mapa.matrix;
+
+	visao(x, y, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+
+	desenhaMapa(window, x, y, state);
 	desenhaArmas(window, state);
 	desenhaMobs(window, state);
 

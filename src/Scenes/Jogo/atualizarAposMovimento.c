@@ -5,13 +5,13 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
   ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
 
-  if (elementoMapa != Moeda)
+  if (elementoMapa.tipo != Moeda)
     return;
 
   state->jogoAtual.mensagem_descricao = "Encontraste uma moeda!";
   state->jogoAtual.mensagem_controlos = "A moeda é automaticamente recolhida";
 
-  state->mapa.matrix[pos_x][pos_y] = Vazio;
+  state->mapa.matrix[pos_x][pos_y].tipo = Vazio;
   state->jogoAtual.jogador.dinheiro++;
 }
 
