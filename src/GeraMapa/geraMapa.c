@@ -27,6 +27,7 @@ void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 		for (int n = 0; n < (colunas); n++)
 		{
 			mapa[i][n].visivel = 1;
+			mapa[i][n].descoberto = 0;
 
 			if (i == 0 || i == linhas - 1 || n == 0 || (i == linhas - 1 && n == colunas - 1) || n == colunas - 1)
 			{

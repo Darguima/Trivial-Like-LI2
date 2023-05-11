@@ -15,13 +15,50 @@ typedef enum scene
 
 typedef enum colors
 {
+	// ncurses default colors
+	BLACK,
+	RED,
+	GREEN,
+	YELLOW,
+	BLUE,
+	MAGENTA,
+	CYAN,
+	WHITE,
+
+	FG_MapaVisivel,
+	BG_MapaVisivel,
+
+	FG_MapaMemoria,
+	BG_MapaMemoria,
+
+	FG_MapaDesconhecido,
+	BG_MapaDesconhecido,
+
+	FG_Player,
+	FG_Mob,
+	FG_Arma,
+	FG_Moeda,
+} Colors;
+
+typedef enum colorsSchema
+{
 	WhiteBlack,
 	YellowBlack,
 	BlueBlack,
 	GreenBlack,
 	BlackYellow,
 	BlackRed,
-} Colors;
+
+	MapaPlayerColor,
+
+	MapaVisivelColor,
+	MapaMemoriaColor,
+	MapaDesconhecidoColor,
+
+	MobColor,
+	ArmaColor,
+	MoedaColor,
+} ColorsScheme;
 
 typedef struct coordenadas
 {
@@ -126,7 +163,8 @@ typedef enum elementosDoMapaCatalogo
 typedef struct elementosDoMapa
 {
 	ElementosDoMapaCatalogo tipo;
-	int visivel; // 1 para visivel
+	int visivel;		// 1 para visivel
+	int descoberto; // 1 para descoberto
 } ElementosDoMapa;
 
 typedef struct terminal

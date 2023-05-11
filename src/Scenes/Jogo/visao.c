@@ -25,6 +25,7 @@ void visao(int largura, int altura, ElementosDoMapa **mapa, int posX, int posY)
       }
 
       mapa[blocoX][blocoY].visivel = 1;
+      mapa[blocoX][blocoY].descoberto = 1;
 
       if (mapa[blocoX][blocoY].tipo == Parede)
         break;

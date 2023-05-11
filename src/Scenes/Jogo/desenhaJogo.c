@@ -12,31 +12,61 @@
 
 void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
 {
+	int bloco_visivel, bloco_descoberto;
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
 		{
-			if (state->mapa.matrix[x][y].visivel == 0) {
+			bloco_visivel = state->mapa.matrix[x][y].visivel;
+			bloco_descoberto = state->mapa.matrix[x][y].descoberto;
+
+			// Nunca foi visto
+			if (bloco_descoberto == 0)
+			{
+				wattron(window, COLOR_PAIR(MapaDesconhecidoColor));
 				mvwaddch(window, y, x, ' ');
+				wattroff(window, COLOR_PAIR(MapaDesconhecidoColor));
 				continue;
 			}
-			
+
+			// Já foi, no passado, visto
+			else if (bloco_visivel == 0)
+			{
+				wattron(window, COLOR_PAIR(MapaMemoriaColor));
+			}
+
+			else if (bloco_visivel == 1)
+			{
+				wattron(window, COLOR_PAIR(MapaVisivelColor));
+			}
+
 			switch (state->mapa.matrix[x][y].tipo)
 			{
 			case Parede:
 				mvwaddch(window, y, x, '#');
 				break;
-			
+
 			case Moeda:
-				wattron(window, COLOR_PAIR(YellowBlack));
+				if (bloco_visivel)
+					wattron(window, COLOR_PAIR(MoedaColor));
+
 				mvwaddch(window, y, x, 'c');
-				wattroff(window, COLOR_PAIR(YellowBlack));
+
+				wattroff(window, COLOR_PAIR(MoedaColor));
+				break;
+
+			case Vazio:
+				mvwaddch(window, y, x, ' ');
 				break;
 
 			default:
 				mvwaddch(window, y, x, ' ');
 				break;
 			}
+
+			wattroff(window, COLOR_PAIR(MapaVisivelColor));
+			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+			wattroff(window, COLOR_PAIR(MapaDesconhecidoColor));
 		}
 	}
 }
@@ -47,12 +77,20 @@ void desenhaArmas(WINDOW *window, State *state)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
-		if (!armaAtual.disponivel || state->mapa.matrix[armaAtual.posicao.x][armaAtual.posicao.y].visivel == 0)
+		if (!armaAtual.disponivel || state->mapa.matrix[armaAtual.posicao.x][armaAtual.posicao.y].descoberto == 0)
 			continue;
 
-		wattron(window, COLOR_PAIR(GreenBlack));
+		wattron(window, COLOR_PAIR(MapaMemoriaColor));
+		if (state->mapa.matrix[armaAtual.posicao.x][armaAtual.posicao.y].visivel == 1)
+		{
+			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+			wattron(window, COLOR_PAIR(ArmaColor));
+		}
+
 		mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
-		wattroff(window, COLOR_PAIR(GreenBlack));
+
+		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+		wattroff(window, COLOR_PAIR(ArmaColor));
 	}
 }
 
@@ -62,12 +100,20 @@ void desenhaMobs(WINDOW *window, State *state)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
-		if (!(mobAtual.mob.vida > 0) || state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 0)
+		if (!(mobAtual.mob.vida > 0) || state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].descoberto == 0)
 			continue;
 
-		wattron(window, COLOR_PAIR(BlackRed));
+		wattron(window, COLOR_PAIR(MapaMemoriaColor));
+		if (state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 1)
+		{
+			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+			wattron(window, COLOR_PAIR(MobColor));
+		}
+
 		mvwaddch(window, mobAtual.posicao.y, mobAtual.posicao.x, 'M');
-		wattroff(window, COLOR_PAIR(BlackRed));
+
+		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+		wattroff(window, COLOR_PAIR(MobColor));
 	}
 }
 
@@ -81,9 +127,9 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y)
 	desenhaArmas(window, state);
 	desenhaMobs(window, state);
 
-	wattron(window, COLOR_PAIR(BlueBlack));
+	wattron(window, COLOR_PAIR(MapaPlayerColor));
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');
-	wattroff(window, COLOR_PAIR(BlueBlack));
+	wattroff(window, COLOR_PAIR(MapaPlayerColor));
 
 	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 	wrefresh(window);
