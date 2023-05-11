@@ -92,7 +92,7 @@ void atualizarMobs(State *state)
 
     // Atualiza a informação dos mobs
     state->jogoAtual.mensagem_nomeMob = mobSobreposto->mob.nome;
-    state->jogoAtual.mensagem_vidaMob = mobSobreposto->mob.vida; //! aqui ocorre o erro de conversão
+    state->jogoAtual.mensagem_vidaMob = mobSobreposto->mob.vida; // copia a string para a variável de destino
 
   }
 }
@@ -105,7 +105,8 @@ void atualizarAposMovimento(State *state)
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
   state->jogoAtual.mensagem_nomeMob = "";
-  state->jogoAtual.mensagem_vidaMob = "";
+  move(state->mapa.terminal.height - 2, 30);
+	clrtoeol();
 
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);

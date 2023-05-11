@@ -15,9 +15,11 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
 	// limpa o menu lateral antes de desenhar novamente
-	move(state->mapa.terminal.height - 4, 20);
+	move(state->mapa.terminal.height - 4, 0);
 	clrtoeol();
-	move(state->mapa.terminal.height - 2, 20);
+	move(state->mapa.terminal.height - 3, 0);
+	clrtoeol();
+	move(state->mapa.terminal.height - 2, 0);
 	clrtoeol();
 	atualizarAposMovimento(state);
 }
