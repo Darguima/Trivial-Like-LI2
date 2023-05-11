@@ -27,7 +27,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 
   refresh();
 
-  mvaddstr(y, x - 17, "Neste menu vai ser possivel escolher o save");
-  mvaddstr(nrows - 4, 2, "Pressione j para jogar");
-  mvaddstr(nrows - 2, 2, "Pressione q para voltar");
+  mvaddstr(y, x - 17, "Escolher o save");
+  mvaddstr(nrows - 4, 2, "Pressione [J] para jogar");
+  mvaddstr(nrows - 2, 2, "Pressione [Q] para voltar");
 }
