@@ -94,7 +94,7 @@ void eventosJogo(State *state)
 		}
 
 		break;
-
+	
 	/* Setas */
 	case KEY_A1:
 	case '7':

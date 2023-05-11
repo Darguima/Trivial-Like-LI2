@@ -10,18 +10,18 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, ElementosDoMapa **mapa)
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
 {
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
 		{
-			if (mapa[x][y].visivel == 0) {
+			if (state->mapa.matrix[x][y].visivel == 0) {
 				mvwaddch(window, y, x, ' ');
 				continue;
 			}
 			
-			switch (mapa[x][y].tipo)
+			switch (state->mapa.matrix[x][y].tipo)
 			{
 			case Parede:
 				mvwaddch(window, y, x, '#');
@@ -71,11 +71,13 @@ void desenhaMobs(WINDOW *window, State *state)
 	}
 }
 
-void desenhaJogo(WINDOW *window, State *state, int x, int y, ElementosDoMapa **mapa)
+void desenhaJogo(WINDOW *window, State *state, int x, int y)
 {
+	ElementosDoMapa **mapa = state->mapa.matrix;
+
 	visao(x, y, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 
-	desenhaMapa(window, x, y, mapa);
+	desenhaMapa(window, x, y, state);
 	desenhaArmas(window, state);
 	desenhaMobs(window, state);
 
