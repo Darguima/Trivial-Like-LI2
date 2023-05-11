@@ -125,6 +125,10 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y)
 
 	visao(x, y, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 
+	/*
+	* A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
+	* Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
+	*/
 	desenhaMapa(window, x, y, state);
 	desenhaArmas(window, state);
 	desenhaMobs(window, state);
