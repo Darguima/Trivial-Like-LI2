@@ -10,18 +10,60 @@ typedef enum scene
 	Controlos,
 	Sobre,
 	Sair,
+	GameOver,
 } Scene;
+
+typedef enum colors
+{
+	// ncurses default colors
+	BLACK,
+	RED,
+	GREEN,
+	YELLOW,
+	BLUE,
+	MAGENTA,
+	CYAN,
+	WHITE,
+
+	FG_MapaVisivel,
+	BG_MapaVisivel,
+
+	FG_MapaMemoria,
+	BG_MapaMemoria,
+
+	FG_MapaDesconhecido,
+	BG_MapaDesconhecido,
+
+	FG_Player,
+	FG_Mob,
+	FG_Arma,
+	FG_Moeda,
+} Colors;
+
+typedef enum colorsSchema
+{
+	WhiteBlack,
+	YellowBlack,
+	BlueBlack,
+	GreenBlack,
+	BlackYellow,
+	BlackRed,
+
+	MapaPlayerColor,
+
+	MapaVisivelColor,
+	MapaMemoriaColor,
+	MapaDesconhecidoColor,
+
+	MobColor,
+	ArmaColor,
+	MoedaColor,
+} ColorsScheme;
 
 typedef struct coordenadas
 {
 	int x, y;
 } Coordenadas;
-
-typedef struct moeda
-{
-	int valor; // valor da moeda
-	Coordenadas posicao;
-} Moeda;
 
 /* Diferentes armas que o player e mobs pode ter */
 typedef enum catalogoArmas
@@ -45,6 +87,13 @@ typedef struct arma
 	char *mensagem;	   // texto que descreve a arma
 } Arma;
 
+typedef struct armaNoMapa
+{
+	Coordenadas posicao;
+	int disponivel; /* 1 se está disponível no a mapa; 0 se a arma já foi apanhada */
+	Arma arma;
+} ArmaNoMapa;
+
 typedef enum catalogoMobs
 {					  // o tipo do mob a chamar
 	Esqueleto,		  /* E */
@@ -59,28 +108,31 @@ typedef enum catalogoMobs
 typedef struct mob
 {						  // podem haver mais que um mob com armas diferentes
 	CatalogoMobs tipomob; // recebe qual o tipo do mob
+	char *nome;			  // nome do mob
+	char charASCII;		  // char pelo qual se refere ao mob
 	Arma arma;			  // o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
-	int vida;
-	int raioVisao; // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
+	int vida;			  // vida do mob instantanea
+	int vidaMaxima;		  // máxima vida do mob
+	int raioVisao;		  // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
 } Mob;
 
-typedef struct statusMob
+typedef struct mobNoMapa
 {
 	Coordenadas posicao;
-	Mob mob; // qual o mob e as suas características
-} StatusMobs;
+	Mob mob;
+} MobNoMapa;
 
 typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida; // valor entre 0 e 100
+	int vida;				// valor entre 0 e ...
+	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
-	char *mensagem;	  /* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
 	Arma *inventario;
 } StatusJogador;
 
@@ -94,9 +146,13 @@ typedef struct controlosMenu
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
+	MobNoMapa *mobs;
+	ArmaNoMapa *armas;
+	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 } JogoAtual;
 
-typedef enum elementosDoMapa
+typedef enum elementosDoMapaCatalogo
 {
 	Vazio,			  /*   */
 	Jogador,		  /* @ */
@@ -105,13 +161,29 @@ typedef enum elementosDoMapa
 	Parede,			  /* # */
 	PortaNormal,	  /* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
+	Moeda,						/* c */
+
+} ElementosDoMapaCatalogo;
+
+typedef struct elementosDoMapa
+{
+	ElementosDoMapaCatalogo tipo;
+	int visivel;		// 1 para visivel
+	int descoberto; // 1 para descoberto
 } ElementosDoMapa;
 
-typedef struct mapa
+typedef struct terminal
 {
 	int height;
 	int width;
-	int **matrix;
+} Terminal;
+
+typedef struct mapa
+{
+	Terminal terminal;
+	int height;
+	int width;
+	ElementosDoMapa **matrix;
 } Mapa;
 
 typedef struct state
@@ -135,5 +207,32 @@ extern const Arma cetro;
 extern const Arma catalogoArmas[];
 
 State criarEstado(int colunas, int linhas);
+
+extern Arma const punhos;
+extern Arma const garras;
+extern Arma const espadaOxidada;
+extern Arma const espadaLonga;
+extern Arma const arco;
+extern Arma const acido;
+extern Arma const cetro;
+
+extern int const armasNoMapaLength;
+extern int const catalogoArmasLength;
+extern Arma const catalogoArmas[];
+
+extern Mob const esqueleto1;
+extern Mob const esqueleto2;
+extern Mob const soldadoEsqueleto1;
+extern Mob const vampiro1;
+extern Mob const vampiro2;
+extern Mob const mutante1;
+extern Mob const mutante2;
+extern Mob const aranha1;
+extern Mob const aranha2;
+extern Mob const zombie1;
+
+extern int const mobsNoMapaLength;
+extern int const catalogoMobsLength;
+extern Mob const catalogoMobs[];
 
 #endif

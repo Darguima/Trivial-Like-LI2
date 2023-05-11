@@ -23,7 +23,7 @@ void desenhaMenuInicial(WINDOW *window, State *state)
     mvaddstr(y + 3, x - 2, "2.Controlos");
     mvaddstr(y + 6, x - 1, "3.Sobre");
     mvaddstr(y + 9, x - 1, "4.Sair");
-    mvaddstr(nrows - 2, 2, "Selecione a opção com 1-4");
+    mvaddstr(nrows - 2, 2, "Selecione a opção com [1]-[4]");
 
     mvprintw(y - 7, x - 21, "     _____     _       _       _ _ _            ");
     mvprintw(y - 6, x - 21, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");

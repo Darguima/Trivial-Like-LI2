@@ -20,7 +20,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   UNUSED(window);
   UNUSED(state);
 
-  geraMapa(state->mapa.width, state->mapa.height, state->mapa.matrix);
+  geraMapa(state, state->mapa.terminal.width, state->mapa.terminal.height);
 
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);
@@ -34,6 +34,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   mvaddstr(y, x - 17, "1.");
   mvaddstr(y + 2, x - 17, "2.");
   mvaddstr(y + 4, x - 17, "3.");
+
 
   mvaddstr(nrows - 4, 2, "Pressione num jogador para jogar");
   mvaddstr(nrows - 2, 2, "Pressione q para voltar");
@@ -100,4 +101,5 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
     string = (char *)json_object_get_string(username);
     mvaddstr(y+4, x - 15, string);
   }
+
 }

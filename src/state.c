@@ -10,29 +10,33 @@ const Arma acido = {5, Acido, "Acido", 40, 15, "Um líquido lançado por certos 
 const Arma cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
 const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
-const Mob esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
-const Mob esqueleto2 = {Esqueleto, punhos, 50, 3};
-const Mob soldadoEsqueleto1 = {SoldadoEsqueleto, espadaLonga, 70, 4};
-const Mob vampiro1 = {Vampiro, garras, 150, 8};
-const Mob vampiro2 = {Vampiro, cetro, 60, 10};
-const Mob mutante1 = {Mutante, punhos, 40, 2};
-const Mob mutante2 = {Mutante, punhos, 20, 2};
-const Mob aranha1 = {Aranha, acido, 40, 10};
-const Mob aranha2 = {Aranha, acido, 60, 8};
-const Mob zombie1 = {Zombie, garras, 100, 2};
 
-const Mob catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
+Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E', espadaOxidada, 40, 40, 3};
+Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E', punhos, 40, 40, 3};
+Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, "Soldado Esqueleto", 'S', espadaLonga, 60, 60, 4};
+Mob const vampiro1 = {Vampiro, "Vampiro", 'V', garras, 70, 70, 8};
+Mob const vampiro2 = {Vampiro, "Vampiro", 'V', cetro, 50, 50, 10};
+Mob const mutante1 = {Mutante, "Mutante", 'M', punhos, 30, 30, 2};
+Mob const mutante2 = {Mutante, "Mutante", 'M', punhos, 10, 10, 2};
+Mob const aranha1 = {Aranha, "Aranha", 'A', acido, 30, 30, 10};
+Mob const aranha2 = {Aranha, "Aranha", 'A', acido, 40, 40, 8};
+Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
+
+int const mobsNoMapaLength = 10;
+int const catalogoMobsLength = 10;
+Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
+
 
 State criarEstado(int colunas, int linhas)
 {
 	State state;
-	int **matrix;
+	ElementosDoMapa **matrix;
 
 	// Allocate memory for the matrix
-	matrix = (int **)malloc(colunas * sizeof(int *));
+	matrix = (ElementosDoMapa **)malloc(colunas * sizeof(ElementosDoMapa *));
 	for (int i = 0; i < colunas; i++)
 	{
-		matrix[i] = (int *)malloc(linhas * sizeof(int));
+		matrix[i] = (ElementosDoMapa *)malloc(linhas * sizeof(ElementosDoMapa));
 	}
 
 	// Fill the matrix with values
@@ -45,18 +49,25 @@ State criarEstado(int colunas, int linhas)
 
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = "Joao";
-	state.jogoAtual.jogador.posicao.x = 3;
-	state.jogoAtual.jogador.posicao.y = 3;
+	state.jogoAtual.jogador.vidaMaxima = 100;
+	state.jogoAtual.jogador.posicao.x = 1;
+	state.jogoAtual.jogador.posicao.y = 1;
 	state.jogoAtual.jogador.numMapaAtual = 1;
-	state.jogoAtual.jogador.mensagem = NULL;
 	state.jogoAtual.jogador.inventario = NULL;
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
 
-	state.mapa.width = colunas;
-	state.mapa.height = linhas;
+	state.jogoAtual.mobs = malloc(mobsNoMapaLength * sizeof(MobNoMapa));
+	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));
+	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
+	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
+
+	state.mapa.terminal.width = colunas;
+	state.mapa.terminal.height = linhas;
+	state.mapa.width = colunas - 40;
+	state.mapa.height = linhas - 10;
 	state.mapa.matrix = matrix;
 
 	return state;
