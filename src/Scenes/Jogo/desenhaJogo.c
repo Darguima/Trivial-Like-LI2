@@ -92,6 +92,48 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira menu esquerdo
 	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
 	box(l_win, 0, 0);
+	
+
+	// num mapa atual
+	mvwprintw(l_win,1, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
+
+	// vida
+	mvwprintw(l_win, 3, 1, "VIDA: %d", state->jogoAtual.jogador.vida);
+	if (state->jogoAtual.jogador.vida > 96)
+	{
+		mvwprintw(l_win, 4, 1, "%s", "#################");
+	}
+	else if (state->jogoAtual.jogador.vida != 0)
+	{
+		for (int i = 0; i < (state->jogoAtual.jogador.vida / 6) + 1; i++)
+		{
+			mvwprintw(l_win,4, 1 + i, "%s", "#");
+		}
+	}
+
+	// arma principal
+	attron(A_BOLD);
+	mvwprintw(l_win,7, 1, "%s", "PRINCIPAL ");
+	attroff(A_BOLD);
+	mvwprintw(l_win,7, 12, "[Z]:");
+	mvwprintw(l_win,8, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
+	mvwprintw(l_win,9, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
+	mvwprintw(l_win,10, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
+
+	// arma secundaria
+	attron(A_BOLD);
+	mvwprintw(l_win,12, 1, "%s", "SECUNDARIA ");
+	attroff(A_BOLD);
+	mvwprintw(l_win,12, 12, "[X]:");
+	mvwprintw(l_win,13, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
+	mvwprintw(l_win,14, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
+	mvwprintw(l_win,15, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
+
+	// dinheiro
+	attron(A_BOLD);
+	mvwprintw(l_win,17, 1, "%s", "MOEDAS:");
+	attroff(A_BOLD);
+	mvwprintw(l_win,17, 9, "%d", state->jogoAtual.jogador.dinheiro);
 	wrefresh(l_win);
 
 	// fronteira menu direito
@@ -102,6 +144,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira esquerda menu de baixo
 	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, 0);
 	box(b_e_win, 0, 0);
+	// mensagem
+	mvwprintw(b_e_win,1, 1, "%s", state->jogoAtual.mensagem_descricao);
+	mvwprintw(b_e_win,3, 1, "%s", state->jogoAtual.mensagem_controlos);
 	wrefresh(b_e_win);
 
 	// fronteira direita menu de baixo
@@ -112,61 +157,6 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira centro menu de baixo
 	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
-	wrefresh(b_c_win);
-
-	// num mapa atual
-	mvprintw(6, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
-
-	// vida
-	mvprintw(8, 1, "%s", "VIDA:");
-	mvprintw(8, 6, "%d", state->jogoAtual.jogador.vida);
-	if (state->jogoAtual.jogador.vida > 96)
-	{
-		mvprintw(9, 1, "%s", "#################");
-	}
-	else if (state->jogoAtual.jogador.vida != 0)
-	{
-		for (int i = 0; i < (state->jogoAtual.jogador.vida / 6) + 1; i++)
-		{
-			mvprintw(9, 1 + i, "%s", "#");
-		}
-	}
-
-	// desenha TriviaLike
-	mvprintw(0, state->mapa.terminal.width / 2 - 20, "     _____     _       _       _ _ _            ");
-	mvprintw(1, state->mapa.terminal.width / 2 - 20, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
-	mvprintw(2, state->mapa.terminal.width / 2 - 20, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
-	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
-	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
-
-	// arma principal
-	attron(A_BOLD);
-	mvprintw(12, 1, "%s", "PRINCIPAL ");
-	attroff(A_BOLD);
-	mvprintw(12, 12, "[Z]:");
-	mvprintw(13, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
-	mvprintw(14, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
-	mvprintw(15, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
-
-	// arma secundaria
-	attron(A_BOLD);
-	mvprintw(17, 1, "%s", "SECUNDARIA ");
-	attroff(A_BOLD);
-	mvprintw(17, 12, "[X]:");
-	mvprintw(18, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
-	mvprintw(19, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
-	mvprintw(20, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
-
-	// dinheiro
-	attron(A_BOLD);
-	mvprintw(22, 1, "%s", "MOEDAS:");
-	attroff(A_BOLD);
-	mvprintw(22, 9, "%d", state->jogoAtual.jogador.dinheiro);
-
-	// mensagem
-	mvprintw(state->mapa.terminal.height - 4, 1, "%s", state->jogoAtual.mensagem_descricao);
-	mvprintw(state->mapa.terminal.height - 2, 1, "%s", state->jogoAtual.mensagem_controlos);
-
 	MobNoMapa *mobSobreposto;
 	if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
 	{
@@ -175,14 +165,25 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 		char moblen = (strlen(mobSobreposto->mob.nome))/2;
 
 		// desenha a vida do mob
-		mvprintw(state->mapa.terminal.height - 4, (state->mapa.terminal.width / 2 - 2) - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
+		mvwprintw(b_c_win, 1 , 14 - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 
 		for (int i = 0; i < 15; i++)
 		{
 			if ((float)i / 18 < vidaP)
 			{
-				mvprintw(state->mapa.terminal.height - 2, (state->mapa.terminal.width / 2 - 7) + i, "#");
+				mvwprintw(b_c_win,3 , 9 + i, "#");
 			}
 		}
 	}
+	wrefresh(b_c_win);
+
+	
+
+	// desenha TriviaLike
+	mvprintw(0, state->mapa.terminal.width / 2 - 20, "     _____     _       _       _ _ _            ");
+	mvprintw(1, state->mapa.terminal.width / 2 - 20, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
+	mvprintw(2, state->mapa.terminal.width / 2 - 20, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
+	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
+	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
+
 }
