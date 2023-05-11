@@ -4,16 +4,6 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
-void limparMenuLateral(State *state)
-{
-	// limpa o menu lateral antes de desenhar novamente
-	move(state->mapa.terminal.height - 4, 0);
-	clrtoeol();
-	move(state->mapa.terminal.height - 3, 0);
-	clrtoeol();
-	move(state->mapa.terminal.height - 2, 0);
-	clrtoeol();
-}
 
 void mover_jogador(State *state, int dx, int dy)
 {
@@ -44,7 +34,6 @@ void eventosJogo(State *state)
 {
 	int key = getch();
 
-	limparMenuLateral(state);
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;

@@ -63,7 +63,7 @@ void desenhaMobs(WINDOW *window, State *state)
 			continue;
 
 		wattron(window, COLOR_PAIR(BlackRed));
-		mvwaddch(window, mobAtual.posicao.y, mobAtual.posicao.x, 'M');
+		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII );
 		wattroff(window, COLOR_PAIR(BlackRed));
 	}
 }
@@ -97,6 +97,21 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	WINDOW *r_win = newwin(state->mapa.height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
 	wrefresh(r_win);
+
+	// fronteira esquerda menu de baixo
+	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, 0);
+	box(b_e_win, 0, 0);
+	wrefresh(b_e_win);
+
+	// fronteira direita menu de baixo
+	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, state->mapa.terminal.width / 2 + 17);
+	box(b_d_win, 0, 0);
+	wrefresh(b_d_win);
+
+	// fronteira centro menu de baixo
+	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
+	box(b_c_win, 0, 0);
+	wrefresh(b_c_win);
 
 	// num mapa atual
 	mvprintw(6, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
@@ -154,17 +169,17 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	MobNoMapa *mobSobreposto;
 	if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
 	{
-		float vidaP = (float) mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
+		float vidaP = (float)mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
 
 		// desenha a vida do mob
-		mvprintw(state->mapa.terminal.height - 4, state->mapa.terminal.width / 2 - 3, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
+		mvprintw(state->mapa.terminal.height - 4, state->mapa.terminal.width / 2 - 5, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 
 		for (int i = 0; i < 15; i++)
 		{
-			if ((float)i/18 < vidaP)
+			if ((float)i / 18 < vidaP)
 			{
-				mvprintw(state->mapa.terminal.height - 2, (state->mapa.terminal.width / 2 -3 ) + i, "#");
-			}			
+				mvprintw(state->mapa.terminal.height - 2, (state->mapa.terminal.width / 2 - 7) + i, "#");
+			}
 		}
 	}
 }

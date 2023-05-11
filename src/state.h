@@ -71,6 +71,7 @@ typedef struct mob
 {						  // podem haver mais que um mob com armas diferentes
 	CatalogoMobs tipomob; // recebe qual o tipo do mob
 	char *nome;			  // nome do mob
+	char charASCII;		  // char pelo qual se refere ao mob
 	Arma arma;			  // o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
 	int vida;			  // vida do mob instantanea
 	int vidaMaxima;		  // máxima vida do mob
