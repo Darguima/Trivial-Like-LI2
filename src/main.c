@@ -84,7 +84,7 @@ int main()
 		case Jogo:
 			wrefresh(window);
 			desenhaMenusLaterais(window, &state);
-			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10, state.mapa.matrix);
+			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10);
 			eventosJogo(&state);
 			break;
 

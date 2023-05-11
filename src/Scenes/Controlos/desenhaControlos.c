@@ -1,7 +1,5 @@
 #include <ncurses.h>
-
 #include "../../state.h"
-
 #include "desenhaControlos.h"
 /*
  * Enquanto os dois parametros da funcao não forem usados

@@ -1,8 +1,15 @@
 #include <ncurses.h>
-
+#include <unistd.h>
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
+
+void limparMsgMenuInferior (State *state) {
+	move(state->mapa.terminal.height - 4, 20);
+	clrtoeol();
+	move(state->mapa.terminal.height - 2, 20);
+	clrtoeol();
+}
 
 void mover_jogador(State *state, int dx, int dy)
 {
@@ -14,11 +21,8 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-	// limpa o menu lateral antes de desenhar novamente
-	move(state->mapa.terminal.height - 4, 20);
-	clrtoeol();
-	move(state->mapa.terminal.height - 2, 20);
-	clrtoeol();
+
+	limparMsgMenuInferior(state);
 	atualizarAposMovimento(state);
 }
 
@@ -35,6 +39,8 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
+	
+
 	int key = getch();
 
 	ArmaNoMapa *armaSobreposta;
@@ -67,7 +73,7 @@ void eventosJogo(State *state)
 		break;
 
 	case 'x':
-	
+
 		// Pegar arma secundária
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
 		{
@@ -75,7 +81,7 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-		
+
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -83,13 +89,12 @@ void eventosJogo(State *state)
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-			
+
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
-		
 
 		break;
-
+	
 	/* Setas */
 	case KEY_A1:
 	case '7':
