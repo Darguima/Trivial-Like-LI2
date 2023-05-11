@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../../state.h"
 #include "./atualizarAposMovimento.h"
@@ -171,8 +172,10 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		float vidaP = (float)mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
 
+		char moblen = (strlen(mobSobreposto->mob.nome))/2;
+
 		// desenha a vida do mob
-		mvprintw(state->mapa.terminal.height - 4, state->mapa.terminal.width / 2 - 5, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
+		mvprintw(state->mapa.terminal.height - 4, (state->mapa.terminal.width / 2 - 2) - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 
 		for (int i = 0; i < 15; i++)
 		{
