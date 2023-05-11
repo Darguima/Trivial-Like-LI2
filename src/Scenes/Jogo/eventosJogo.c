@@ -2,7 +2,6 @@
 #include <json-c/json.h>
 #include "../../state.h"
 
-
 void mover_jogador(State *state, int dx, int dy)
 {
 	state->jogoAtual.jogador.posicao.x += dx;
@@ -21,7 +20,6 @@ void save_game_state(const char *filename, int vida, const char *username, int n
 	json_object_object_add(game_state, "dinheiro", json_object_new_int(dinheiro));
 	json_object_object_add(game_state, "armaPrincipal", json_object_new_int(armaPrincipal));
 	json_object_object_add(game_state, "armaSecundaria", json_object_new_int(armaSecundaria));
-	
 
 	// Converter objeto JSON para string
 	const char *json_str = json_object_to_json_string_ext(game_state, JSON_C_TO_STRING_PRETTY);
@@ -44,32 +42,16 @@ void save_game_state(const char *filename, int vida, const char *username, int n
 
 void eventosJogo(State *state)
 {
+	char file[10]; 
 	int key = getch();
 
 	switch (key)
 	{
 	case 's':
-		if (state->jogoAtual.jogador.numSave == 1)
-		{
-			save_game_state("1.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
-		}
-		if (state->jogoAtual.jogador.numSave == 2)
-		{
-			save_game_state("2.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
-		}
-		if (state->jogoAtual.jogador.numSave == 3)
-		{
-			save_game_state("3.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
-		}
-		break;
-	case 'a':
-		state->jogoAtual.jogador.armaPrincipal=punhos;
-		break;
-	case 'b':
-		state->jogoAtual.jogador.armaPrincipal=arco;
-		break;
-	case 'c':
-		state->jogoAtual.jogador.armaPrincipal=garras;
+		
+		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
+		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+
 		break;
 	case KEY_A1:
 	case '7':

@@ -53,9 +53,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   }
   else
   {
-    if (fread(buffer, 1024, 1, fp))
-    {
-    }
+    if (fread(buffer, 1024, 1, fp)){}
     fclose(fp);
     parsed_json = json_tokener_parse(buffer);
     json_object_object_get_ex(parsed_json, "username", &username);
