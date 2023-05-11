@@ -72,8 +72,9 @@ typedef struct mob
 	CatalogoMobs tipomob; // recebe qual o tipo do mob
 	char *nome;			  // nome do mob
 	Arma arma;			  // o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
-	int vida;
-	int raioVisao; // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
+	int vida;			  // vida do mob instantanea
+	int vidaMaxima;		  // máxima vida do mob
+	int raioVisao;		  // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
 } Mob;
 
 typedef struct mobNoMapa
@@ -109,8 +110,6 @@ typedef struct jogoAtual
 	ArmaNoMapa *armas;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
-	char *mensagem_nomeMob;	  /* Nome do mob a ser mostrado */
-	int mensagem_vidaMob;	  /* Vida do mob que se está a combater */
 } JogoAtual;
 
 typedef enum elementosDoMapa

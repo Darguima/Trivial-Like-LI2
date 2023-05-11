@@ -90,10 +90,6 @@ void atualizarMobs(State *state)
     state->jogoAtual.mensagem_descricao = "Em combate!";
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";
 
-    // Atualiza a informação dos mobs
-    state->jogoAtual.mensagem_nomeMob = mobSobreposto->mob.nome;
-    state->jogoAtual.mensagem_vidaMob = mobSobreposto->mob.vida; // copia a string para a variável de destino
-
   }
 }
 
@@ -104,9 +100,6 @@ void atualizarAposMovimento(State *state)
 
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
-  state->jogoAtual.mensagem_nomeMob = "";
-  move(state->mapa.terminal.height - 2, state->mapa.terminal.width/2 - 3);
-	clrtoeol();
 
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);

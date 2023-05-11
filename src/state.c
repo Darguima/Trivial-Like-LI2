@@ -13,16 +13,16 @@ int const armasNoMapaLength = 2;
 int const catalogoArmasLength = 7;
 Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
-Mob const esqueleto1 = {Esqueleto, "Esqueleto", espadaOxidada, 40, 3};
-Mob const esqueleto2 = {Esqueleto, "Esqueleto", punhos, 40, 3};
-Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, "Soldado Esqueleto" ,espadaLonga, 60, 4};
-Mob const vampiro1 = {Vampiro, "Vampiro", garras, 70, 8};
-Mob const vampiro2 = {Vampiro, "Vampiro", cetro, 50, 10};
-Mob const mutante1 = {Mutante, "Mutante", punhos, 30, 2};
-Mob const mutante2 = {Mutante, "Mutante", punhos, 10, 2};
-Mob const aranha1 = {Aranha, "Aranha", acido, 30, 10};
-Mob const aranha2 = {Aranha, "Aranha", acido, 40, 8};
-Mob const zombie1 = {Zombie, "Zombie", garras, 70, 2};
+Mob const esqueleto1 = {Esqueleto, "Esqueleto", espadaOxidada, 40,40, 3};
+Mob const esqueleto2 = {Esqueleto, "Esqueleto", punhos, 40,40, 3};
+Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, "Soldado Esqueleto" ,espadaLonga, 60,60, 4};
+Mob const vampiro1 = {Vampiro, "Vampiro", garras, 70,70, 8};
+Mob const vampiro2 = {Vampiro, "Vampiro", cetro, 50,50, 10};
+Mob const mutante1 = {Mutante, "Mutante", punhos, 30,30, 2};
+Mob const mutante2 = {Mutante, "Mutante", punhos, 10,10, 2};
+Mob const aranha1 = {Aranha, "Aranha", acido, 30,30, 10};
+Mob const aranha2 = {Aranha, "Aranha", acido, 40,40, 8};
+Mob const zombie1 = {Zombie, "Zombie", garras, 70,70, 2};
 
 int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;
@@ -63,8 +63,6 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
-	state.jogoAtual.mensagem_nomeMob = "";
-	state.jogoAtual.mensagem_vidaMob = 0;
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

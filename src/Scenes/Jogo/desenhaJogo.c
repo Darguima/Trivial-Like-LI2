@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "../../state.h"
-
+#include "./atualizarAposMovimento.h"
 /*
  * Enquanto os dois parametros da funcao não forem usados
  * esta macro é importante para prevenir o warning:
@@ -116,12 +116,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 		}
 	}
 
-	//desenha TriviaLike
-	mvprintw(0 , state->mapa.terminal.width/2 -20, "     _____     _       _       _ _ _            ");
-    mvprintw(1 , state->mapa.terminal.width/2 -20,"    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
-    mvprintw(2 , state->mapa.terminal.width/2 -20,"      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
-    mvprintw(3 , state->mapa.terminal.width/2 -20,"      | || |  | |\\ V /| | (_| | | |   <  __/   ");
-    mvprintw(4 , state->mapa.terminal.width/2 -20,"      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
+	// desenha TriviaLike
+	mvprintw(0, state->mapa.terminal.width / 2 - 20, "     _____     _       _       _ _ _            ");
+	mvprintw(1, state->mapa.terminal.width / 2 - 20, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
+	mvprintw(2, state->mapa.terminal.width / 2 - 20, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
+	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
+	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
 
 	// arma principal
 	attron(A_BOLD);
@@ -151,8 +151,20 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(state->mapa.terminal.height - 4, 1, "%s", state->jogoAtual.mensagem_descricao);
 	mvprintw(state->mapa.terminal.height - 2, 1, "%s", state->jogoAtual.mensagem_controlos);
 
-	//desenha a vida do mob
-	mvprintw(state->mapa.terminal.height-4, state->mapa.terminal.width/2 - 3, "%s", state->jogoAtual.mensagem_nomeMob);
-	mvprintw(state->mapa.terminal.height-2, state->mapa.terminal.width/2 - 3, "%d", state->jogoAtual.mensagem_vidaMob);
+	MobNoMapa *mobSobreposto;
+	if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
+	{
+		float vidaP = (float) mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
 
+		// desenha a vida do mob
+		mvprintw(state->mapa.terminal.height - 4, state->mapa.terminal.width / 2 - 3, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
+
+		for (int i = 0; i < 15; i++)
+		{
+			if ((float)i/18 < vidaP)
+			{
+				mvprintw(state->mapa.terminal.height - 2, (state->mapa.terminal.width / 2 -3 ) + i, "#");
+			}			
+		}
+	}
 }
