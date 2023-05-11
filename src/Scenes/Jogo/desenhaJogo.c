@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <string.h>
 #include "./visao.h"
 #include "../../state.h"
 #include "./atualizarAposMovimento.h"
