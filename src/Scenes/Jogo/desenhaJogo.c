@@ -64,7 +64,7 @@ void desenhaMobs(WINDOW *window, State *state)
 			continue;
 
 		wattron(window, COLOR_PAIR(BlackRed));
-		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII );
+		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII);
 		wattroff(window, COLOR_PAIR(BlackRed));
 	}
 }
@@ -92,10 +92,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira menu esquerdo
 	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
 	box(l_win, 0, 0);
-	
 
 	// num mapa atual
-	mvwprintw(l_win,1, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
+	mvwprintw(l_win, 1, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
 
 	// vida
 	mvwprintw(l_win, 3, 1, "VIDA: %d", state->jogoAtual.jogador.vida);
@@ -107,33 +106,33 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		for (int i = 0; i < (state->jogoAtual.jogador.vida / 6) + 1; i++)
 		{
-			mvwprintw(l_win,4, 1 + i, "%s", "#");
+			mvwprintw(l_win, 4, 1 + i, "%s", "#");
 		}
 	}
 
 	// arma principal
 	attron(A_BOLD);
-	mvwprintw(l_win,7, 1, "%s", "PRINCIPAL ");
+	mvwprintw(l_win, 7, 1, "%s", "PRINCIPAL ");
 	attroff(A_BOLD);
-	mvwprintw(l_win,7, 12, "[Z]:");
-	mvwprintw(l_win,8, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
-	mvwprintw(l_win,9, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
-	mvwprintw(l_win,10, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
+	mvwprintw(l_win, 7, 12, "[Z]:");
+	mvwprintw(l_win, 8, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
+	mvwprintw(l_win, 9, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
+	mvwprintw(l_win, 10, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
 
 	// arma secundaria
 	attron(A_BOLD);
-	mvwprintw(l_win,12, 1, "%s", "SECUNDARIA ");
+	mvwprintw(l_win, 12, 1, "%s", "SECUNDARIA ");
 	attroff(A_BOLD);
-	mvwprintw(l_win,12, 12, "[X]:");
-	mvwprintw(l_win,13, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
-	mvwprintw(l_win,14, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
-	mvwprintw(l_win,15, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
+	mvwprintw(l_win, 12, 12, "[X]:");
+	mvwprintw(l_win, 13, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
+	mvwprintw(l_win, 14, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
+	mvwprintw(l_win, 15, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
 
 	// dinheiro
 	attron(A_BOLD);
-	mvwprintw(l_win,17, 1, "%s", "MOEDAS:");
+	mvwprintw(l_win, 17, 1, "%s", "MOEDAS:");
 	attroff(A_BOLD);
-	mvwprintw(l_win,17, 9, "%d", state->jogoAtual.jogador.dinheiro);
+	mvwprintw(l_win, 17, 9, "%d", state->jogoAtual.jogador.dinheiro);
 	wrefresh(l_win);
 
 	// fronteira menu direito
@@ -145,8 +144,8 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, 0);
 	box(b_e_win, 0, 0);
 	// mensagem
-	mvwprintw(b_e_win,1, 1, "%s", state->jogoAtual.mensagem_descricao);
-	mvwprintw(b_e_win,3, 1, "%s", state->jogoAtual.mensagem_controlos);
+	mvwprintw(b_e_win, 1, 1, "%s", state->jogoAtual.mensagem_descricao);
+	mvwprintw(b_e_win, 3, 1, "%s", state->jogoAtual.mensagem_controlos);
 	wrefresh(b_e_win);
 
 	// fronteira direita menu de baixo
@@ -162,22 +161,20 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		float vidaP = (float)mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
 
-		char moblen = (strlen(mobSobreposto->mob.nome))/2;
+		char moblen = (strlen(mobSobreposto->mob.nome)) / 2;
 
 		// desenha a vida do mob
-		mvwprintw(b_c_win, 1 , 14 - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
+		mvwprintw(b_c_win, 1, 14 - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 
 		for (int i = 0; i < 15; i++)
 		{
 			if ((float)i / 18 < vidaP)
 			{
-				mvwprintw(b_c_win,3 , 9 + i, "#");
+				mvwprintw(b_c_win, 3, 9 + i, "#");
 			}
 		}
 	}
 	wrefresh(b_c_win);
-
-	
 
 	// desenha TriviaLike
 	mvprintw(0, state->mapa.terminal.width / 2 - 20, "     _____     _       _       _ _ _            ");
@@ -185,5 +182,4 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(2, state->mapa.terminal.width / 2 - 20, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
 	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
 	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
-
 }

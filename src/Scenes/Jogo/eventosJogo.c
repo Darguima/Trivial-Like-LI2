@@ -4,7 +4,6 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
-
 void mover_jogador(State *state, int dx, int dy)
 {
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
@@ -15,7 +14,7 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-	
+
 	atualizarAposMovimento(state);
 }
 
@@ -33,7 +32,6 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
-
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
@@ -65,7 +63,7 @@ void eventosJogo(State *state)
 		break;
 
 	case 'x':
-	
+
 		// Pegar arma secundária
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
 		{
@@ -73,7 +71,7 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-		
+
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -81,10 +79,9 @@ void eventosJogo(State *state)
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-			
+
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
-		
 
 		break;
 

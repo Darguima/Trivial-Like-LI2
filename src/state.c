@@ -13,16 +13,16 @@ int const armasNoMapaLength = 2;
 int const catalogoArmasLength = 7;
 Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
-Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E',espadaOxidada, 40,40, 3};
-Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E',punhos, 40,40, 3};
-Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, "Soldado Esqueleto",'S',espadaLonga, 60,60, 4};
-Mob const vampiro1 = {Vampiro, "Vampiro",'V' ,garras, 70,70, 8};
-Mob const vampiro2 = {Vampiro, "Vampiro",'V' ,cetro, 50,50, 10};
-Mob const mutante1 = {Mutante, "Mutante", 'M',punhos, 30,30, 2};
-Mob const mutante2 = {Mutante, "Mutante", 'M',punhos, 10,10, 2};
-Mob const aranha1 = {Aranha, "Aranha",'A', acido, 30,30, 10};
-Mob const aranha2 = {Aranha, "Aranha",'A' ,acido, 40,40, 8};
-Mob const zombie1 = {Zombie, "Zombie",'Z' ,garras, 70,70, 2};
+Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E', espadaOxidada, 40, 40, 3};
+Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E', punhos, 40, 40, 3};
+Mob const soldadoEsqueleto1 = {SoldadoEsqueleto, "Soldado Esqueleto", 'S', espadaLonga, 60, 60, 4};
+Mob const vampiro1 = {Vampiro, "Vampiro", 'V', garras, 70, 70, 8};
+Mob const vampiro2 = {Vampiro, "Vampiro", 'V', cetro, 50, 50, 10};
+Mob const mutante1 = {Mutante, "Mutante", 'M', punhos, 30, 30, 2};
+Mob const mutante2 = {Mutante, "Mutante", 'M', punhos, 10, 10, 2};
+Mob const aranha1 = {Aranha, "Aranha", 'A', acido, 30, 30, 10};
+Mob const aranha2 = {Aranha, "Aranha", 'A', acido, 40, 40, 8};
+Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 
 int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;

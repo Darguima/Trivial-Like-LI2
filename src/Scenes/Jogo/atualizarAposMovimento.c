@@ -42,8 +42,6 @@ void atualizarArmas(State *state)
   }
 }
 
-
-
 int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto)
 {
   int pos_x = state->jogoAtual.jogador.posicao.x;
@@ -89,7 +87,6 @@ void atualizarMobs(State *state)
   {
     state->jogoAtual.mensagem_descricao = "Em combate!";
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";
-
   }
 }
 
