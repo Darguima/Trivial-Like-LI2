@@ -44,86 +44,32 @@ void save_game_state(const char *filename, int vida, const char *username, int n
 
 void eventosJogo(State *state)
 {
-	int a1,a2;
-	//assinalar armas para saber quais guardar
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == Punhos)
-	{
-		a1=1;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == Garras)
-	{
-		a1=2;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == EspadaOxidada)
-	{
-		a1=3;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == EspadaLonga)
-	{
-		a1=4;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == Arco)
-	{
-		a1=5;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == Acido)
-	{
-		a1=6;
-	}
-	if (state->jogoAtual.jogador.armaPrincipal.tipoArma == Cetro)
-	{
-		a1=7;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == Punhos)
-	{
-		a2=1;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == Garras)
-	{
-		a2=2;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == EspadaOxidada)
-	{
-		a2=3;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == EspadaLonga)
-	{
-		a2=4;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == Arco)
-	{
-		a2=5;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == Acido)
-	{
-		a2=6;
-	}
-	if (state->jogoAtual.jogador.armaSecundaria.tipoArma == Cetro)
-	{
-		a2=7;
-	}
-
-	
 	int key = getch();
 
 	switch (key)
 	{
 	case 's':
-		if (state->jogoAtual.jogador.n == 1)
+		if (state->jogoAtual.jogador.numSave == 1)
 		{
-			save_game_state("1.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, a1,a2);
+			save_game_state("1.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
 		}
-		if (state->jogoAtual.jogador.n == 2)
+		if (state->jogoAtual.jogador.numSave == 2)
 		{
-			save_game_state("2.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,a1,a2);
+			save_game_state("2.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
 		}
-		if (state->jogoAtual.jogador.n == 3)
+		if (state->jogoAtual.jogador.numSave == 3)
 		{
-			save_game_state("3.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,a1,a2);
+			save_game_state("3.json", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro,state->jogoAtual.jogador.armaPrincipal.index,state->jogoAtual.jogador.armaSecundaria.index);
 		}
 		break;
-	case 'i':
+	case 'a':
 		state->jogoAtual.jogador.armaPrincipal=punhos;
+		break;
+	case 'b':
+		state->jogoAtual.jogador.armaPrincipal=arco;
+		break;
+	case 'c':
+		state->jogoAtual.jogador.armaPrincipal=garras;
 		break;
 	case KEY_A1:
 	case '7':

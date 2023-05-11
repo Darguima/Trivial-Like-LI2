@@ -2,13 +2,13 @@
 #include "state.h"
 
 
-const Arma punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-const Arma garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-const Arma espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
-const Arma espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-const Arma arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-const Arma acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
-const Arma cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+const Arma punhos = {Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos ",0};
+const Arma garras = {Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh...",1};
+const Arma espadaOxidada = {EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate.",2};
+const Arma espadaLonga = {EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador.",3};
+const Arma arco = {Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão.",4};
+const Arma acido = {Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca.",5};
+const Arma cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis.",6};
 
 const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 const Mob esqueleto1 = {Esqueleto, espadaOxidada, 50, 3};
@@ -54,7 +54,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
-	state.jogoAtual.jogador.n=0;
+	state.jogoAtual.jogador.numSave=0;
 
 	state.mapa.width = colunas;
 	state.mapa.height = linhas;

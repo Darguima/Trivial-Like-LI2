@@ -41,7 +41,8 @@ typedef struct arma
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
 	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 1
-	char *mensagem;	   // texto que descreve a arma
+	char *mensagem;	 
+	int index;  // texto que descreve a arma
 } Arma;
 
 typedef enum catalogoMobs
@@ -76,7 +77,7 @@ typedef struct statusJogador
 	int vida; // valor entre 0 e 100
 	Arma armaPrincipal;
 	Arma armaSecundaria;
-	int n;
+	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
 	char *mensagem;	  /* Mensagem para mostrar um texto relevante. ex. qual tecla usar para interagir, algum informação do mapa */
