@@ -1,5 +1,9 @@
 #include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <json-c/json.h>
+
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 
@@ -10,10 +14,6 @@
  * Quando forem as duas usadas pode ser removida
  */
 #define UNUSED(x) (void)(x)
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 void desenhaSelecionarJogador(WINDOW *window, State *state)
 {

@@ -2,7 +2,6 @@
 #include <ncurses.h>
 #include <time.h>
 #include "state.h"
-#include <json-c/json.h>
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"
@@ -73,7 +72,7 @@ int main()
 		case SelecionarJogador:
 			desenhaSelecionarJogador(window, &state);
 			eventosSelecionarJogador(&state);
-			
+
 			break;
 
 		case Jogo:

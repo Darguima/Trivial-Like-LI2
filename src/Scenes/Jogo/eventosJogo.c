@@ -1,5 +1,4 @@
 #include <ncurses.h>
-#include <json-c/json.h>
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
 

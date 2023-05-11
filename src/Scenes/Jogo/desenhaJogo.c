@@ -1,7 +1,6 @@
 #include <ncurses.h>
 #include <time.h>
 #include <stdlib.h>
-#include <json-c/json.h>
 
 #include "../../state.h"
 
@@ -13,9 +12,8 @@
  */
 #define UNUSED(x) (void)(x)
 
-
-
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa) {
+void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, int **mapa)
+{
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
@@ -48,7 +46,6 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y, int **mapa)
 
 void desenhaMenusLaterais(WINDOW *window, State *state)
 {
-
 
 	// fronteira menu esquerdo
 	WINDOW *l_win = newwin(state->mapa.height - 10, 20, 5, 0);
