@@ -105,7 +105,7 @@ void atualizarAposMovimento(State *state)
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
   state->jogoAtual.mensagem_nomeMob = "";
-  move(state->mapa.terminal.height - 2, 30);
+  move(state->mapa.terminal.height - 2, state->mapa.terminal.width/2 - 3);
 	clrtoeol();
 
   atualizarMoedas(state, pos_x, pos_y);

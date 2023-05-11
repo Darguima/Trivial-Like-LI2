@@ -152,7 +152,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(state->mapa.terminal.height - 2, 1, "%s", state->jogoAtual.mensagem_controlos);
 
 	//desenha a vida do mob
-	mvprintw(state->mapa.terminal.height-3, state->mapa.terminal.width/2 - 3, "%s", state->jogoAtual.mensagem_nomeMob);
+	mvprintw(state->mapa.terminal.height-4, state->mapa.terminal.width/2 - 3, "%s", state->jogoAtual.mensagem_nomeMob);
 	mvprintw(state->mapa.terminal.height-2, state->mapa.terminal.width/2 - 3, "%d", state->jogoAtual.mensagem_vidaMob);
 
 }
