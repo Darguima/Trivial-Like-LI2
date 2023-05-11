@@ -4,6 +4,16 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
+void limpar_menu_inferior (State *state) {
+	// limpa o menu lateral antes de desenhar novamente
+	move(state->mapa.terminal.height - 4, 0);
+	clrtoeol();
+	move(state->mapa.terminal.height - 3, 0);
+	clrtoeol();
+	move(state->mapa.terminal.height - 2, 0);
+	clrtoeol();
+}
+
 void mover_jogador(State *state, int dx, int dy)
 {
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
@@ -14,13 +24,7 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-	// limpa o menu lateral antes de desenhar novamente
-	move(state->mapa.terminal.height - 4, 0);
-	clrtoeol();
-	move(state->mapa.terminal.height - 3, 0);
-	clrtoeol();
-	move(state->mapa.terminal.height - 2, 0);
-	clrtoeol();
+
 	atualizarAposMovimento(state);
 }
 
@@ -38,6 +42,8 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
+
+	limpar_menu_inferior(state);
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;

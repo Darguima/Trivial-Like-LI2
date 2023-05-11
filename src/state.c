@@ -63,8 +63,6 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
-	state.jogoAtual.mensagem_nomeMob = "";
-	state.jogoAtual.mensagem_vidaMob = 0;
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

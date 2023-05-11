@@ -109,8 +109,6 @@ typedef struct jogoAtual
 	ArmaNoMapa *armas;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
-	char *mensagem_nomeMob;	  /* Nome do mob a ser mostrado */
-	int mensagem_vidaMob;	  /* Vida do mob que se está a combater */
 } JogoAtual;
 
 typedef enum elementosDoMapa
