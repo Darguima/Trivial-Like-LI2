@@ -42,6 +42,8 @@ void atualizarArmas(State *state)
   }
 }
 
+
+
 int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto)
 {
   int pos_x = state->jogoAtual.jogador.posicao.x;
@@ -87,6 +89,11 @@ void atualizarMobs(State *state)
   {
     state->jogoAtual.mensagem_descricao = "Em combate!";
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";
+
+    // Atualiza a informação dos mobs
+    state->jogoAtual.mensagem_nomeMob = mobSobreposto->mob.nome;
+    state->jogoAtual.mensagem_vidaMob = mobSobreposto->mob.vida; //! aqui ocorre o erro de conversão
+
   }
 }
 
@@ -97,6 +104,8 @@ void atualizarAposMovimento(State *state)
 
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
+  state->jogoAtual.mensagem_nomeMob = "";
+  state->jogoAtual.mensagem_vidaMob = "";
 
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
