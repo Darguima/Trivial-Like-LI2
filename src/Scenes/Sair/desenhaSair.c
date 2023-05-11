@@ -25,6 +25,6 @@ void desenhaSair(WINDOW *window, State *state)
   mvaddstr(y, x - 4, "Deseja mesmo sair?");
   mvaddstr(y + 2, x - 12, "O jogo ainda tem tanto para dar...");
 
-  mvaddstr(nrows - 4, 2, "Pressione 's' para sair");
-  mvaddstr(nrows - 2, 2, "Pressione 'q' para voltar ao menu anterior");
+  mvaddstr(nrows - 4, 2, "Pressione [S] para sair");
+  mvaddstr(nrows - 2, 2, "Pressione [Q] para voltar ao menu anterior");
 }
