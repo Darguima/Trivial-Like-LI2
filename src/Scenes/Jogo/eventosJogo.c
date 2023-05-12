@@ -5,14 +5,6 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
-void limparMsgMenuInferior(State *state)
-{
-	move(state->mapa.terminal.height - 4, 20);
-	clrtoeol();
-	move(state->mapa.terminal.height - 2, 20);
-	clrtoeol();
-}
-
 void mover_jogador(State *state, int dx, int dy)
 {
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
@@ -24,7 +16,6 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
 
-	limparMsgMenuInferior(state);
 	atualizarAposMovimento(state);
 }
 
@@ -41,11 +32,11 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
+	int key = getch();
+	char file[10];
+
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
-
-	char file[10];
-	int key = getch();
 
 	switch (key)
 	{
@@ -56,14 +47,6 @@ void eventosJogo(State *state)
 		break;
 		/* Interação com mapa */
 	case 'z':
-		// Pegar arma principal
-		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
-		{
-			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
-			// Adicionar Arma ao inventário
-			armaSobreposta->disponivel = 0;
-		}
-
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -75,18 +58,17 @@ void eventosJogo(State *state)
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
-		break;
-
-	case 'x':
-
-		// Pegar arma secundária
-		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+		// Pegar arma principal
+		else if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
 		{
-			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
+			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
 
+		break;
+
+	case 'x':
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
 		{
@@ -98,10 +80,17 @@ void eventosJogo(State *state)
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
+		// Pegar arma secundária
+		else if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+		{
+			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
+			// Adicionar Arma ao inventário
+			armaSobreposta->disponivel = 0;
+		}
+
 		break;
 
-		/* Setas */
-
+	/* Setas */
 	case KEY_A1:
 	case '7':
 		mover_jogador(state, -1, -1);

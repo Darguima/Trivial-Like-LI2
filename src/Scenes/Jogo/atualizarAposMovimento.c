@@ -98,6 +98,11 @@ void atualizarAposMovimento(State *state)
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
+  /*
+	* A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
+	* Quanto mais para o fim estiver a função, maior prioridade têm as suas alterações, sobrescrevendo
+  * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos) 
+	*/
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
   atualizarMobs(state);
