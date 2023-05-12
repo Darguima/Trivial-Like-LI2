@@ -222,6 +222,8 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 
 		char moblen = (strlen(mobSobreposto->mob.nome)) / 2;
 
+		wbkgd(b_c_win, COLOR_PAIR(RedBlack));
+
 		// desenha a vida do mob
 		mvwprintw(b_c_win, 1, 14 - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 

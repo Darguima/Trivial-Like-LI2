@@ -48,6 +48,7 @@ typedef enum colorsSchema
 	GreenBlack,
 	BlackYellow,
 	BlackRed,
+	RedBlack,
 
 	MapaPlayerColor,
 
