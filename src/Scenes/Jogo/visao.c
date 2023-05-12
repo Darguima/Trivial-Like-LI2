@@ -1,6 +1,6 @@
 #include <math.h>
 #include "../../state.h"
-#include "../../GeraMapa/geraMapa.h"
+#include "../../MapaUtils/mapaUtils.h"
 
 #define PI 3.14159265358979323846
 
@@ -19,7 +19,7 @@ void visao(int largura, int altura, ElementosDoMapa **mapa, int posX, int posY)
       blocoX = (posX + (raio * cos(anguloRad)));
       blocoY = (posY - (raio * sin(anguloRad)));
 
-      if (!isOk(blocoX, blocoY, largura, altura))
+      if (!estaDentroDoMapa(blocoX, blocoY, largura, altura))
       {
         break;
       }
