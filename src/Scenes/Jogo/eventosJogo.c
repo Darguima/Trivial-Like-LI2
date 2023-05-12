@@ -1,10 +1,12 @@
 #include <ncurses.h>
-#include <unistd.h>
 #include "../../state.h"
+#include "../../SalvarJogo/salvarJogo.h"
+#include <unistd.h>
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
-void limparMsgMenuInferior (State *state) {
+void limparMsgMenuInferior(State *state)
+{
 	move(state->mapa.terminal.height - 4, 20);
 	clrtoeol();
 	move(state->mapa.terminal.height - 2, 20);
@@ -39,17 +41,20 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
-	
-
-	int key = getch();
-
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
 
+	char file[10];
+	int key = getch();
+
 	switch (key)
 	{
-		/* Interação com mapa */
+	case 's':
 
+		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
+		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+		break;
+		/* Interação com mapa */
 	case 'z':
 		// Pegar arma principal
 		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
@@ -94,8 +99,9 @@ void eventosJogo(State *state)
 		}
 
 		break;
-	
-	/* Setas */
+
+		/* Setas */
+
 	case KEY_A1:
 	case '7':
 		mover_jogador(state, -1, -1);
@@ -129,6 +135,7 @@ void eventosJogo(State *state)
 	case KEY_DOWN:
 	case '2':
 		mover_jogador(state, 0, +1);
+
 		break;
 
 	case KEY_C3:

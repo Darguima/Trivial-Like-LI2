@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include "state.h"
 
-Arma const punhos = {Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-Arma const garras = {Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-Arma const espadaOxidada = {EspadaOxidada, "Espada Oxidada", 20, 75, "Espada que pertenceu a um soldado caído em combate."};
-Arma const espadaLonga = {EspadaLonga, "Espada Longa", 25, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-Arma const arco = {Arco, "Arco", 40, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-Arma const acido = {Acido, "Acido", 20, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
-Arma const cetro = {Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+Arma const punhos = {0, Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
+Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
+Arma const espadaOxidada = {2, EspadaOxidada, "Espada Oxidada", 20, 75, "Espada que pertenceu a um soldado caído em combate."};
+Arma const espadaLonga = {3, EspadaLonga, "Espada Longa", 25, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
+Arma const arco = {4, Arco, "Arco", 40, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
+Arma const acido = {5, Acido, "Acido", 20, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+Arma const cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
 int const armasNoMapaLength = 2;
 int const catalogoArmasLength = 7;
@@ -49,8 +49,8 @@ State criarEstado(int colunas, int linhas)
 	state.controloMenu.help = 0;
 
 	state.jogoAtual.jogador.vida = 100;
+	state.jogoAtual.jogador.username = "Joao";
 	state.jogoAtual.jogador.vidaMaxima = 100;
-	state.jogoAtual.jogador.username = NULL;
 	state.jogoAtual.jogador.posicao.x = 1;
 	state.jogoAtual.jogador.posicao.y = 1;
 	state.jogoAtual.jogador.numMapaAtual = 1;
@@ -58,6 +58,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
+	state.jogoAtual.jogador.numSave = 0;
 
 	state.jogoAtual.mobs = malloc(mobsNoMapaLength * sizeof(MobNoMapa));
 	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));

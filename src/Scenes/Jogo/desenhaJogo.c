@@ -14,6 +14,7 @@
 void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
 {
 	int bloco_visivel, bloco_descoberto;
+
 	for (int x = 0; x < largura_mapa; x++)
 	{
 		for (int y = 0; y < altura_mapa; y++)
@@ -112,7 +113,6 @@ void desenhaMobs(WINDOW *window, State *state)
 		}
 
 		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII);
-
 
 		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 		wattroff(window, COLOR_PAIR(MobColor));
