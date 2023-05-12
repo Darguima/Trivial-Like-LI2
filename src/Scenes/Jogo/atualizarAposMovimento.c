@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
@@ -35,7 +36,8 @@ void moverMobs(State *state)
 
     int x_deslocamento, y_deslocamento;
 
-    x_deslocamento = 1, y_deslocamento = 1;
+    x_deslocamento = (rand() % 3) - 1;
+    y_deslocamento = (rand() % 3) - 1;
 
     if (estaTotalmenteLivre(state, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
     {
