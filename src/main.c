@@ -68,7 +68,6 @@ int main()
 	init_pair(BlackRed, COLOR_BLACK, COLOR_RED);
 	init_pair(RedBlack, COLOR_RED, COLOR_BLACK);
 
-
 	init_pair(MapaPlayerColor, FG_Player, BG_MapaVisivel);
 
 	init_pair(MapaVisivelColor, FG_MapaVisivel, BG_MapaVisivel);
