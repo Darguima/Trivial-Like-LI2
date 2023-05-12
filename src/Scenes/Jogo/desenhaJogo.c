@@ -240,6 +240,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		char armaLen = (strlen(armaSobreposta->arma.nome)) / 2;
 
+		wbkgd(b_c_win, COLOR_PAIR(GreenBlack));
+
+
 		//desenha nome da arma
 		mvwprintw(b_c_win, 1, 16 - armaLen, "%s", armaSobreposta->arma.nome);
 		mvwprintw(b_c_win, 2, 9, "%d pts de dano", armaSobreposta->arma.dano);
