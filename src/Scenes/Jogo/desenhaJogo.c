@@ -2,7 +2,8 @@
 #include <string.h>
 #include "./visao.h"
 #include "../../state.h"
-#include "./atualizarAposMovimento.h"
+#include "../../MapaUtils/mapaUtils.h"
+
 /*
  * Enquanto os dois parametros da funcao não forem usados
  * esta macro é importante para prevenir o warning:

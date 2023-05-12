@@ -1,15 +1,16 @@
 #include <ncurses.h>
 #include <unistd.h>
+#include "./atualizarAposMovimento.h"
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
-#include "./atualizarAposMovimento.h"
+#include "../../MapaUtils/mapaUtils.h"
 
 void mover_jogador(State *state, int dx, int dy)
 {
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
 	int temp_y = state->jogoAtual.jogador.posicao.y + dy;
 
-	if (is_pos_free(state->mapa, temp_x, temp_y))
+	if (estaSemParede(state->mapa, temp_x, temp_y))
 	{
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
