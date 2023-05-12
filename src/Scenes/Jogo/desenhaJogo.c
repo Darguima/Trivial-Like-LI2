@@ -232,6 +232,21 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 			}
 		}
 	}
+	ArmaNoMapa *armaSobreposta;
+	if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+	{
+		char armaLen = (strlen(armaSobreposta->arma.nome)) / 2;
+
+		//desenha nome da arma
+		mvwprintw(b_c_win, 1, 16 - armaLen, "%s", armaSobreposta->arma.nome);
+		mvwprintw(b_c_win, 2, 9, "%d pts de dano", armaSobreposta->arma.dano);
+		mvwprintw(b_c_win, 3, 9, "%d%% de acertar", armaSobreposta->arma.probabilidade);
+
+
+
+
+	}
+	
 	wrefresh(b_c_win);
 
 	// desenha TriviaLike
