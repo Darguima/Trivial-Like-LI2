@@ -2,23 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "../state.h"
-
-int isOk(int x, int y, int xmax, int ymax)
-{
-	if (x >= 0 && x < xmax && y >= 0 && y < ymax)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-int is_pos_free(Mapa mapa, int x, int y)
-{
-	return isOk(x, y, mapa.width, mapa.height) && mapa.matrix[x][y].tipo != Parede;
-}
+#include "../MapaUtils/mapaUtils.h"
 
 void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
 {
@@ -79,7 +63,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 				{
 					for (int b = j - 1; b <= j + 1; b++)
 					{
-						if (isOk(a, b, x, y))
+						if (estaDentroDoMapa(a, b, x, y))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -97,7 +81,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 				{
 					for (int b = j - 4; b <= j + 4; b++)
 					{
-						if (isOk(a, b, x, y))
+						if (estaDentroDoMapa(a, b, x, y))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -136,7 +120,7 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 				{
 					for (int b = j - 1; b <= j + 1; b++)
 					{
-						if (isOk(a, b, x, y))
+						if (estaDentroDoMapa(a, b, x, y))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -177,7 +161,7 @@ void adicionarMoedas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.height - 2)) + 1;
-		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
 	}
@@ -193,7 +177,7 @@ void adicionarArmas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.height - 2)) + 1;
-		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.armas[armas_geradas].posicao = pos;
@@ -212,7 +196,7 @@ void adicionarMobs(State *state)
 		{
 			pos_x = (rand() % (state->mapa.width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.height - 2)) + 1;
-		} while (!is_pos_free(state->mapa, pos_x, pos_y));
+		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.mobs[mobs_gerados].posicao = pos;
@@ -240,20 +224,20 @@ void geraMapa(State *state, int ncols, int nrows)
 	{
 		for (
 				x_offset = radius, y_offset = 0;
-				y_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				y_offset <= radius && !estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset);
 				y_offset++)
 			;
 
-		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset))
+		if (estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset))
 			break;
 
 		for (
 				y_offset = radius, x_offset = 0;
-				x_offset <= radius && !is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				x_offset <= radius && !estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset);
 				x_offset++)
 			;
 
-		if (is_pos_free(state->mapa, pos_x + x_offset, pos_y + y_offset))
+		if (estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset))
 			break;
 	}
 

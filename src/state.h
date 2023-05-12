@@ -156,13 +156,11 @@ typedef enum elementosDoMapaCatalogo
 {
 	Vazio,						/*   */
 	Jogador,					/* @ */
-	Mobs,							/* M - com foreground ou background vermelho */
 	NPC,							/* & */
 	Parede,						/* # */
 	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
 	Moeda,						/* c */
-
 } ElementosDoMapaCatalogo;
 
 typedef struct elementosDoMapa

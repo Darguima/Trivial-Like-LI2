@@ -1,5 +1,6 @@
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
+#include "../../MapaUtils/mapaUtils.h"
 
 void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
@@ -15,23 +16,6 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
   state->jogoAtual.jogador.dinheiro++;
 }
 
-int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
-{
-  int pos_x = state->jogoAtual.jogador.posicao.x;
-  int pos_y = state->jogoAtual.jogador.posicao.y;
-
-  for (int arma_i = 0; arma_i < armasNoMapaLength; arma_i++)
-  {
-    if (state->jogoAtual.armas[arma_i].posicao.x == pos_x && state->jogoAtual.armas[arma_i].posicao.y == pos_y)
-    {
-      *armaSobreposta = &(state->jogoAtual.armas[arma_i]);
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
 void atualizarArmas(State *state)
 {
   ArmaNoMapa *armaSobreposta;
@@ -40,23 +24,6 @@ void atualizarArmas(State *state)
     state->jogoAtual.mensagem_descricao = armaSobreposta->arma.mensagem;
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para usar como primária, [X] como secundária.";
   }
-}
-
-int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto)
-{
-  int pos_x = state->jogoAtual.jogador.posicao.x;
-  int pos_y = state->jogoAtual.jogador.posicao.y;
-
-  for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
-  {
-    if (state->jogoAtual.mobs[mob_i].posicao.x == pos_x && state->jogoAtual.mobs[mob_i].posicao.y == pos_y)
-    {
-      *mobSobreposto = &(state->jogoAtual.mobs[mob_i]);
-      return 1;
-    }
-  }
-
-  return 0;
 }
 
 void moverMobs(State *state)
@@ -70,7 +37,7 @@ void moverMobs(State *state)
 
     x_deslocamento = 1, y_deslocamento = 1;
 
-    if (is_pos_free(state->mapa, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
+    if (estaTotalmenteLivre(state, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
     {
       *pos_x += x_deslocamento;
       *pos_y += y_deslocamento;
