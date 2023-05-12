@@ -39,10 +39,15 @@ $ cd triviallike
 
 #### Debian / Ubuntu / Mint
 
-Para instalar o `ncurses` (libncurses-dev) e o `gcc` (build-essential) em derivados Debian.
+Para instalar o `ncurses` (libncurses-dev) ,o `gcc` (build-essential) em derivados Debian.
 
 ```bash
 $ sudo apt-get install libncurses-dev build-essential
+```
+Para instalar o `json-c` (libjson-c-dev)
+
+```bash
+$ sudo apt install libjson-c-dev
 ```
 
 ---
