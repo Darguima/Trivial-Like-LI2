@@ -20,7 +20,7 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
 void atualizarArmas(State *state)
 {
   ArmaNoMapa *armaSobreposta;
-  if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+  if (esta_sobre_arma(state, &armaSobreposta))
   {
     state->jogoAtual.mensagem_descricao = armaSobreposta->arma.mensagem;
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para usar como primária, [X] como secundária.";
@@ -52,7 +52,7 @@ void atualizarMobs(State *state)
   moverMobs(state);
 
   MobNoMapa *mobSobreposto;
-  if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
+  if (esta_sobre_mob(state, &mobSobreposto))
   {
     state->jogoAtual.mensagem_descricao = "Em combate!";
     state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";

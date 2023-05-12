@@ -47,7 +47,7 @@ void eventosJogo(State *state)
 		/* Interação com mapa */
 	case 'z':
 		// atacar com principal
-		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
+		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
 			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
 
@@ -58,7 +58,7 @@ void eventosJogo(State *state)
 		}
 
 		// Pegar arma principal
-		else if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+		else if (esta_sobre_arma(state, &armaSobreposta))
 		{
 			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
@@ -69,7 +69,7 @@ void eventosJogo(State *state)
 
 	case 'x':
 		// Atacar com secundária
-		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
+		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
 			int dano = state->jogoAtual.jogador.armaSecundaria.dano;
 
@@ -80,7 +80,7 @@ void eventosJogo(State *state)
 		}
 
 		// Pegar arma secundária
-		else if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+		else if (esta_sobre_arma(state, &armaSobreposta))
 		{
 			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
 			// Adicionar Arma ao inventário

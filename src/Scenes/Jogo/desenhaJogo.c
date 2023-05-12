@@ -216,7 +216,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
 	MobNoMapa *mobSobreposto;
-	if (esta_sobre_mob(state, &mobSobreposto) && mobSobreposto->mob.vida > 0)
+	if (esta_sobre_mob(state, &mobSobreposto))
 	{
 		float vidaP = (float)mobSobreposto->mob.vida / mobSobreposto->mob.vidaMaxima;
 
