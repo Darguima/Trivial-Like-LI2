@@ -2,4 +2,4 @@
 
 #include "../../state.h"
 
-void desenhaSelecionarJogador(WINDOW* window, State* state);
+void desenhaSelecionarJogador(WINDOW *window, State *state);

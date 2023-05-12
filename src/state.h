@@ -79,6 +79,7 @@ typedef enum catalogoArmas
 
 typedef struct arma
 {
+	int index;
 	CatalogoArmas tipoArma;
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
@@ -129,6 +130,7 @@ typedef struct statusJogador
 	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
+	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
 	Arma *inventario;

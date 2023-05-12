@@ -2,5 +2,4 @@
 
 #include "../../state.h"
 
-void desenhaGameOver(WINDOW* window, State* state);
-
+void desenhaGameOver(WINDOW *window, State *state);
