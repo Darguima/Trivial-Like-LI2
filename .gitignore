@@ -1,3 +1,4 @@
 triviallike
 *.o
+*.json 
 .vscode
