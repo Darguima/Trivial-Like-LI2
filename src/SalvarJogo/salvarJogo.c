@@ -51,6 +51,7 @@ void load_game_state(const char *filename, State *state)
 
 	// load ficheiro
 	fp = fopen(filename, "r");
+	if(fp==NULL){state->jogoAtual.jogador.askUser=1;}
 	if (fp != NULL)
 	{
 
