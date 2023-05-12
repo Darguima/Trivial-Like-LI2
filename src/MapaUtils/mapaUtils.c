@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "../state.h"
 
 int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto)
@@ -37,25 +36,37 @@ int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
 
 int estaDentroDoMapa(int x, int y, int xmax, int ymax)
 {
-	if (x >= 0 && x < xmax && y >= 0 && y < ymax)
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
+  if (x >= 0 && x < xmax && y >= 0 && y < ymax)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 int estaSemParede(Mapa mapa, int x, int y)
 {
-	return estaDentroDoMapa(x, y, mapa.width, mapa.height) && mapa.matrix[x][y].tipo != Parede;
+  return estaDentroDoMapa(x, y, mapa.width, mapa.height) && mapa.matrix[x][y].tipo != Parede;
 }
 
+// O user pode entrar nesta posição e não vai estar a sobrepor nada
+int estaTotalmenteLivreParaOUser(State *state, int x, int y)
+{
+  ArmaNoMapa *armaSobreposta;
+  MobNoMapa *mob_sobreposto;
+
+  return estaDentroDoMapa(x, y, state->mapa.width, state->mapa.height) &&
+         state->mapa.matrix[x][y].tipo == Vazio &&
+         (!esta_sobre_arma(state, &armaSobreposta) || !armaSobreposta->disponivel) &&
+         (!esta_sobre_mob(state, &mob_sobreposto) || mob_sobreposto->mob.vida <= 0);
+}
+
+// Não existe mesmo nada nesta posição, nem se quer o user
 int estaTotalmenteLivre(State *state, int x, int y)
 {
-	return estaDentroDoMapa(x, y, state->mapa.width, state->mapa.height) &&
-          state->mapa.matrix[x][y].tipo == Vazio &&
-          !esta_sobre_arma(state, NULL) &&
-          !esta_sobre_mob(state, NULL);
+  return estaTotalmenteLivreParaOUser(state, x, y) &&
+         state->jogoAtual.jogador.posicao.x != x &&
+         state->jogoAtual.jogador.posicao.y != y;
 }
