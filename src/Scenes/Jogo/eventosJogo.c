@@ -5,9 +5,8 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
 
-
-
-void limparMsgMenuInferior (State *state) {
+void limparMsgMenuInferior(State *state)
+{
 	move(state->mapa.terminal.height - 4, 20);
 	clrtoeol();
 	move(state->mapa.terminal.height - 2, 20);
@@ -45,13 +44,13 @@ void eventosJogo(State *state)
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
 
-	char file[10]; 
+	char file[10];
 	int key = getch();
 
 	switch (key)
 	{
 	case 's':
-		
+
 		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
 		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
 		break;
@@ -100,8 +99,8 @@ void eventosJogo(State *state)
 		}
 
 		break;
-	
-	/* Setas */
+
+		/* Setas */
 
 	case KEY_A1:
 	case '7':

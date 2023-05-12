@@ -35,7 +35,6 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   mvaddstr(y + 2, x - 17, "2.");
   mvaddstr(y + 4, x - 17, "3.");
 
-
   mvaddstr(nrows - 4, 2, "Pressione num jogador para jogar");
   mvaddstr(nrows - 2, 2, "Pressione q para voltar");
 
@@ -54,7 +53,9 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   }
   else
   {
-    if (fread(buffer, 1024, 1, fp)){}
+    if (fread(buffer, 1024, 1, fp))
+    {
+    }
     fclose(fp);
     parsed_json = json_tokener_parse(buffer);
     json_object_object_get_ex(parsed_json, "username", &username);
@@ -68,7 +69,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   if (fp == NULL)
   {
     // Senao existir "Novo Jogo"
-    mvaddstr(y+2, x - 15, "Novo Jogo");
+    mvaddstr(y + 2, x - 15, "Novo Jogo");
   }
   else
   {
@@ -79,7 +80,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
     parsed_json = json_tokener_parse(buffer);
     json_object_object_get_ex(parsed_json, "username", &username);
     string = (char *)json_object_get_string(username);
-    mvaddstr(y+2, x - 15, string);
+    mvaddstr(y + 2, x - 15, string);
   }
 
   // por username 3
@@ -88,7 +89,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   if (fp == NULL)
   {
     // Senao existir "Novo Jogo"
-    mvaddstr(y+4, x - 15, "Novo Jogo");
+    mvaddstr(y + 4, x - 15, "Novo Jogo");
   }
   else
   {
@@ -99,7 +100,6 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
     parsed_json = json_tokener_parse(buffer);
     json_object_object_get_ex(parsed_json, "username", &username);
     string = (char *)json_object_get_string(username);
-    mvaddstr(y+4, x - 15, string);
+    mvaddstr(y + 4, x - 15, string);
   }
-
 }

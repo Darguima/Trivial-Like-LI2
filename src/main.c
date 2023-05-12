@@ -66,13 +66,13 @@ int main()
 	init_pair(GreenBlack, COLOR_GREEN, COLOR_BLACK);
 	init_pair(BlackYellow, COLOR_BLACK, COLOR_YELLOW);
 	init_pair(BlackRed, COLOR_BLACK, COLOR_RED);
-	
+
 	init_pair(MapaPlayerColor, FG_Player, BG_MapaVisivel);
 
 	init_pair(MapaVisivelColor, FG_MapaVisivel, BG_MapaVisivel);
 	init_pair(MapaMemoriaColor, FG_MapaMemoria, BG_MapaMemoria);
 	init_pair(MapaDesconhecidoColor, FG_MapaDesconhecido, BG_MapaDesconhecido);
-	
+
 	init_pair(MobColor, FG_Mob, BG_MapaVisivel);
 	init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
 	init_pair(MoedaColor, FG_Moeda, BG_MapaVisivel);

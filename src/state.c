@@ -1,15 +1,17 @@
 #include <stdlib.h>
 #include "state.h"
 
-const Arma punhos = {0, Punhos, "Punhos", 7, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
-const Arma garras = {1, Garras, "Garras", 20, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
-const Arma espadaOxidada = {2, EspadaOxidada, "EspadaOxidada", 25, 75, "Espada que pertenceu a um soldado caído em combate."};
-const Arma espadaLonga = {3, EspadaLonga, "EspadaLonga", 30, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
-const Arma arco = {4, Arco, "Arco", 45, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-const Arma acido = {5, Acido, "Acido", 40, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
-const Arma cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+Arma const punhos = {0, Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
+Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
+Arma const espadaOxidada = {2, EspadaOxidada, "Espada Oxidada", 20, 75, "Espada que pertenceu a um soldado caído em combate."};
+Arma const espadaLonga = {3, EspadaLonga, "Espada Longa", 25, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
+Arma const arco = {4, Arco, "Arco", 40, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
+Arma const acido = {5, Acido, "Acido", 20, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+Arma const cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
 
-const Arma catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
+int const armasNoMapaLength = 2;
+int const catalogoArmasLength = 7;
+Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
 
 Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E', espadaOxidada, 40, 40, 3};
 Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E', punhos, 40, 40, 3};
@@ -25,7 +27,6 @@ Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 int const mobsNoMapaLength = 10;
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
-
 
 State criarEstado(int colunas, int linhas)
 {

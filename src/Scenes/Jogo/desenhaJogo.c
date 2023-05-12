@@ -11,8 +11,6 @@
  */
 #define UNUSED(x) (void)(x)
 
-
-
 void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
 {
 	int bloco_visivel, bloco_descoberto;
@@ -116,7 +114,6 @@ void desenhaMobs(WINDOW *window, State *state)
 
 		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII);
 
-
 		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 		wattroff(window, COLOR_PAIR(MobColor));
 	}
@@ -144,6 +141,7 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y)
 
 void desenhaMenusLaterais(WINDOW *window, State *state)
 {
+	UNUSED(window);
 
 	// fronteira menu esquerdo
 	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
@@ -190,7 +188,6 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	attroff(A_BOLD);
 	mvwprintw(l_win, 17, 9, "%d", state->jogoAtual.jogador.dinheiro);
 	wrefresh(l_win);
-
 
 	// fronteira menu direito
 	WINDOW *r_win = newwin(state->mapa.height, 20, 5, state->mapa.terminal.width - 20);
@@ -239,5 +236,4 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(2, state->mapa.terminal.width / 2 - 20, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
 	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
 	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
-  
 }
