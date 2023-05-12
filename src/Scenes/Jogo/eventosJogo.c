@@ -33,12 +33,10 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
+	char file[10];
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
-
-	char file[10];
-	int key = getch();
 
 	switch (key)
 	{
