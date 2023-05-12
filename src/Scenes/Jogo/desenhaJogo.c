@@ -103,19 +103,11 @@ void desenhaMobs(WINDOW *window, State *state)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
-		if (!(mobAtual.mob.vida > 0) || state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].descoberto == 0)
+		if (state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 0 || !(mobAtual.mob.vida > 0))
 			continue;
-
-		wattron(window, COLOR_PAIR(MapaMemoriaColor));
-		if (state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 1)
-		{
-			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
-			wattron(window, COLOR_PAIR(MobColor));
-		}
-
+		
+		wattron(window, COLOR_PAIR(MobColor));
 		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII);
-
-		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 		wattroff(window, COLOR_PAIR(MobColor));
 	}
 }
@@ -215,6 +207,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira centro menu de baixo
 	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
+
 	MobNoMapa *mobSobreposto;
 	if (esta_sobre_mob(state, &mobSobreposto))
 	{
@@ -235,6 +228,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 			}
 		}
 	}
+
 	ArmaNoMapa *armaSobreposta;
 	if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
 	{
