@@ -127,9 +127,9 @@ void desenhaJogo(WINDOW *window, State *state, int x, int y)
 	visao(x, y, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 
 	/*
-	* A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
-	* Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
-	*/
+	 * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
+	 * Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
+	 */
 	desenhaMapa(window, x, y, state);
 	desenhaArmas(window, state);
 	desenhaMobs(window, state);
@@ -222,6 +222,8 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 
 		char moblen = (strlen(mobSobreposto->mob.nome)) / 2;
 
+		wbkgd(b_c_win, COLOR_PAIR(RedBlack));
+
 		// desenha a vida do mob
 		mvwprintw(b_c_win, 1, 14 - moblen, "%s [%d]", mobSobreposto->mob.nome, mobSobreposto->mob.vida);
 
@@ -233,6 +235,19 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 			}
 		}
 	}
+	ArmaNoMapa *armaSobreposta;
+	if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+	{
+		char armaLen = (strlen(armaSobreposta->arma.nome)) / 2;
+
+		wbkgd(b_c_win, COLOR_PAIR(GreenBlack));
+
+		// desenha nome da arma
+		mvwprintw(b_c_win, 1, 16 - armaLen, "%s", armaSobreposta->arma.nome);
+		mvwprintw(b_c_win, 2, 9, "%d pts de dano", armaSobreposta->arma.dano);
+		mvwprintw(b_c_win, 3, 9, "%d%% de acertar", armaSobreposta->arma.probabilidade);
+	}
+
 	wrefresh(b_c_win);
 
 	// desenha TriviaLike
