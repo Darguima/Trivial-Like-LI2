@@ -19,8 +19,17 @@ void eventosSelecionarJogador(State *state)
 		}
 		else
 		{
-			state->jogoAtual.jogador.numSave = 1;
-			load_game_state("1.json", state);
+			if (state->jogoAtual.jogador.askUser == 0 || state->jogoAtual.jogador.askUser == 2)
+			{
+				state->jogoAtual.jogador.askUser = 0;
+				state->jogoAtual.jogador.numSave = 1;
+				load_game_state("1.json", state);
+				if (state->jogoAtual.jogador.askUser == 0 )
+				{
+					state->sceneAtual = Jogo;
+				}
+				
+			}
 		}
 		break;
 
@@ -35,9 +44,17 @@ void eventosSelecionarJogador(State *state)
 		}
 		else
 		{
-
-			state->jogoAtual.jogador.numSave = 2;
-			load_game_state("2.json", state);
+			if (state->jogoAtual.jogador.askUser == 0 || state->jogoAtual.jogador.askUser == 2)
+			{
+				state->jogoAtual.jogador.askUser = 0;
+				state->jogoAtual.jogador.numSave = 2;
+				load_game_state("2.json", state);
+				if (state->jogoAtual.jogador.askUser == 0 )
+				{
+					state->sceneAtual = Jogo;
+				}
+				
+			}
 		}
 		break;
 
@@ -53,8 +70,17 @@ void eventosSelecionarJogador(State *state)
 		else
 		{
 
-			state->jogoAtual.jogador.numSave = 3;
-			load_game_state("3.json", state);
+			if (state->jogoAtual.jogador.askUser == 0 || state->jogoAtual.jogador.askUser == 2)
+			{
+				state->jogoAtual.jogador.askUser = 0;
+				state->jogoAtual.jogador.numSave = 3;
+				load_game_state("3.json", state);
+				if (state->jogoAtual.jogador.askUser == 0 )
+				{
+					state->sceneAtual = Jogo;
+				}
+				
+			}
 		}
 		break;
 	case 'j':

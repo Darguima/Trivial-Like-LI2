@@ -87,13 +87,13 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   if (state->jogoAtual.jogador.askUser == 1)
 {
     char str[80];
-    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)");
+    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)                                                      ");
     refresh();
     getstr(str);
     state->jogoAtual.jogador.username = malloc(strlen(str) + 1);
     strcpy(state->jogoAtual.jogador.username, str);
     mvaddstr(nrows - 14, 2, "                                                     ");
-    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar", state->jogoAtual.jogador.username);
+    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar com novo jogador ou outro numero para continuar com outro jogador", state->jogoAtual.jogador.username);
     refresh();
     state->jogoAtual.jogador.askUser = 2;
 }
