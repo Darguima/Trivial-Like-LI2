@@ -4,9 +4,9 @@
 /* São as diferentes páginas que podem aparecer ao longo do jogo */
 typedef enum scene
 {
-	MenuInicial,			 /* Primeira página que aparece no jogo */
+	MenuInicial,	   /* Primeira página que aparece no jogo */
 	SelecionarJogador, /* Transição entre Menu Inicial e Jogo (para escolher o jogador) */
-	Jogo,							 /* O jogo em si, com o status do jogador, mapa e inventário */
+	Jogo,			   /* O jogo em si, com o status do jogador, mapa e inventário */
 	Controlos,
 	Sobre,
 	Sair,
@@ -25,6 +25,7 @@ typedef enum colors
 	CYAN,
 	WHITE,
 
+	// cores do FG-Foreground BG-Background  
 	FG_MapaVisivel,
 	BG_MapaVisivel,
 
@@ -35,9 +36,10 @@ typedef enum colors
 	BG_MapaDesconhecido,
 
 	FG_Player,
-	FG_Mob,
-	FG_Arma,
 	FG_Moeda,
+	FG_Arma,
+	FG_Objeto,
+	FG_Mob,
 } Colors;
 
 typedef enum colorsSchema
@@ -56,9 +58,10 @@ typedef enum colorsSchema
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
-	MobColor,
-	ArmaColor,
 	MoedaColor,
+	ArmaColor,
+	ObjetoColor,
+	MobColor,
 } ColorsScheme;
 
 typedef struct coordenadas
@@ -68,29 +71,31 @@ typedef struct coordenadas
 
 typedef enum catalogoObjetos
 {
-	PocaoVidaD, // poção de vida que recupera toda a vida
-	PocaoVidaG, // poção de vida Grande (60 vida)
-	PocaoVidaP, // poção de vida Pequena (25 vida)
+	PocaoVidaD,		  // poção de vida que recupera toda a vida
+	PocaoVidaG,		  // poção de vida Grande (60 vida)
+	PocaoVidaP,		  // poção de vida Pequena (25 vida)
 	PocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
-	PocaoMagica, // poção que recupera toda a vida e aumenta a vida máxima
-	PortalDeBolso, // um portal que envia o jogador ao próximo mapa
+	PocaoMagica,	  // poção que recupera toda a vida e aumenta a vida máxima
+	PortalDeBolso,	  // um portal que envia o jogador ao próximo mapa
 
-}CatalogoObjetos;
+} CatalogoObjetos;
 
 typedef struct objeto
 {
+	int index;
 	CatalogoObjetos objeto;
-	char *nomeObjeto; // nome para ser mostrado no inventário
-	char *mensagem; // mensagem mostrada ao pegar no objeto
-	
-}Objeto;
+	char *nome; // nome para ser mostrado no inventário
+	int quantidade;	  // quantidade desse objeto
+	char *mensagem;	  // mensagem mostrada ao pegar no objeto
 
-// o inventario tem um limite de 10 items
-typedef struct inventarioS
+} Objeto;
+
+typedef struct objetoNoMapa
 {
-	CatalogoObjetos objetos[10]; 
-}InventarioS;
-
+	Coordenadas posicao;
+	int disponivel; // 1 se está disponível no mapa; 0 se o objeto já foi apanhada 
+	Objeto objeto;
+} ObjetoNoMapa;
 
 /* Diferentes armas que o player e mobs pode ter */
 typedef enum catalogoArmas
@@ -111,36 +116,36 @@ typedef struct arma
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
 	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 1
-	char *mensagem;		 // texto que descreve a arma
+	char *mensagem;	   // texto que descreve a arma
 } Arma;
 
 typedef struct armaNoMapa
 {
 	Coordenadas posicao;
-	int disponivel; /* 1 se está disponível no a mapa; 0 se a arma já foi apanhada */
+	int disponivel; /* 1 se está disponível no mapa; 0 se a arma já foi apanhada */
 	Arma arma;
 } ArmaNoMapa;
 
 typedef enum catalogoMobs
-{										// o tipo do mob a chamar
-	Esqueleto,				/* E */
+{					  // o tipo do mob a chamar
+	Esqueleto,		  /* E */
 	SoldadoEsqueleto, /* S */
-	Vampiro,					/* V */
-	Mutante,					/* M */
-	Aranha,						/* A */
-	Zombie,						/* Z */
-										/* Possibilidade de adicionar mais no futuro */
+	Vampiro,		  /* V */
+	Mutante,		  /* M */
+	Aranha,			  /* A */
+	Zombie,			  /* Z */
+					  /* Possibilidade de adicionar mais no futuro */
 } CatalogoMobs;
 
 typedef struct mob
-{												// podem haver mais que um mob com armas diferentes
+{						  // podem haver mais que um mob com armas diferentes
 	CatalogoMobs tipomob; // recebe qual o tipo do mob
-	char *nome;						// nome do mob
-	char charASCII;				// char pelo qual se refere ao mob
-	Arma arma;						// o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
-	int vida;							// vida do mob instantanea
-	int vidaMaxima;				// máxima vida do mob
-	int raioVisao;				// o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
+	char *nome;			  // nome do mob
+	char charASCII;		  // char pelo qual se refere ao mob
+	Arma arma;			  // o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
+	int vida;			  // vida do mob instantanea
+	int vidaMaxima;		  // máxima vida do mob
+	int raioVisao;		  // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
 } Mob;
 
 typedef struct mobNoMapa
@@ -153,14 +158,14 @@ typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida;				// valor entre 0 e ...
+	int vida;		// valor entre 0 e ...
 	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
-	InventarioS *inventario;
+	char *inventario;
 } StatusJogador;
 
 typedef enum dificuldadeJogo {
@@ -178,9 +183,9 @@ typedef struct controlosSceneVars
 
 typedef struct selecionarJogadorSceneVars
 {
-	int delete;			// 1modo_apagar_ligado
+	int delete;		// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
-	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
+	int askUser;	// 0nada 1pergunta_username 2continuar_para_jogo
 } SelecionarJogadorSceneVars;
 
 typedef struct scenesVariables
@@ -195,25 +200,26 @@ typedef struct jogoAtual
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
+	ObjetoNoMapa *objetos;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo
 {
-	Vazio,						/*   */
-	Jogador,					/* @ */
-	NPC,							/* & */
-	Parede,						/* # */
-	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
+	Vazio,			  /*   */
+	Jogador,		  /* @ */
+	NPC,			  /* & */
+	Parede,			  /* # */
+	PortaNormal,	  /* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
-	Moeda,						/* c */
+	Moeda,			  /* c */
 } ElementosDoMapaCatalogo;
 
 typedef struct elementosDoMapa
 {
 	ElementosDoMapaCatalogo tipo;
-	int visivel;		// 1 para visivel
+	int visivel;	// 1 para visivel
 	int descoberto; // 1 para descoberto
 } ElementosDoMapa;
 
@@ -231,9 +237,10 @@ typedef struct mapa
 	int matrix_height;
 	int matrix_width;
 
-	int qntArmasNoMapaLength;
-	int qntMobsNoMapaLength;
 	int qntMoedasNoMapaLength;
+	int qntArmasNoMapaLength;
+	int qntObjetosNoMapaLength;
+	int qntMobsNoMapaLength;
 
 	ElementosDoMapa **matrix;
 } Mapa;

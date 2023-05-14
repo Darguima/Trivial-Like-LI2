@@ -97,6 +97,29 @@ void desenhaArmas(WINDOW *window, State *state, int initial_x, int initial_y)
 	}
 }
 
+void desenhaObjetos(WINDOW *window, State *state, int initial_x, int initial_y)
+{
+	for (int objeto = 0; objeto < state->mapa.qntObjetosNoMapaLength; objeto++)
+	{
+		ObjetoNoMapa objetoAtual = state->jogoAtual.objetos[objeto];
+
+		if (!objetoAtual.disponivel || state->mapa.matrix[objetoAtual.posicao.x][objetoAtual.posicao.y].descoberto == 0)
+			continue;
+
+		wattron(window, COLOR_PAIR(MapaMemoriaColor));
+		if (state->mapa.matrix[objetoAtual.posicao.x][objetoAtual.posicao.y].visivel == 1)
+		{
+			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+			wattron(window, COLOR_PAIR(ObjetoColor));
+		}
+
+		mvwaddch(window, objetoAtual.posicao.y - initial_y, objetoAtual.posicao.x - initial_x, 'P');
+
+		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+		wattroff(window, COLOR_PAIR(ObjetoColor));
+	}
+}
+
 void desenhaMobs(WINDOW *window, State *state, int initial_x, int initial_y)
 {
 	for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
@@ -155,9 +178,11 @@ void desenhaJogo(WINDOW *window, State *state)
 	 * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
 	 * Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
 	 */
-	
+
+	// as moedas são gravadas dentro do mapa, então a sua prioridade é igual a este
 	desenhaMapa(window, state, initial_x, final_x, initial_y, final_y);
 	desenhaArmas(window, state, initial_x, initial_y);
+	desenhaObjetos(window, state, initial_x, initial_y);
 	desenhaMobs(window, state, initial_x, initial_y);
 
 	wattron(window, COLOR_PAIR(MapaPlayerColor));

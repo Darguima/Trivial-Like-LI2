@@ -26,16 +26,15 @@ Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
-Objeto const pocaoVidaD       = {PocaoVidaD,"Poção de Vida Definitiva","Recupera toda a vida" }; 
-Objeto const pocaoVidaG       = {PocaoVidaG,"Poção de Vida Grande", "Recupera 70 pontos de vida" };
-Objeto const pocaoVidaP       = {PocaoVidaP,"Poção de Vida Pequena", "Recupera 40 pontos de vida" };
-Objeto const pocaoAumentoVida = {PocaoAumentoVida,"Poção de Aumento de Vida", "Aumenta a vida máxima em 25 pontos" };
-Objeto const pocaoMagica      = {PocaoMagica,"Poção Mágica", "Recupera toda a vida e aumenta a vida máxima em 15 pontos" };
-Objeto const portalDeBolso    = {PortalDeBolso,"portalDeBolso", "Portal de uma só utilização que muda para o mapa seguinte, amentando a vida máxima em 5 pontos" };
+Objeto const pocaoVidaD       = {0,PocaoVidaD,"Poção de Vida Definitiva",0,"Recupera toda a vida" }; 
+Objeto const pocaoVidaG       = {1,PocaoVidaG,"Poção de Vida Grande",0,"Recupera 70 pontos de vida" };
+Objeto const pocaoVidaP       = {2,PocaoVidaP,"Poção de Vida Pequena",1,"Recupera 40 pontos de vida" };
+Objeto const pocaoAumentoVida = {3,PocaoAumentoVida,"Poção de Aumento de Vida",0,"Aumenta a vida máxima em 25 pontos" };
+Objeto const pocaoMagica      = {4,PocaoMagica,"Poção Mágica",0,"Recupera toda a vida e aumenta a vida máxima em 15 pontos" };
+Objeto const portalDeBolso    = {5,PortalDeBolso,"portalDeBolso",0,"Portal de uma só utilização que muda para o mapa seguinte, amentando a vida máxima em 5 pontos" };
 
-int const objetosNoMapaLength = 2;
 int const catalogoObjetosLength = 6;
-Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG,pocaoVidaP,pocaoAumentoVida,pocaoMagica,portalDeBolso,}
+Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG,pocaoVidaP,pocaoAumentoVida,pocaoMagica,portalDeBolso};
 
 
 State criarEstado(int colunas, int linhas)
@@ -59,9 +58,10 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.display_height = linhas - 10;
 	state.mapa.matrix_width = 300;
 	state.mapa.matrix_height = 300;
+	state.mapa.qntMoedasNoMapaLength = 0;
+	state.mapa.qntObjetosNoMapaLength = 0;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
-	state.mapa.qntMoedasNoMapaLength = 0;
 	state.mapa.matrix = (ElementosDoMapa **)malloc(state.mapa.matrix_width * sizeof(ElementosDoMapa *));
 	for (int i = 0; i < state.mapa.matrix_width; i++)
 		state.mapa.matrix[i] = (ElementosDoMapa *)malloc(state.mapa.matrix_height * sizeof(ElementosDoMapa));
@@ -80,6 +80,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.dificuldade = FACIL;
 	state.jogoAtual.mobs = NULL; // Alocado depois
 	state.jogoAtual.armas = NULL; // Alocado depois
+	state.jogoAtual.objetos = NULL; // Alocado depois
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 

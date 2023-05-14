@@ -44,7 +44,7 @@ int main()
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
 
-	/* Starting colors pairs */
+	/* Starting colors & colors pairs */
 	start_color();
 
 	init_color(FG_MapaVisivel, 1000, 1000, 1000);
@@ -56,9 +56,10 @@ int main()
 	init_color(BG_MapaDesconhecido, 125, 125, 125);
 
 	init_color(FG_Player, 0, 0, 1000);
-	init_color(FG_Mob, 1000, 0, 0);
-	init_color(FG_Arma, 0, 1000, 0);
 	init_color(FG_Moeda, 1000, 1000, 0);
+	init_color(FG_Arma, 0, 1000, 0);
+	init_color(FG_Objeto, 0, 0, 1000);
+	init_color(FG_Mob, 1000, 0, 0);
 
 	init_pair(WhiteBlack, COLOR_WHITE, COLOR_BLACK);
 	init_pair(YellowBlack, COLOR_YELLOW, COLOR_BLACK);
@@ -74,9 +75,10 @@ int main()
 	init_pair(MapaMemoriaColor, FG_MapaMemoria, BG_MapaMemoria);
 	init_pair(MapaDesconhecidoColor, FG_MapaDesconhecido, BG_MapaDesconhecido);
 
-	init_pair(MobColor, FG_Mob, BG_MapaVisivel);
-	init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
 	init_pair(MoedaColor, FG_Moeda, BG_MapaVisivel);
+	init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
+	init_pair(ObjetoColor, FG_Objeto, BG_MapaVisivel);
+	init_pair(MobColor, FG_Mob, BG_MapaVisivel);
 
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 
