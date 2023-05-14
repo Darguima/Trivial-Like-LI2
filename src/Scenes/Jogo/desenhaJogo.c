@@ -282,8 +282,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	ObjetoNoMapa *objetoSobreposto;
 	if (esta_sobre_objeto(state, &objetoSobreposto))
 	{
-		mvwprintw(b_d_win, 1, 1, "%s", state->jogoAtual.mensagem_direita);
-		mvwprintw(b_d_win, 3, 1, "%s", state->jogoAtual.mensagem_descricao_direita);
+		mvwprintw(b_d_win, 1, 1, "%s", state->jogoAtual.mensagem_descricao_direita);
+		mvwprintw(b_d_win, 3, 1, "%s", state->jogoAtual.mensagem_direita);
+		
 	}
 
 	wrefresh(b_d_win);

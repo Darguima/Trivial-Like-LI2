@@ -52,8 +52,9 @@ void atualizarObjetos(State *state)
   ObjetoNoMapa *objetoSobreposto;
 	if (esta_sobre_objeto(state, &objetoSobreposto))
 	{
-		state->jogoAtual.mensagem_direita =  "Encontraste um objeto! Pressiona [E] para pegar nele.";
     state->jogoAtual.mensagem_descricao_direita = objetoSobreposto->objeto.mensagem;
+		state->jogoAtual.mensagem_direita =  "Encontraste um objeto! Pressiona [E] para pegar nele.";
+    
 	}
 }
 
@@ -84,6 +85,7 @@ void atualizarAposMovimento(State *state)
 	*/
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
+  atualizarObjetos(state);
   atualizarMobs(state);
 }
 
