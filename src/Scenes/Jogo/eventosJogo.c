@@ -100,49 +100,50 @@ void eventosJogo(State *state)
 		break;
 
 		/* Setas */
-	case KEY_A1:
-	case '7':
-		mover_jogador(state, -1, -1);
-		break;
-
 	case KEY_UP:
-	case '8':
 		mover_jogador(state, 0, -1);
 		break;
 
-	case KEY_A3:
-	case '9':
-		mover_jogador(state, +1, -1);
-		break;
-
 	case KEY_LEFT:
-	case '4':
 		mover_jogador(state, -1, 0);
 		break;
 
 	case KEY_RIGHT:
-	case '6':
 		mover_jogador(state, +1, 0);
 		break;
 
-	case KEY_C1:
-	case '1':
-		mover_jogador(state, -1, +1);
-		break;
-
 	case KEY_DOWN:
-	case '2':
 		mover_jogador(state, 0, +1);
-
 		break;
 
-	case KEY_C3:
-	case '3':
-		mover_jogador(state, +1, +1);
-		break;
+		// Inventário
+	//case '1':
+	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaP.mensagem;
+	//	break;
+	//case '2':
+	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaG.mensagem;
+	//	break;
+//
+	//case '3':
+	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaD.mensagem;
+	//	break;
+//
+	//case '4':
+	//state->jogoAtual.mensagem_descricao_direita = pocaoAumentoVida.mensagem;
+	//	break;
+//
+	//case '5':
+	//state->jogoAtual.mensagem_descricao_direita = pocaoMagica.mensagem;
+	//	break;
+//
+	//case '6':
+	//state->jogoAtual.mensagem_descricao_direita = portalDeBolso.mensagem;
+	//	break;
 
+		// Sair
 	case 'q':
-		state->sceneAtual = MenuInicial;
+		state->
+		sceneAtual = MenuInicial;
 		break;
 	}
 }
