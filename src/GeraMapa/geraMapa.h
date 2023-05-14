@@ -2,4 +2,4 @@
 
 #include "../state.h"
 
-void geraMapa(State *state, int ncols, int nrows);
+void geraMapa(State *state);

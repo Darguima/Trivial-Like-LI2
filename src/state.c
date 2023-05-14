@@ -47,9 +47,9 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.display_height = linhas - 10;
 	state.mapa.matrix_width = state.mapa.display_width;
 	state.mapa.matrix_height = state.mapa.display_height;
-	state.mapa.qntArmasNoMapaLength = 2;
-	state.mapa.qntMobsNoMapaLength = 10;
-	state.mapa.qntMoedasNoMapaLength = 10;
+	state.mapa.qntArmasNoMapaLength = 0;
+	state.mapa.qntMobsNoMapaLength = 0;
+	state.mapa.qntMoedasNoMapaLength = 0;
 	state.mapa.matrix = (ElementosDoMapa **)malloc(state.mapa.matrix_width * sizeof(ElementosDoMapa *));
 	for (int i = 0; i < state.mapa.matrix_width; i++)
 		state.mapa.matrix[i] = (ElementosDoMapa *)malloc(state.mapa.matrix_height * sizeof(ElementosDoMapa));
@@ -60,13 +60,13 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.posicao.x = 1;
 	state.jogoAtual.jogador.posicao.y = 1;
 	state.jogoAtual.jogador.numMapaAtual = 1;
-	state.jogoAtual.jogador.inventario = NULL;
+	state.jogoAtual.jogador.inventario = NULL; // Alocado depois
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
-	state.jogoAtual.mobs = malloc(state.mapa.qntMobsNoMapaLength * sizeof(MobNoMapa));
-	state.jogoAtual.armas = malloc(state.mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
+	state.jogoAtual.mobs = NULL; // Alocado depois
+	state.jogoAtual.armas = NULL; // Alocado depois
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
