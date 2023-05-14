@@ -76,7 +76,7 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state
 
 void desenhaArmas(WINDOW *window, State *state)
 {
-	for (int arma = 0; arma < armasNoMapaLength; arma++)
+	for (int arma = 0; arma < state->mapa.qntArmasNoMapaLength; arma++)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
@@ -99,7 +99,7 @@ void desenhaArmas(WINDOW *window, State *state)
 
 void desenhaMobs(WINDOW *window, State *state)
 {
-	for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
+	for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
@@ -141,7 +141,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	UNUSED(window);
 
 	// fronteira menu esquerdo
-	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
+	WINDOW *l_win = newwin(state->mapa.display_height, 20, 5, 0);
 	box(l_win, 0, 0);
 
 	// num mapa atual
@@ -187,12 +187,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	wrefresh(l_win);
 
 	// fronteira menu direito
-	WINDOW *r_win = newwin(state->mapa.height, 20, 5, state->mapa.terminal.width - 20);
+	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
 	wrefresh(r_win);
 
 	// fronteira esquerda menu de baixo
-	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, 0);
+	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, 0);
 	box(b_e_win, 0, 0);
 	// mensagem
 	mvwprintw(b_e_win, 1, 1, "%s", state->jogoAtual.mensagem_descricao);
@@ -200,12 +200,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	wrefresh(b_e_win);
 
 	// fronteira direita menu de baixo
-	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, state->mapa.terminal.width / 2 + 17);
+	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, state->mapa.terminal.width / 2 + 17);
 	box(b_d_win, 0, 0);
 	wrefresh(b_d_win);
 
 	// fronteira centro menu de baixo
-	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
+	WINDOW *b_c_win = newwin(5, 33, state->mapa.display_height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
 
 	MobNoMapa *mobSobreposto;

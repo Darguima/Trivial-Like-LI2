@@ -193,8 +193,15 @@ typedef struct terminal
 typedef struct mapa
 {
 	Terminal terminal;
-	int height;
-	int width;
+	int display_height;
+	int display_width;
+	int matrix_height;
+	int matrix_width;
+
+	int qntArmasNoMapaLength;
+	int qntMobsNoMapaLength;
+	int qntMoedasNoMapaLength;
+
 	ElementosDoMapa **matrix;
 } Mapa;
 
@@ -219,7 +226,6 @@ extern Arma const arco;
 extern Arma const acido;
 extern Arma const cetro;
 
-extern int const armasNoMapaLength;
 extern int const catalogoArmasLength;
 extern Arma const catalogoArmas[];
 
@@ -234,7 +240,6 @@ extern Mob const aranha1;
 extern Mob const aranha2;
 extern Mob const zombie1;
 
-extern int const mobsNoMapaLength;
 extern int const catalogoMobsLength;
 extern Mob const catalogoMobs[];
 
