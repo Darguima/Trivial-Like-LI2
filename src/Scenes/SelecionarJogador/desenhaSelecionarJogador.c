@@ -19,7 +19,6 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 {
   UNUSED(window);
   UNUSED(state);
-
   geraMapa(state, state->mapa.terminal.width, state->mapa.terminal.height);
 
   int nrows, ncols;
@@ -27,79 +26,72 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   int y = (nrows / 2) - 4;
   int x = (ncols / 2) - 2;
 
+  move(nrows - 14, 0);
+  clrtoeol();
+
+  move(nrows - 8, 0);
+  clrtoeol();
   box(window, 0, 0); // desenhar caixa
 
   refresh();
-  mvaddstr(y - 10, x - 17, "Selecione Jogo"); //
+  mvaddstr(y - 10, x - 17, "Selecione Jogo");
   mvaddstr(y, x - 17, "1.");
   mvaddstr(y + 2, x - 17, "2.");
   mvaddstr(y + 4, x - 17, "3.");
-
+  mvaddstr(nrows - 6, 2, "Para apagar jogador pressione d");
   mvaddstr(nrows - 4, 2, "Pressione num jogador para jogar");
   mvaddstr(nrows - 2, 2, "Pressione q para voltar");
 
-  // usernames em 1. 2. 3.
+  if (state->scenesVariables.selecionarJogadorSceneVars.delete == 1)
+  {
+    mvaddstr(nrows - 8, 2, "Delete Ligado, pressione numero para escolher qual progresso quer apagar ('a' : desligar)");
+  }
+  else if (state->scenesVariables.selecionarJogadorSceneVars.faildelete == 1)
+  {
+    mvaddstr(nrows - 8, 2, "Erro a apagar ficheiro ('a' : apagar mensagem)");
+  }
+
+  if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 1)
+  {
+    char str[80];
+    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)");
+    refresh();
+    getnstr(str, 30);
+    strcpy(state->jogoAtual.jogador.username, str);
+    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar com novo jogador ou outro numero para continuar com outro jogador", state->jogoAtual.jogador.username);
+    refresh();
+    state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
+  }
+
+  // print usernames
   char *string;
   FILE *fp;
   char buffer[1024];
-  // por username 1
   struct json_object *parsed_json;
   struct json_object *username;
-  fp = fopen("1.json", "r");
-  if (fp == NULL)
+  char filename[10];
+
+  for (int i = 1; i <= 3; i++)
   {
-    // Senao existir "Novo Jogo"
-    mvaddstr(y, x - 15, "Novo Jogo");
-  }
-  else
-  {
-    if (fread(buffer, 1024, 1, fp))
+    sprintf(filename, "%d.json", i);
+    fp = fopen(filename, "r");
+
+    if (fp == NULL)
     {
+      move(y + (i - 1) * 2, x - 15);
+      clrtoeol();
+      mvaddstr(y + (i - 1) * 2, x - 15, "Novo Jogo");
     }
-    fclose(fp);
-    parsed_json = json_tokener_parse(buffer);
-    json_object_object_get_ex(parsed_json, "username", &username);
-    string = (char *)json_object_get_string(username);
-    mvaddstr(y, x - 15, string);
-  }
-
-  // por username 2
-
-  fp = fopen("2.json", "r");
-  if (fp == NULL)
-  {
-    // Senao existir "Novo Jogo"
-    mvaddstr(y + 2, x - 15, "Novo Jogo");
-  }
-  else
-  {
-    if (fread(buffer, 1024, 1, fp))
+    else
     {
+      if (fread(buffer, 1024, 1, fp))
+      {
+      }
+      fclose(fp);
+      parsed_json = json_tokener_parse(buffer);
+      json_object_object_get_ex(parsed_json, "username", &username);
+      string = (char *)json_object_get_string(username);
+      mvaddstr(y + (i - 1) * 2, x - 15, string);
     }
-    fclose(fp);
-    parsed_json = json_tokener_parse(buffer);
-    json_object_object_get_ex(parsed_json, "username", &username);
-    string = (char *)json_object_get_string(username);
-    mvaddstr(y + 2, x - 15, string);
-  }
-
-  // por username 3
-
-  fp = fopen("3.json", "r");
-  if (fp == NULL)
-  {
-    // Senao existir "Novo Jogo"
-    mvaddstr(y + 4, x - 15, "Novo Jogo");
-  }
-  else
-  {
-    if (fread(buffer, 1024, 1, fp))
-    {
-    }
-    fclose(fp);
-    parsed_json = json_tokener_parse(buffer);
-    json_object_object_get_ex(parsed_json, "username", &username);
-    string = (char *)json_object_get_string(username);
-    mvaddstr(y + 4, x - 15, string);
   }
 }
