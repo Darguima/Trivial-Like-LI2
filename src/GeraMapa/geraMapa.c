@@ -150,17 +150,44 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 	return;
 }
 
+// sinal deve ser 1 ou -1 para mudar o sinal do offset
+// -1 vai aumentar a probabilidade de aparecer o elemento
+// +1 vai diminuir a probabilidade de aparecer o elemento
+int calcularProbabilidadeComDificuldade(int probabilidade, DificuldadeJogo dificuldade, int sinal)
+{
+	int result = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
+	return result > 0 ? result : 1;
+}
+
+void calcularQuantidadeElementosMapa(State *state)
+{
+	int area = state->mapa.matrix_height * state->mapa.matrix_width;
+	DificuldadeJogo dificuldade = state->jogoAtual.dificuldade;
+
+	// Probabilidade de aparecer uma arma = 1 / 3000
+	state->mapa.qntArmasNoMapaLength = area / calcularProbabilidadeComDificuldade(3000, dificuldade, +1);
+	free(state->jogoAtual.armas);
+	state->jogoAtual.armas = malloc(state->mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
+
+	// Probabilidade de aparecer um mob = 1 / 600
+	state->mapa.qntMobsNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, -1);
+	free(state->jogoAtual.mobs);
+	state->jogoAtual.mobs = malloc(state->mapa.qntMobsNoMapaLength * sizeof(MobNoMapa));
+
+	// Probabilidade de aparecer uma moeda = 1 / 600
+	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
+}
+
 void adicionarMoedas(State *state)
 {
-	int offset = (rand() % 5) - 2;
-	for (int moedas_geradas = 0; moedas_geradas < 10 + offset; moedas_geradas++)
+	for (int moedas_geradas = 0; moedas_geradas < state->mapa.qntMoedasNoMapaLength; moedas_geradas++)
 	{
 		int pos_x, pos_y;
 
 		do
 		{
-			pos_x = (rand() % (state->mapa.width - 2)) + 1;
-			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
 		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
@@ -169,14 +196,14 @@ void adicionarMoedas(State *state)
 
 void adicionarArmas(State *state)
 {
-	for (int armas_geradas = 0; armas_geradas < armasNoMapaLength; armas_geradas++)
+	for (int armas_geradas = 0; armas_geradas < state->mapa.qntArmasNoMapaLength; armas_geradas++)
 	{
 		int pos_x, pos_y;
 
 		do
 		{
-			pos_x = (rand() % (state->mapa.width - 2)) + 1;
-			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
 		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
@@ -188,14 +215,14 @@ void adicionarArmas(State *state)
 
 void adicionarMobs(State *state)
 {
-	for (int mobs_gerados = 0; mobs_gerados < mobsNoMapaLength; mobs_gerados++)
+	for (int mobs_gerados = 0; mobs_gerados < state->mapa.qntMobsNoMapaLength; mobs_gerados++)
 	{
 		int pos_x, pos_y;
 
 		do
 		{
-			pos_x = (rand() % (state->mapa.width - 2)) + 1;
-			pos_y = (rand() % (state->mapa.height - 2)) + 1;
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
 		} while (!estaSemParede(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
@@ -204,13 +231,16 @@ void adicionarMobs(State *state)
 	}
 }
 
-void geraMapa(State *state, int ncols, int nrows)
+void geraMapa(State *state)
 {
-	int largura_mapa = ncols - 40;
-	int altura_mapa = nrows - 10;
+	int largura_mapa = state->mapa.matrix_width;
+	int altura_mapa = state->mapa.matrix_height;
 
 	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
+
+	calcularQuantidadeElementosMapa(state);
+
 	adicionarMoedas(state);
 	adicionarArmas(state);
 	adicionarMobs(state);
