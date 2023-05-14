@@ -232,6 +232,7 @@ void adicionarObjetos(State *state)
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.objetos[objetos_gerados].posicao = pos;
+		state->jogoAtual.objetos[objetos_gerados].disponivel = 1;
 		state->jogoAtual.objetos[objetos_gerados].objeto = catalogoObjetos[rand() % catalogoObjetosLength];
 	}
 }

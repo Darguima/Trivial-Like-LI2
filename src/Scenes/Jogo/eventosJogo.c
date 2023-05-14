@@ -35,6 +35,7 @@ void eventosJogo(State *state)
 	char file[10];
 
 	ArmaNoMapa *armaSobreposta;
+	ObjetoNoMapa *objetoSobreposto;
 	MobNoMapa *mob_sobreposto;
 
 	switch (key)
@@ -44,7 +45,8 @@ void eventosJogo(State *state)
 		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
 		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
 		break;
-		/* Interação com mapa */
+
+	/* Interação com mapa */
 	case 'z':
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
@@ -89,7 +91,15 @@ void eventosJogo(State *state)
 
 		break;
 
-	/* Setas */
+	case 'e':
+		// Pegar um objeto
+		if (esta_sobre_objeto(state, &objetoSobreposto))
+		{
+			objetoSobreposto->disponivel = 0;
+		}
+		break;
+
+		/* Setas */
 	case KEY_A1:
 	case '7':
 		mover_jogador(state, -1, -1);
