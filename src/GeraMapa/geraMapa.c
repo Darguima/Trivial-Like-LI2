@@ -150,21 +150,32 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 	return;
 }
 
-void calcularQuantidadeElementosMapa(State *state) {
+// sinal deve ser 1 ou -1 para mudar o sinal do offset
+// -1 vai aumentar a probabilidade de aparecer o elemento
+// +1 vai diminuir a probabilidade de aparecer o elemento
+int calcularProbabilidadeComDificuldade(int probabilidade, DificuldadeJogo dificuldade, int sinal)
+{
+	int result = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
+	return result > 0 ? result : 1;
+}
+
+void calcularQuantidadeElementosMapa(State *state)
+{
 	int area = state->mapa.matrix_height * state->mapa.matrix_width;
+	DificuldadeJogo dificuldade = state->jogoAtual.dificuldade;
 
 	// Probabilidade de aparecer uma arma = 1 / 3000
-	state->mapa.qntArmasNoMapaLength = area / 3000;
+	state->mapa.qntArmasNoMapaLength = area / calcularProbabilidadeComDificuldade(3000, dificuldade, +1);
 	free(state->jogoAtual.armas);
 	state->jogoAtual.armas = malloc(state->mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
 
 	// Probabilidade de aparecer um mob = 1 / 600
-	state->mapa.qntMobsNoMapaLength = area / 600;
+	state->mapa.qntMobsNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, -1);
 	free(state->jogoAtual.mobs);
 	state->jogoAtual.mobs = malloc(state->mapa.qntMobsNoMapaLength * sizeof(MobNoMapa));
 
 	// Probabilidade de aparecer uma moeda = 1 / 600
-	state->mapa.qntMoedasNoMapaLength = area / 600;
+	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
 }
 
 void adicionarMoedas(State *state)

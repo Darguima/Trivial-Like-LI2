@@ -45,8 +45,8 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.terminal.height = linhas;
 	state.mapa.display_width = colunas - 40;
 	state.mapa.display_height = linhas - 10;
-	state.mapa.matrix_width = 500;
-	state.mapa.matrix_height = 500;
+	state.mapa.matrix_width = 300;
+	state.mapa.matrix_height = 300;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
 	state.mapa.qntMoedasNoMapaLength = 0;
@@ -65,6 +65,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
+	state.jogoAtual.dificuldade = FACIL;
 	state.jogoAtual.mobs = NULL; // Alocado depois
 	state.jogoAtual.armas = NULL; // Alocado depois
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";

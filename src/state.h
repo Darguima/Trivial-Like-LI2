@@ -137,6 +137,12 @@ typedef struct statusJogador
 	Arma *inventario;
 } StatusJogador;
 
+typedef enum dificuldadeJogo {
+	FACIL = 0,
+	MEDIO = 1,
+	DIFICIL = 2,
+} DificuldadeJogo;
+
 typedef struct controlosSceneVars
 {
 	int highlight;
@@ -160,6 +166,7 @@ typedef struct scenesVariables
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
+	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
