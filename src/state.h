@@ -68,12 +68,12 @@ typedef struct coordenadas
 
 typedef enum catalogoObjetos
 {
-	pocaoVidaD, // poção de vida que recupera toda a vida
-	pocaoVidaG, // poção de vida Grande (60 vida)
-	pocaoVidaP, // poção de vida Pequena (25 vida)
-	pocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
-	pocaoMagica, // poção que recupera toda a vida e aumenta a vida máxima
-	portalDeBolso, // um portal que envia o jogador ao próximo mapa
+	PocaoVidaD, // poção de vida que recupera toda a vida
+	PocaoVidaG, // poção de vida Grande (60 vida)
+	PocaoVidaP, // poção de vida Pequena (25 vida)
+	PocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
+	PocaoMagica, // poção que recupera toda a vida e aumenta a vida máxima
+	PortalDeBolso, // um portal que envia o jogador ao próximo mapa
 
 }CatalogoObjetos;
 
