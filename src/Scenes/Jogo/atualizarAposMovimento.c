@@ -29,7 +29,7 @@ void atualizarArmas(State *state)
 
 void moverMobs(State *state)
 {
-  for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
+  for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
   {
     int *pos_x = &(state->jogoAtual.mobs[mob_i].posicao.x);
     int *pos_y = &(state->jogoAtual.mobs[mob_i].posicao.y);

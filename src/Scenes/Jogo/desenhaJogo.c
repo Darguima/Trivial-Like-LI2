@@ -12,22 +12,22 @@
  */
 #define UNUSED(x) (void)(x)
 
-void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state)
+void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int initial_y, int final_y)
 {
 	int bloco_visivel, bloco_descoberto;
 
-	for (int x = 0; x < largura_mapa; x++)
+	for (int window_x = 0, map_x = initial_x; map_x < final_x; window_x++, map_x++)
 	{
-		for (int y = 0; y < altura_mapa; y++)
+		for (int window_y = 0, map_y = initial_y; map_y < final_y; window_y++, map_y++)
 		{
-			bloco_visivel = state->mapa.matrix[x][y].visivel;
-			bloco_descoberto = state->mapa.matrix[x][y].descoberto;
+			bloco_visivel = state->mapa.matrix[map_x][map_y].visivel;
+			bloco_descoberto = state->mapa.matrix[map_x][map_y].descoberto;
 
 			// Nunca foi visto
 			if (bloco_descoberto == 0)
 			{
 				wattron(window, COLOR_PAIR(MapaDesconhecidoColor));
-				mvwaddch(window, y, x, ' ');
+				mvwaddch(window, window_y, window_x, ' ');
 				wattroff(window, COLOR_PAIR(MapaDesconhecidoColor));
 				continue;
 			}
@@ -43,27 +43,27 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state
 				wattron(window, COLOR_PAIR(MapaVisivelColor));
 			}
 
-			switch (state->mapa.matrix[x][y].tipo)
+			switch (state->mapa.matrix[map_x][map_y].tipo)
 			{
 			case Parede:
-				mvwaddch(window, y, x, '#');
+				mvwaddch(window, window_y, window_x, '#');
 				break;
 
 			case Moeda:
 				if (bloco_visivel)
 					wattron(window, COLOR_PAIR(MoedaColor));
 
-				mvwaddch(window, y, x, 'c');
+				mvwaddch(window, window_y, window_x, 'c');
 
 				wattroff(window, COLOR_PAIR(MoedaColor));
 				break;
 
 			case Vazio:
-				mvwaddch(window, y, x, ' ');
+				mvwaddch(window, window_y, window_x, ' ');
 				break;
 
 			default:
-				mvwaddch(window, y, x, ' ');
+				mvwaddch(window, window_y, window_x, ' ');
 				break;
 			}
 
@@ -74,9 +74,9 @@ void desenhaMapa(WINDOW *window, int largura_mapa, int altura_mapa, State *state
 	}
 }
 
-void desenhaArmas(WINDOW *window, State *state)
+void desenhaArmas(WINDOW *window, State *state, int initial_x, int initial_y)
 {
-	for (int arma = 0; arma < armasNoMapaLength; arma++)
+	for (int arma = 0; arma < state->mapa.qntArmasNoMapaLength; arma++)
 	{
 		ArmaNoMapa armaAtual = state->jogoAtual.armas[arma];
 
@@ -90,47 +90,80 @@ void desenhaArmas(WINDOW *window, State *state)
 			wattron(window, COLOR_PAIR(ArmaColor));
 		}
 
-		mvwaddch(window, armaAtual.posicao.y, armaAtual.posicao.x, '%');
+		mvwaddch(window, armaAtual.posicao.y - initial_y, armaAtual.posicao.x - initial_x, '%');
 
 		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 		wattroff(window, COLOR_PAIR(ArmaColor));
 	}
 }
 
-void desenhaMobs(WINDOW *window, State *state)
+void desenhaMobs(WINDOW *window, State *state, int initial_x, int initial_y)
 {
-	for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
+	for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
 	{
 		MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
 
 		if (state->mapa.matrix[mobAtual.posicao.x][mobAtual.posicao.y].visivel == 0 || !(mobAtual.mob.vida > 0))
 			continue;
-		
+
 		wattron(window, COLOR_PAIR(MobColor));
-		mvwprintw(window, mobAtual.posicao.y, mobAtual.posicao.x, "%c", mobAtual.mob.charASCII);
+		mvwprintw(window, mobAtual.posicao.y - initial_y, mobAtual.posicao.x - initial_x, "%c", mobAtual.mob.charASCII);
 		wattroff(window, COLOR_PAIR(MobColor));
 	}
 }
 
-void desenhaJogo(WINDOW *window, State *state, int x, int y)
+void desenhaJogo(WINDOW *window, State *state)
 {
 	ElementosDoMapa **mapa = state->mapa.matrix;
 
-	visao(x, y, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+	visao(state->mapa.matrix_width, state->mapa.matrix_height, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+
+	Coordenadas player_pos = state->jogoAtual.jogador.posicao;
+	int display_width = state->mapa.display_width,
+			display_height = state->mapa.display_height,
+			matrix_width = state->mapa.matrix_width,
+			matrix_height = state->mapa.matrix_height;
+
+	int initial_x = player_pos.x - (display_width - 1) / 2,
+			final_x = initial_x + display_width,
+			initial_y = player_pos.y - (display_height - 1) / 2,
+			final_y = initial_y + display_height;
+
+	if (initial_x < 0)
+	{
+		initial_x = 0;
+		final_x = display_width;
+	}
+	else if (final_x > matrix_width)
+	{
+		initial_x = matrix_width - display_width;
+		final_x = matrix_width;
+	}
+
+	if (initial_y < 0)
+	{
+		initial_y = 0;
+		final_y = display_height;
+	}
+	else if (final_y > matrix_height)
+	{
+		initial_y = matrix_height - display_height;
+		final_y = matrix_height;
+	}
 
 	/*
 	 * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
 	 * Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
 	 */
-	desenhaMapa(window, x, y, state);
-	desenhaArmas(window, state);
-	desenhaMobs(window, state);
+	
+	desenhaMapa(window, state, initial_x, final_x, initial_y, final_y);
+	desenhaArmas(window, state, initial_x, initial_y);
+	desenhaMobs(window, state, initial_x, initial_y);
 
 	wattron(window, COLOR_PAIR(MapaPlayerColor));
-	mvwaddch(window, state->jogoAtual.jogador.posicao.y, state->jogoAtual.jogador.posicao.x, '@');
+	mvwaddch(window, state->jogoAtual.jogador.posicao.y - initial_y, state->jogoAtual.jogador.posicao.x - initial_x, '@');
 	wattroff(window, COLOR_PAIR(MapaPlayerColor));
 
-	wmove(window, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
 	wrefresh(window);
 
 	return;
@@ -141,7 +174,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	UNUSED(window);
 
 	// fronteira menu esquerdo
-	WINDOW *l_win = newwin(state->mapa.height, 20, 5, 0);
+	WINDOW *l_win = newwin(state->mapa.display_height, 20, 5, 0);
 	box(l_win, 0, 0);
 
 	// num mapa atual
@@ -187,12 +220,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	wrefresh(l_win);
 
 	// fronteira menu direito
-	WINDOW *r_win = newwin(state->mapa.height, 20, 5, state->mapa.terminal.width - 20);
+	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
 	wrefresh(r_win);
 
 	// fronteira esquerda menu de baixo
-	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, 0);
+	WINDOW *b_e_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, 0);
 	box(b_e_win, 0, 0);
 	// mensagem
 	mvwprintw(b_e_win, 1, 1, "%s", state->jogoAtual.mensagem_descricao);
@@ -200,12 +233,12 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	wrefresh(b_e_win);
 
 	// fronteira direita menu de baixo
-	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.height + 5, state->mapa.terminal.width / 2 + 17);
+	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, state->mapa.terminal.width / 2 + 17);
 	box(b_d_win, 0, 0);
 	wrefresh(b_d_win);
 
 	// fronteira centro menu de baixo
-	WINDOW *b_c_win = newwin(5, 33, state->mapa.height + 5, state->mapa.terminal.width / 2 - 16);
+	WINDOW *b_c_win = newwin(5, 33, state->mapa.display_height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
 
 	MobNoMapa *mobSobreposto;

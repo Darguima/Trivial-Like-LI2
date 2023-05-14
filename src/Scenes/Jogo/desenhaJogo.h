@@ -3,4 +3,4 @@
 #include "../../state.h"
 
 void desenhaMenusLaterais(WINDOW *window, State *state);
-void desenhaJogo(WINDOW *window, State *state, int x, int y);
+void desenhaJogo(WINDOW *window, State *state);

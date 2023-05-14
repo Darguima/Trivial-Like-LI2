@@ -5,7 +5,7 @@ int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto)
   int pos_x = state->jogoAtual.jogador.posicao.x;
   int pos_y = state->jogoAtual.jogador.posicao.y;
 
-  for (int mob_i = 0; mob_i < mobsNoMapaLength; mob_i++)
+  for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
   {
     if (
         state->jogoAtual.mobs[mob_i].posicao.x == pos_x &&
@@ -25,7 +25,7 @@ int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
   int pos_x = state->jogoAtual.jogador.posicao.x;
   int pos_y = state->jogoAtual.jogador.posicao.y;
 
-  for (int arma_i = 0; arma_i < armasNoMapaLength; arma_i++)
+  for (int arma_i = 0; arma_i < state->mapa.qntArmasNoMapaLength; arma_i++)
   {
     if (
         state->jogoAtual.armas[arma_i].posicao.x == pos_x &&
@@ -54,7 +54,7 @@ int estaDentroDoMapa(int x, int y, int xmax, int ymax)
 
 int estaSemParede(Mapa mapa, int x, int y)
 {
-  return estaDentroDoMapa(x, y, mapa.width, mapa.height) && mapa.matrix[x][y].tipo != Parede;
+  return estaDentroDoMapa(x, y, mapa.matrix_width, mapa.matrix_height) && mapa.matrix[x][y].tipo != Parede;
 }
 
 // O user pode entrar nesta posição e não vai estar a sobrepor nada
@@ -62,7 +62,7 @@ int estaTotalmenteLivreParaOUser(State *state, int x, int y)
 {
   int *null = 0;
 
-  return estaDentroDoMapa(x, y, state->mapa.width, state->mapa.height) &&
+  return estaDentroDoMapa(x, y, state->mapa.matrix_width, state->mapa.matrix_height) &&
          state->mapa.matrix[x][y].tipo == Vazio &&
          !esta_sobre_arma(state, (ArmaNoMapa **) &null) &&
          !esta_sobre_mob(state, (MobNoMapa **) &null);
