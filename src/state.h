@@ -186,6 +186,7 @@ typedef struct selecionarJogadorSceneVars
 	int delete;		// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
 	int askUser;	// 0nada 1pergunta_username 2continuar_para_jogo
+	int confirmarPocao;
 } SelecionarJogadorSceneVars;
 
 typedef struct scenesVariables
@@ -203,6 +204,8 @@ typedef struct jogoAtual
 	ObjetoNoMapa *objetos;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
+	char *mensagem_direita; /* mensagem de baixo direita*/
+	char *mensagem_descricao_direita;
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo

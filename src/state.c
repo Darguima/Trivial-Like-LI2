@@ -26,12 +26,27 @@ Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
-Objeto const pocaoVidaD       = {0,PocaoVidaD,"Poção de Vida Definitiva",0,"Recupera toda a vida" }; 
-Objeto const pocaoVidaG       = {1,PocaoVidaG,"Poção de Vida Grande",0,"Recupera 70 pontos de vida" };
-Objeto const pocaoVidaP       = {2,PocaoVidaP,"Poção de Vida Pequena",1,"Recupera 40 pontos de vida" };
-Objeto const pocaoAumentoVida = {3,PocaoAumentoVida,"Poção de Aumento de Vida",0,"Aumenta a vida máxima em 25 pontos" };
-Objeto const pocaoMagica      = {4,PocaoMagica,"Poção Mágica",0,"Recupera toda a vida e aumenta a vida máxima em 15 pontos" };
-Objeto const portalDeBolso    = {5,PortalDeBolso,"portalDeBolso",0,"Portal de uma só utilização que muda para o mapa seguinte, amentando a vida máxima em 5 pontos" };
+Objeto const pocaoVidaP       = {0,PocaoVidaP,"Poção de Vida Pequena",1,"Recupera 40 pts de vida." };
+Objeto const pocaoVidaG       = {1,PocaoVidaG,"Poção de Vida Grande",0,"Recupera 70 pts de vida." };
+Objeto const pocaoVidaD       = {2,PocaoVidaD,"Poção de Vida Definitiva",0,"Recupera toda a vida." }; 
+Objeto const pocaoAumentoVida = {3,PocaoAumentoVida,"Poção de Aumento de Vida",0,"Aumenta a vida máxima em 25 pts." };
+Objeto const pocaoMagica      = {4,PocaoMagica,"Poção Mágica",0,"Recupera toda a vida e aumenta a vida máxima em 15 pts." };
+Objeto const portalDeBolso    = {5,PortalDeBolso,"portalDeBolso",0,"Portal de uma só uso que muda o mapa. Amentando a vida máxima em 5 pts." };
+
+/*
+Objeto const ...
+não pode conter quantidade
+
+ObjetoNoMapa -> coordenadas
+ObjetoNoInventario -> quantidade.
+
+struct statusJogador.inventario é do tipo *ObjetoNoInventario (array de ObjetoNoInventario). DEfine-lo no state.c com malloc. E no selecionarJogador, crias um loop para atribuir 0 quantidade a todos os elementos
+tamanho do array = catalogoObjetosLength;
+
+vais aos eventosJogo.c, descobres o tipo de objeto q estas sobreposto, encontras esse objeot no array inventario, e aumentas 1 À sua quantidade.
+
+*/
+
 
 int const catalogoObjetosLength = 6;
 Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG,pocaoVidaP,pocaoAumentoVida,pocaoMagica,portalDeBolso};
@@ -83,6 +98,7 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.objetos = NULL; // Alocado depois
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
+	state.jogoAtual.mensagem_direita = ' ';
 
 	return state;
 }

@@ -143,14 +143,14 @@ void desenhaJogo(WINDOW *window, State *state)
 
 	Coordenadas player_pos = state->jogoAtual.jogador.posicao;
 	int display_width = state->mapa.display_width,
-			display_height = state->mapa.display_height,
-			matrix_width = state->mapa.matrix_width,
-			matrix_height = state->mapa.matrix_height;
+		display_height = state->mapa.display_height,
+		matrix_width = state->mapa.matrix_width,
+		matrix_height = state->mapa.matrix_height;
 
 	int initial_x = player_pos.x - (display_width - 1) / 2,
-			final_x = initial_x + display_width,
-			initial_y = player_pos.y - (display_height - 1) / 2,
-			final_y = initial_y + display_height;
+		final_x = initial_x + display_width,
+		initial_y = player_pos.y - (display_height - 1) / 2,
+		final_y = initial_y + display_height;
 
 	if (initial_x < 0)
 	{
@@ -247,6 +247,24 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira menu direito
 	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
+	mvwprintw(r_win, 1, 1, "[1]Pocao Vida P");
+	mvwprintw(r_win, 2, 1, "................X%s", "0"); // nestes 0' vão as quantidades dos itens
+
+	mvwprintw(r_win, 5, 1, "[2]Pocao Vida G");
+	mvwprintw(r_win, 6, 1, "................X%s", "2");
+	
+	mvwprintw(r_win, 9, 1, "[3]Pocao Vida D");
+	mvwprintw(r_win, 10, 1, "................X%s", "1");
+	
+	mvwprintw(r_win, 13, 1, "[4]Pocao Aumento");
+	mvwprintw(r_win, 14, 1, "................X%s", "0");
+	
+	mvwprintw(r_win, 17, 1, "[5]Pocao Magica");
+	mvwprintw(r_win, 18, 1, "................X%s", "0");
+	
+	mvwprintw(r_win, 21, 1, "[6]Portal de Bolso");
+	mvwprintw(r_win, 22, 1, "................X%s", "1");
+
 	wrefresh(r_win);
 
 	// fronteira esquerda menu de baixo
@@ -260,6 +278,14 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira direita menu de baixo
 	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, state->mapa.terminal.width / 2 + 17);
 	box(b_d_win, 0, 0);
+
+	ObjetoNoMapa *objetoSobreposto;
+	if (esta_sobre_objeto(state, &objetoSobreposto))
+	{
+		mvwprintw(b_d_win, 1, 1, "%s", state->jogoAtual.mensagem_direita);
+		mvwprintw(b_d_win, 3, 1, "%s", state->jogoAtual.mensagem_descricao_direita);
+	}
+
 	wrefresh(b_d_win);
 
 	// fronteira centro menu de baixo

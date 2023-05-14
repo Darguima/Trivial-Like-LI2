@@ -47,6 +47,16 @@ void moverMobs(State *state)
   }
 }
 
+void atualizarObjetos(State *state)
+{
+  ObjetoNoMapa *objetoSobreposto;
+	if (esta_sobre_objeto(state, &objetoSobreposto))
+	{
+		state->jogoAtual.mensagem_direita =  "Encontraste um objeto! Pressiona [E] para pegar nele.";
+    state->jogoAtual.mensagem_descricao_direita = objetoSobreposto->objeto.mensagem;
+	}
+}
+
 void atualizarMobs(State *state)
 {
   moverMobs(state);
@@ -76,3 +86,5 @@ void atualizarAposMovimento(State *state)
   atualizarArmas(state);
   atualizarMobs(state);
 }
+
+
