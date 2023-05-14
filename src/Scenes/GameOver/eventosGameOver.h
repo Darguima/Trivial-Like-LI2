@@ -1,3 +1,3 @@
 #include "../../state.h"
 
-void eventosGameOver (State *state);
+void eventosGameOver(State *state);

@@ -1,24 +1,20 @@
 #include <ncurses.h>
-
-#include "../../state.h"
-#include "../../GeraMapa/geraMapa.h"
 #include "./atualizarAposMovimento.h"
+#include "../../state.h"
+#include "../../SalvarJogo/salvarJogo.h"
+#include "../../MapaUtils/mapaUtils.h"
 
 void mover_jogador(State *state, int dx, int dy)
 {
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
 	int temp_y = state->jogoAtual.jogador.posicao.y + dy;
 
-	if (is_pos_free(state->mapa, temp_x, temp_y))
+	if (estaSemParede(state->mapa, temp_x, temp_y))
 	{
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-	// limpa o menu lateral antes de desenhar novamente
-	move(state->mapa.terminal.height - 4, 20);
-	clrtoeol();
-	move(state->mapa.terminal.height - 2, 20);
-	clrtoeol();
+
 	atualizarAposMovimento(state);
 }
 
@@ -36,25 +32,22 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
+	char file[10];
 
 	ArmaNoMapa *armaSobreposta;
 	MobNoMapa *mob_sobreposto;
 
 	switch (key)
 	{
+	case 's':
+
+		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
+		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+		break;
 		/* Interação com mapa */
-
 	case 'z':
-		// Pegar arma principal
-		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
-		{
-			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
-			// Adicionar Arma ao inventário
-			armaSobreposta->disponivel = 0;
-		}
-
 		// atacar com principal
-		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
+		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
 			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
 
@@ -64,29 +57,35 @@ void eventosJogo(State *state)
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
-		break;
-
-	case 'x':
-	
-		// Pegar arma secundária
-		if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
+		// Pegar arma principal
+		else if (esta_sobre_arma(state, &armaSobreposta))
 		{
-			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
+			state->jogoAtual.jogador.armaPrincipal = armaSobreposta->arma;
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-		
+
+		break;
+
+	case 'x':
 		// Atacar com secundária
-		if (esta_sobre_mob(state, &mob_sobreposto) && mob_sobreposto->mob.vida > 0)
+		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
 			int dano = state->jogoAtual.jogador.armaSecundaria.dano;
 
 			mob_sobreposto->mob.vida -= dano;
 			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-			
+
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
-		
+
+		// Pegar arma secundária
+		else if (esta_sobre_arma(state, &armaSobreposta))
+		{
+			state->jogoAtual.jogador.armaSecundaria = armaSobreposta->arma;
+			// Adicionar Arma ao inventário
+			armaSobreposta->disponivel = 0;
+		}
 
 		break;
 
@@ -124,6 +123,7 @@ void eventosJogo(State *state)
 	case KEY_DOWN:
 	case '2':
 		mover_jogador(state, 0, +1);
+
 		break;
 
 	case KEY_C3:

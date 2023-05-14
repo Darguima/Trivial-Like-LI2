@@ -15,13 +15,51 @@ typedef enum scene
 
 typedef enum colors
 {
+	// ncurses default colors
+	BLACK,
+	RED,
+	GREEN,
+	YELLOW,
+	BLUE,
+	MAGENTA,
+	CYAN,
+	WHITE,
+
+	FG_MapaVisivel,
+	BG_MapaVisivel,
+
+	FG_MapaMemoria,
+	BG_MapaMemoria,
+
+	FG_MapaDesconhecido,
+	BG_MapaDesconhecido,
+
+	FG_Player,
+	FG_Mob,
+	FG_Arma,
+	FG_Moeda,
+} Colors;
+
+typedef enum colorsSchema
+{
 	WhiteBlack,
 	YellowBlack,
 	BlueBlack,
 	GreenBlack,
 	BlackYellow,
 	BlackRed,
-} Colors;
+	RedBlack,
+
+	MapaPlayerColor,
+
+	MapaVisivelColor,
+	MapaMemoriaColor,
+	MapaDesconhecidoColor,
+
+	MobColor,
+	ArmaColor,
+	MoedaColor,
+} ColorsScheme;
 
 typedef struct coordenadas
 {
@@ -68,6 +106,7 @@ typedef enum catalogoArmas
 
 typedef struct arma
 {
+	int index;
 	CatalogoArmas tipoArma;
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
@@ -96,9 +135,12 @@ typedef enum catalogoMobs
 typedef struct mob
 {												// podem haver mais que um mob com armas diferentes
 	CatalogoMobs tipomob; // recebe qual o tipo do mob
+	char *nome;						// nome do mob
+	char charASCII;				// char pelo qual se refere ao mob
 	Arma arma;						// o mob possui uma arma só. Aqui temos de aplicar uma das armas do struct Armas
-	int vida;
-	int raioVisao; // o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
+	int vida;							// vida do mob instantanea
+	int vidaMaxima;				// máxima vida do mob
+	int raioVisao;				// o raio de visão pode variar entre 1 e 10 (provisório). o raio de visão mede-se em quantas 'casas' o mob consegue ver o jogador e começar a atacar
 } Mob;
 
 typedef struct mobNoMapa
@@ -111,41 +153,61 @@ typedef struct statusJogador
 {
 	Coordenadas posicao;
 	char *username;
-	int vida; // valor entre 0 e ...
+	int vida;				// valor entre 0 e ...
 	int vidaMaxima; // vida máxima do jogador
 	Arma armaPrincipal;
 	Arma armaSecundaria;
+	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
 	InventarioS *inventario;
 } StatusJogador;
 
-typedef struct controlosMenu
+typedef struct controlosSceneVars
 {
 	int highlight;
 	int side;
 	int help;
-} ControlosMenu;
+} ControlosSceneVars;
+
+typedef struct selecionarJogadorSceneVars
+{
+	int delete;			// 1modo_apagar_ligado
+	int faildelete; // 1apagar_erro
+	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
+} SelecionarJogadorSceneVars;
+
+typedef struct scenesVariables
+{
+	ControlosSceneVars controlosSceneVars;
+	SelecionarJogadorSceneVars selecionarJogadorSceneVars;
+} ScenesVariables;
 
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
-	char *mensagem_descricao;						 /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 } JogoAtual;
 
-typedef enum elementosDoMapa
+typedef enum elementosDoMapaCatalogo
 {
 	Vazio,						/*   */
 	Jogador,					/* @ */
-	Mobs,							/* M - com foreground ou background vermelho */
 	NPC,							/* & */
 	Parede,						/* # */
 	PortaNormal,			/* + - serve para fechar as salas, no futuro se for possível implementar o conceito de chaves escondidas */
 	PortaProximoMapa, /* +++|+++|+++ - serve para mudar de mapa */
 	Moeda,						/* c */
+} ElementosDoMapaCatalogo;
+
+typedef struct elementosDoMapa
+{
+	ElementosDoMapaCatalogo tipo;
+	int visivel;		// 1 para visivel
+	int descoberto; // 1 para descoberto
 } ElementosDoMapa;
 
 typedef struct terminal
@@ -166,7 +228,7 @@ typedef struct state
 {
 	Scene sceneAtual;
 
-	ControlosMenu controloMenu;
+	ScenesVariables scenesVariables;
 
 	JogoAtual jogoAtual;
 	Mapa mapa;

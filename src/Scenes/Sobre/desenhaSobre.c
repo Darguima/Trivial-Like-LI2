@@ -33,5 +33,5 @@ void desenhaSobre(WINDOW *window, State *state)
   mvwprintw(window, y + 8, x - 12, "Hugo Rauber       Afonso Pedreira");
   mvwprintw(window, y + 10, x - 12, "Rodrigo Macedo    Dário Guimarães");
 
-  mvwprintw(window, nrows - 2, 2, "Pressione 'q' para voltar atrás");
+  mvwprintw(window, nrows - 2, 2, "Pressione [Q] para voltar atrás");
 }

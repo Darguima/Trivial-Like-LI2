@@ -1,7 +1,5 @@
 #include <ncurses.h>
-
 #include "../../state.h"
-
 #include "desenhaControlos.h"
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -28,7 +26,7 @@ void desenhaControlos(WINDOW *window, State *state)
     keypad(menu_win, TRUE); // ativar teclas de setas
     refresh();
 
-    print_menu(menu_win, options, NUM_OPTIONS, state->controloMenu.highlight, state->controloMenu.side, state->controloMenu.help);
+    print_menu(menu_win, options, NUM_OPTIONS, state->scenesVariables.controlosSceneVars.highlight, state->scenesVariables.controlosSceneVars.side, state->scenesVariables.controlosSceneVars.help);
 }
 void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, int highlight, int side, int help)
 {
