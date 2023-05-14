@@ -146,9 +146,9 @@ typedef struct controlosSceneVars
 
 typedef struct selecionarJogadorSceneVars
 {
-	int delete;     //1modo_apagar_ligado
-	int faildelete;//1apagar_erro
-	int askUser;  //0nada 1pergunta_username 2continuar_para_jogo
+	int delete;			// 1modo_apagar_ligado
+	int faildelete; // 1apagar_erro
+	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
 } SelecionarJogadorSceneVars;
 
 typedef struct scenesVariables

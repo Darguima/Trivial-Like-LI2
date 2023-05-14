@@ -47,6 +47,9 @@ State criarEstado(int colunas, int linhas)
 	state.scenesVariables.controlosSceneVars.highlight = 1;
 	state.scenesVariables.controlosSceneVars.side = 0;
 	state.scenesVariables.controlosSceneVars.help = 0;
+	state.scenesVariables.selecionarJogadorSceneVars.delete = 0;
+	state.scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
+	state.scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);
@@ -59,10 +62,6 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
-	state.scenesVariables.selecionarJogadorSceneVars.delete = 0;
-	state.scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
-	state.scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-
 
 	state.jogoAtual.mobs = malloc(mobsNoMapaLength * sizeof(MobNoMapa));
 	state.jogoAtual.armas = malloc(armasNoMapaLength * sizeof(ArmaNoMapa));

@@ -34,8 +34,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   box(window, 0, 0); // desenhar caixa
 
   refresh();
-  mvaddstr(nrows - 14, 2, "                                                     ");
-  mvaddstr(y - 10, x - 17, "Selecione Jogo"); //
+  mvaddstr(y - 10, x - 17, "Selecione Jogo");
   mvaddstr(y, x - 17, "1.");
   mvaddstr(y + 2, x - 17, "2.");
   mvaddstr(y + 4, x - 17, "3.");
@@ -45,29 +44,43 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 
   if (state->scenesVariables.selecionarJogadorSceneVars.delete == 1)
   {
-    mvaddstr(nrows - 8, 2, "Delete Ligado, pressione numero para escolher qual progresso quer apagar('a' : desligar)");
+    mvaddstr(nrows - 8, 2, "Delete Ligado, pressione numero para escolher qual progresso quer apagar ('a' : desligar)");
   }
-  if (state->scenesVariables.selecionarJogadorSceneVars.faildelete == 1)
+  else if (state->scenesVariables.selecionarJogadorSceneVars.faildelete == 1)
   {
     mvaddstr(nrows - 8, 2, "Erro a apagar ficheiro ('a' : apagar mensagem)");
   }
 
-  // usernames em 1. 2. 3.
+  if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 1)
+  {
+    char str[80];
+    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)");
+    refresh();
+    getnstr(str, 30);
+    strcpy(state->jogoAtual.jogador.username, str);
+    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar com novo jogador ou outro numero para continuar com outro jogador", state->jogoAtual.jogador.username);
+    refresh();
+    state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
+  }
+
+  // print usernames
   char *string;
   FILE *fp;
   char buffer[1024];
-  // por username 1
   struct json_object *parsed_json;
   struct json_object *username;
   char filename[10];
+
   for (int i = 1; i <= 3; i++)
   {
     sprintf(filename, "%d.json", i);
     fp = fopen(filename, "r");
+
     if (fp == NULL)
     {
-      // Senao existir "Novo Jogo"
-      mvaddstr(y + (i - 1) * 2, x - 15, "Novo Jogo                     ");
+      move(y + (i - 1) * 2, x - 15);
+      clrtoeol();
+      mvaddstr(y + (i - 1) * 2, x - 15, "Novo Jogo");
     }
     else
     {
@@ -80,16 +93,5 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
       string = (char *)json_object_get_string(username);
       mvaddstr(y + (i - 1) * 2, x - 15, string);
     }
-  }
-  if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 1)
-  {
-    char str[80];
-    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)");
-    refresh();
-    getnstr(str,30);
-    strcpy(state->jogoAtual.jogador.username, str);
-    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar com novo jogador ou outro numero para continuar com outro jogador", state->jogoAtual.jogador.username);
-    refresh();
-    state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
   }
 }

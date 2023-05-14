@@ -42,12 +42,12 @@ void load_game_state(const char *filename, State *state)
 	FILE *fp;
 	char buffer[1024];
 	struct json_object *parsed_json,
-		*vida,
-		*username,
-		*numMapaAtual,
-		*dinheiro,
-		*armaPrincipalIndex,
-		*armaSecundariaIndex;
+			*vida,
+			*username,
+			*numMapaAtual,
+			*dinheiro,
+			*armaPrincipalIndex,
+			*armaSecundariaIndex;
 
 	// load ficheiro
 	fp = fopen(filename, "r");
@@ -64,7 +64,9 @@ void load_game_state(const char *filename, State *state)
 	}
 	else
 	{
-		if (fread(buffer, 1024, 1, fp)){}
+		if (fread(buffer, 1024, 1, fp))
+		{
+		}
 		fclose(fp);
 		parsed_json = json_tokener_parse(buffer);
 

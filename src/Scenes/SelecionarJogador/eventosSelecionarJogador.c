@@ -24,11 +24,10 @@ void eventosSelecionarJogador(State *state)
 				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 				state->jogoAtual.jogador.numSave = 1;
 				load_game_state("1.json", state);
-				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 )
+				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
 				{
 					state->sceneAtual = Jogo;
 				}
-				
 			}
 		}
 		break;
@@ -49,11 +48,10 @@ void eventosSelecionarJogador(State *state)
 				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 				state->jogoAtual.jogador.numSave = 2;
 				load_game_state("2.json", state);
-				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 )
+				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
 				{
 					state->sceneAtual = Jogo;
 				}
-				
 			}
 		}
 		break;
@@ -75,11 +73,10 @@ void eventosSelecionarJogador(State *state)
 				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 				state->jogoAtual.jogador.numSave = 3;
 				load_game_state("3.json", state);
-				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 )
+				if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
 				{
 					state->sceneAtual = Jogo;
 				}
-				
 			}
 		}
 		break;
@@ -91,7 +88,7 @@ void eventosSelecionarJogador(State *state)
 		}
 		break;
 	case 'd':
-	    state->scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
+		state->scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
 		state->scenesVariables.selecionarJogadorSceneVars.delete = 1;
 		break;
 	case 'a':
