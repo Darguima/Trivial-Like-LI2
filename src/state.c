@@ -99,6 +99,9 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 	state.jogoAtual.mensagem_direita = " ";
+	state.jogoAtual.mensagem_descricao_direita = " ";
+
+
 
 	return state;
 }
