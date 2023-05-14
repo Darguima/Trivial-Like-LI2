@@ -116,29 +116,29 @@ void eventosJogo(State *state)
 		mover_jogador(state, 0, +1);
 		break;
 
-		// Inventário
-	//case '1':
-	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaP.mensagem;
-	//	break;
-	//case '2':
-	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaG.mensagem;
-	//	break;
-//
-	//case '3':
-	//state->jogoAtual.mensagem_descricao_direita = pocaoVidaD.mensagem;
-	//	break;
-//
-	//case '4':
-	//state->jogoAtual.mensagem_descricao_direita = pocaoAumentoVida.mensagem;
-	//	break;
-//
-	//case '5':
-	//state->jogoAtual.mensagem_descricao_direita = pocaoMagica.mensagem;
-	//	break;
-//
-	//case '6':
-	//state->jogoAtual.mensagem_descricao_direita = portalDeBolso.mensagem;
-	//	break;
+	// Inventário
+	case '1':
+	state->jogoAtual.mensagem_descricao_direita = pocaoVidaP.mensagem;
+		break;
+	case '2':
+	state->jogoAtual.mensagem_descricao_direita = pocaoVidaG.mensagem;
+		break;
+	
+	case '3':
+	state->jogoAtual.mensagem_descricao_direita = pocaoVidaD.mensagem;
+		break;
+	
+	case '4':
+	state->jogoAtual.mensagem_descricao_direita = pocaoAumentoVida.mensagem;
+		break;
+	
+	case '5':
+	state->jogoAtual.mensagem_descricao_direita = pocaoMagica.mensagem;
+		break;
+	
+	case '6':
+	state->jogoAtual.mensagem_descricao_direita = portalDeBolso.mensagem;
+		break;
 
 		// Sair
 	case 'q':
