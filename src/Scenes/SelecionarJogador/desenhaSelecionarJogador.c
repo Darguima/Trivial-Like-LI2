@@ -19,6 +19,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 {
   UNUSED(window);
   UNUSED(state);
+  
   geraMapa(state);
 
   int nrows, ncols;

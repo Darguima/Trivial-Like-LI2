@@ -110,7 +110,7 @@ int main()
 		case Jogo:
 			wrefresh(window);
 			desenhaMenusLaterais(window, &state);
-			desenhaJogo(janela_do_jogo, &state, ncols - 40, nrows - 10);
+			desenhaJogo(janela_do_jogo, &state);
 			eventosJogo(&state);
 
 			break;

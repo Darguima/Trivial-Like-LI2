@@ -45,8 +45,8 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.terminal.height = linhas;
 	state.mapa.display_width = colunas - 40;
 	state.mapa.display_height = linhas - 10;
-	state.mapa.matrix_width = state.mapa.display_width;
-	state.mapa.matrix_height = state.mapa.display_height;
+	state.mapa.matrix_width = 500;
+	state.mapa.matrix_height = 500;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
 	state.mapa.qntMoedasNoMapaLength = 0;
