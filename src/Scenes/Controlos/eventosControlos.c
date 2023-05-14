@@ -11,24 +11,24 @@ void eventosControlos(State *state)
     switch (key)
     {
     case KEY_UP:
-        (state->controloMenu.highlight)--;
-        if ((state->controloMenu.highlight) == 0)
+        (state->scenesVariables.controlosSceneVars.highlight)--;
+        if ((state->scenesVariables.controlosSceneVars.highlight) == 0)
         {
-            (state->controloMenu.highlight) = 1;
+            (state->scenesVariables.controlosSceneVars.highlight) = 1;
         }
         break;
     case KEY_DOWN:
-        (state->controloMenu.highlight)++;
-        if ((state->controloMenu.highlight) - 1 == NUM_OPTIONS)
+        (state->scenesVariables.controlosSceneVars.highlight)++;
+        if ((state->scenesVariables.controlosSceneVars.highlight) - 1 == NUM_OPTIONS)
         {
-            (state->controloMenu.highlight) = NUM_OPTIONS;
+            (state->scenesVariables.controlosSceneVars.highlight) = NUM_OPTIONS;
         }
         break;
     case KEY_LEFT:
-        (state->controloMenu.side) = 0;
+        (state->scenesVariables.controlosSceneVars.side) = 0;
         break;
     case KEY_RIGHT:
-        (state->controloMenu.side) = 1;
+        (state->scenesVariables.controlosSceneVars.side) = 1;
         break;
     case 'q':
         state->sceneAtual = MenuInicial;
@@ -36,12 +36,12 @@ void eventosControlos(State *state)
     default:
         break;
     }
-    if ((state->controloMenu.side) == 1 && key == 10)
+    if ((state->scenesVariables.controlosSceneVars.side) == 1 && key == 10)
     {
-        (state->controloMenu.help) = 1;
+        (state->scenesVariables.controlosSceneVars.help) = 1;
     }
-    if ((state->controloMenu.side) == 0)
+    if ((state->scenesVariables.controlosSceneVars.side) == 0)
     {
-        (state->controloMenu.help) = 0;
+        (state->scenesVariables.controlosSceneVars.help) = 0;
     }
 }

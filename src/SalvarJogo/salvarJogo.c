@@ -42,23 +42,29 @@ void load_game_state(const char *filename, State *state)
 	FILE *fp;
 	char buffer[1024];
 	struct json_object *parsed_json,
-			*vida,
-			*username,
-			*numMapaAtual,
-			*dinheiro,
-			*armaPrincipalIndex,
-			*armaSecundariaIndex;
+		*vida,
+		*username,
+		*numMapaAtual,
+		*dinheiro,
+		*armaPrincipalIndex,
+		*armaSecundariaIndex;
 
 	// load ficheiro
 	fp = fopen(filename, "r");
-	if(fp==NULL){state->jogoAtual.jogador.askUser=1;}
-	if (fp != NULL)
+	if (fp == NULL)
 	{
-
-		if (fread(buffer, 1024, 1, fp))
-		{
-		}
-
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 1;
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		state->jogoAtual.jogador.posicao.x = 1;
+		state->jogoAtual.jogador.posicao.y = 1;
+		state->jogoAtual.jogador.numMapaAtual = 1;
+		state->jogoAtual.jogador.dinheiro = 0;
+		state->jogoAtual.jogador.armaPrincipal = punhos;
+		state->jogoAtual.jogador.armaSecundaria = punhos;
+	}
+	else
+	{
+		if (fread(buffer, 1024, 1, fp)){}
 		fclose(fp);
 		parsed_json = json_tokener_parse(buffer);
 

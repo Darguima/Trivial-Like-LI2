@@ -135,17 +135,27 @@ typedef struct statusJogador
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
 	Arma *inventario;
-	int delete;     //1modo_apagar_ligado
-	int faildelete;//1apagar_erro
-	int askUser;  //0nada 1pergunta_username 2continuar_para_jogo
 } StatusJogador;
 
-typedef struct controlosMenu
+typedef struct controlosSceneVars
 {
 	int highlight;
 	int side;
 	int help;
-} ControlosMenu;
+} ControlosSceneVars;
+
+typedef struct selecionarJogadorSceneVars
+{
+	int delete;     //1modo_apagar_ligado
+	int faildelete;//1apagar_erro
+	int askUser;  //0nada 1pergunta_username 2continuar_para_jogo
+} SelecionarJogadorSceneVars;
+
+typedef struct scenesVariables
+{
+	ControlosSceneVars controlosSceneVars;
+	SelecionarJogadorSceneVars selecionarJogadorSceneVars;
+} ScenesVariables;
 
 typedef struct jogoAtual
 {
@@ -192,7 +202,7 @@ typedef struct state
 {
 	Scene sceneAtual;
 
-	ControlosMenu controloMenu;
+	ScenesVariables scenesVariables;
 
 	JogoAtual jogoAtual;
 	Mapa mapa;
