@@ -19,21 +19,13 @@ void mover_jogador(State *state, int dx, int dy)
 	atualizarAposMovimento(state);
 }
 
-/*
-Arma:
-	1 - para principal
-	2 - para secundária
-*/
-void danoComProbabilidadeAcertar(State *state, int arma, MobNoMapa *mob_sobreposto)
+int ataqueComProbabilidade(Arma arma, int *vida_vitima)
 {
-	Arma arma_player = arma == 1 ? state->jogoAtual.jogador.armaPrincipal : state->jogoAtual.jogador.armaSecundaria;
-	Arma arma_mob = mob_sobreposto->mob.arma;
+	int acertou = rand() % 100 < arma.probabilidade ? 1 : 0;
 
-	int player_acertou = rand() % 100 < arma_player.probabilidade ? 1 : 0;
-	int mob_acertou = rand() % 100  < arma_mob.probabilidade ? 1 : 0;
+	*vida_vitima -= arma.dano * acertou;
 
-	mob_sobreposto->mob.vida -= arma_player.dano * player_acertou;
-	state->jogoAtual.jogador.vida -= arma_mob.dano * mob_acertou;
+	return acertou;
 }
 
 // a função reageVida verifica se o jogador tá morto para dar GameOver
@@ -69,7 +61,8 @@ void eventosJogo(State *state)
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			danoComProbabilidadeAcertar(state, 1, mob_sobreposto);
+			ataqueComProbabilidade(state->jogoAtual.jogador.armaPrincipal, &(mob_sobreposto->mob.vida));
+			ataqueComProbabilidade(mob_sobreposto->mob.arma, &(state->jogoAtual.jogador.vida));
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
@@ -87,7 +80,8 @@ void eventosJogo(State *state)
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			danoComProbabilidadeAcertar(state, 2, mob_sobreposto);
+			ataqueComProbabilidade(state->jogoAtual.jogador.armaSecundaria, &(mob_sobreposto->mob.vida));
+			ataqueComProbabilidade(mob_sobreposto->mob.arma, &(state->jogoAtual.jogador.vida));
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "./eventosJogo.h"
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
@@ -57,9 +58,35 @@ void moverMobs(State *state)
   }
 }
 
+void atacarComMobs(State *state)
+{
+  Coordenadas player_pos = state->jogoAtual.jogador.posicao;
+
+  for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
+  {
+    MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
+
+    // Monstros atacam na vertical e horizontal e no sítio
+    if (
+        ((mobAtual.posicao.x - 1 == player_pos.x || mobAtual.posicao.x + 1 == player_pos.x) && mobAtual.posicao.y == player_pos.y) ||
+        ((mobAtual.posicao.y - 1 == player_pos.y || mobAtual.posicao.y + 1 == player_pos.y) && mobAtual.posicao.x == player_pos.x) ||
+        (mobAtual.posicao.x == player_pos.x && mobAtual.posicao.y == player_pos.y))
+    {
+      if (ataqueComProbabilidade(mobAtual.mob.arma, &(state->jogoAtual.jogador.vida)))
+      {
+        state->jogoAtual.mensagem_descricao = "Estás a ser atacado!";
+        state->jogoAtual.mensagem_controlos = "Foge, ou coloca-te em posição de combate.";
+      }
+
+      reageVida(state);
+    }
+  }
+}
+
 void atualizarMobs(State *state)
 {
   moverMobs(state);
+  atacarComMobs(state);
 
   MobNoMapa *mobSobreposto;
   if (esta_sobre_mob(state, &mobSobreposto))
