@@ -85,7 +85,6 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.posicao.x = 1;
 	state.jogoAtual.jogador.posicao.y = 1;
 	state.jogoAtual.jogador.numMapaAtual = 1;
-	state.jogoAtual.jogador.inventario = NULL; // Alocado depois
 	state.jogoAtual.jogador.dinheiro = 0;
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;

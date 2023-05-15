@@ -256,6 +256,23 @@ void adicionarMobs(State *state)
 	}
 }
 
+// Encontrar uma posição livre para o user dar spawn
+void encontrarPosicaoLivreUser(State *state)
+{
+	int pos_x = state->mapa.matrix_width / 2;
+	int pos_y = state->mapa.matrix_height / 2;
+
+	int x_offset;
+	for (
+			x_offset = 0;
+			x_offset < state->mapa.matrix_width / 2 && !estaTotalmenteLivreParaOUser(state, pos_x + x_offset, pos_y);
+			x_offset++)
+		;
+
+	state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
+	state->jogoAtual.jogador.posicao.y = pos_y;
+}
+
 void geraMapa(State *state)
 {
 	int largura_mapa = state->mapa.matrix_width;
@@ -273,35 +290,7 @@ void geraMapa(State *state)
 	adicionarObjetos(state);
 	adicionarMobs(state);
 
-	// Encontrar uma posição livre para o user dar spawn
-	int pos_x = 1;
-	int pos_y = 1;
-
-	int radius, x_offset = 0, y_offset = 0;
-
-	for (radius = 1; radius < altura_mapa; radius++)
-	{
-		for (
-				x_offset = radius, y_offset = 0;
-				y_offset <= radius && !estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset);
-				y_offset++)
-			;
-
-		if (estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset))
-			break;
-
-		for (
-				y_offset = radius, x_offset = 0;
-				x_offset <= radius && !estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset);
-				x_offset++)
-			;
-
-		if (estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset))
-			break;
-	}
-
-	state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
-	state->jogoAtual.jogador.posicao.y = pos_y + y_offset;
+	encontrarPosicaoLivreUser(state);
 
 	return;
 }
