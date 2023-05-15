@@ -62,6 +62,10 @@ typedef enum colorsSchema
 	ArmaColor,
 	ObjetoColor,
 	MobColor,
+
+	ArmaBox,
+	ObjetoBox,
+	MobBox
 } ColorsScheme;
 
 typedef struct coordenadas
@@ -204,8 +208,8 @@ typedef struct jogoAtual
 	ObjetoNoMapa *objetos;
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
-	char *mensagem_direita; /* mensagem de baixo direita*/
-	char *mensagem_descricao_direita;
+	char *mensagem_inventario; /* mensagem de baixo direita*/
+	char *mensagem_inventario_controlos;
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo

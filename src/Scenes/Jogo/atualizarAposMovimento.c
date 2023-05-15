@@ -27,6 +27,16 @@ void atualizarArmas(State *state)
   }
 }
 
+void atualizarObjetos(State *state)
+{
+  ObjetoNoMapa *objetoSobreposto;
+  if (esta_sobre_objeto(state, &objetoSobreposto))
+  {
+    state->jogoAtual.mensagem_descricao = objetoSobreposto->objeto.mensagem;
+    state->jogoAtual.mensagem_controlos = "Encontraste um objeto! Pressiona [E] para pegar nele.";
+  }
+}
+
 void moverMobs(State *state)
 {
   for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
@@ -45,17 +55,6 @@ void moverMobs(State *state)
       *pos_y += y_deslocamento;
     }
   }
-}
-
-void atualizarObjetos(State *state)
-{
-  ObjetoNoMapa *objetoSobreposto;
-	if (esta_sobre_objeto(state, &objetoSobreposto))
-	{
-    state->jogoAtual.mensagem_descricao_direita = objetoSobreposto->objeto.mensagem;
-		state->jogoAtual.mensagem_direita =  "Encontraste um objeto! Pressiona [E] para pegar nele.";
-    
-	}
 }
 
 void atualizarMobs(State *state)
@@ -79,14 +78,13 @@ void atualizarAposMovimento(State *state)
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
   /*
-	* A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
-	* Quanto mais para o fim estiver a função, maior prioridade têm as suas alterações, sobrescrevendo
-  * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos) 
-	*/
+   * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
+   * Quanto mais para o fim estiver a função, maior prioridade têm as suas alterações, sobrescrevendo
+   * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos)
+   */
+
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
   atualizarObjetos(state);
   atualizarMobs(state);
 }
-
-

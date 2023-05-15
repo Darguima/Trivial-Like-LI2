@@ -80,6 +80,10 @@ int main()
 	init_pair(ObjetoColor, FG_Objeto, BG_MapaVisivel);
 	init_pair(MobColor, FG_Mob, BG_MapaVisivel);
 
+	init_pair(ArmaBox, FG_Arma, COLOR_BLACK);
+	init_pair(ObjetoBox, FG_Objeto, COLOR_BLACK);
+	init_pair(MobBox, FG_Mob, COLOR_BLACK);
+
 	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
 
 	Scene sceneAnterior = state.sceneAtual;
