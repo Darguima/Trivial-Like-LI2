@@ -19,7 +19,16 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 {
   UNUSED(window);
   UNUSED(state);
-  
+
+  // Resetar valores para um novo jogo
+  state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+  state->jogoAtual.jogador.posicao.x = 1;
+  state->jogoAtual.jogador.posicao.y = 1;
+  state->jogoAtual.jogador.numMapaAtual = 1;
+  state->jogoAtual.jogador.dinheiro = 0;
+  state->jogoAtual.jogador.armaPrincipal = punhos;
+  state->jogoAtual.jogador.armaSecundaria = punhos;
+
   geraMapa(state);
 
   int nrows, ncols;
