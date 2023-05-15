@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <stdlib.h>
 #include "./atualizarAposMovimento.h"
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
@@ -16,6 +17,23 @@ void mover_jogador(State *state, int dx, int dy)
 	}
 
 	atualizarAposMovimento(state);
+}
+
+/*
+Arma:
+	1 - para principal
+	2 - para secundária
+*/
+void danoComProbabilidadeAcertar(State *state, int arma, MobNoMapa *mob_sobreposto)
+{
+	Arma arma_player = arma == 1 ? state->jogoAtual.jogador.armaPrincipal : state->jogoAtual.jogador.armaSecundaria;
+	Arma arma_mob = mob_sobreposto->mob.arma;
+
+	int player_acertou = rand() % 100 < arma_player.probabilidade ? 1 : 0;
+	int mob_acertou = rand() % 100  < arma_mob.probabilidade ? 1 : 0;
+
+	mob_sobreposto->mob.vida -= arma_player.dano * player_acertou;
+	state->jogoAtual.jogador.vida -= arma_mob.dano * mob_acertou;
 }
 
 // a função reageVida verifica se o jogador tá morto para dar GameOver
@@ -51,11 +69,7 @@ void eventosJogo(State *state)
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
-
-			mob_sobreposto->mob.vida -= dano;
-			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-
+			danoComProbabilidadeAcertar(state, 1, mob_sobreposto);
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
@@ -73,11 +87,7 @@ void eventosJogo(State *state)
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			int dano = state->jogoAtual.jogador.armaSecundaria.dano;
-
-			mob_sobreposto->mob.vida -= dano;
-			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-
+			danoComProbabilidadeAcertar(state, 2, mob_sobreposto);
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 

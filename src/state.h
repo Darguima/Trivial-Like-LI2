@@ -119,7 +119,7 @@ typedef struct arma
 	CatalogoArmas tipoArma;
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
-	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 1
+	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 100
 	char *mensagem;		 // texto que descreve a arma
 } Arma;
 
