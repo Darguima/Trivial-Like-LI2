@@ -188,9 +188,11 @@ void desenhaJogo(WINDOW *window, State *state)
 	desenhaObjetos(window, state, initial_x, initial_y);
 	desenhaMobs(window, state, initial_x, initial_y);
 
-	wattron(window, COLOR_PAIR(MapaPlayerColor));
+	MobNoMapa *mob;
+	wattron(window, COLOR_PAIR(!esta_sobre_mob(state, &mob) ? MapaPlayerColor : MapaPlayerSobAtaqueColor));
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y - initial_y, state->jogoAtual.jogador.posicao.x - initial_x, '@');
 	wattroff(window, COLOR_PAIR(MapaPlayerColor));
+	wattroff(window, COLOR_PAIR(MapaPlayerSobAtaqueColor));
 
 	wrefresh(window);
 

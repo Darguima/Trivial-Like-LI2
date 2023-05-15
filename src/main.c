@@ -73,6 +73,7 @@ int main()
 	init_pair(RedBlack, COLOR_RED, COLOR_BLACK);
 
 	init_pair(MapaPlayerColor, FG_Player, BG_MapaVisivel);
+	init_pair(MapaPlayerSobAtaqueColor, FG_Player, FG_Mob);
 
 	init_pair(MapaVisivelColor, FG_MapaVisivel, BG_MapaVisivel);
 	init_pair(MapaMemoriaColor, FG_MapaMemoria, BG_MapaMemoria);

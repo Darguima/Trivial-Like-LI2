@@ -54,6 +54,7 @@ typedef enum colorsSchema
 	RedBlack,
 
 	MapaPlayerColor,
+	MapaPlayerSobAtaqueColor,
 
 	MapaVisivelColor,
 	MapaMemoriaColor,
