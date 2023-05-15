@@ -48,6 +48,9 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 			case Parede:
 				mvwaddch(window, window_y, window_x, '#');
 				break;
+			case PortaProximoMapa:
+				mvwaddch(window, window_y, window_x, '+');
+				break;
 
 			case Moeda:
 				if (bloco_visivel)
@@ -57,7 +60,6 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 
 				wattroff(window, COLOR_PAIR(MoedaColor));
 				break;
-
 			case Vazio:
 				mvwaddch(window, window_y, window_x, ' ');
 				break;
@@ -146,14 +148,14 @@ void desenhaJogo(WINDOW *window, State *state)
 
 	Coordenadas player_pos = state->jogoAtual.jogador.posicao;
 	int display_width = state->mapa.display_width,
-			display_height = state->mapa.display_height,
-			matrix_width = state->mapa.matrix_width,
-			matrix_height = state->mapa.matrix_height;
+		display_height = state->mapa.display_height,
+		matrix_width = state->mapa.matrix_width,
+		matrix_height = state->mapa.matrix_height;
 
 	int initial_x = player_pos.x - (display_width - 1) / 2,
-			final_x = initial_x + display_width,
-			initial_y = player_pos.y - (display_height - 1) / 2,
-			final_y = initial_y + display_height;
+		final_x = initial_x + display_width,
+		initial_y = player_pos.y - (display_height - 1) / 2,
+		final_y = initial_y + display_height;
 
 	if (initial_x < 0)
 	{

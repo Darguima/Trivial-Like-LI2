@@ -252,6 +252,7 @@ typedef struct mapa
 	int qntArmasNoMapaLength;
 	int qntObjetosNoMapaLength;
 	int qntMobsNoMapaLength;
+	int qntPortaisNoMapaLength;
 
 	ElementosDoMapa **matrix;
 } Mapa;

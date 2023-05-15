@@ -181,6 +181,9 @@ void calcularQuantidadeElementosMapa(State *state)
 
 	// Probabilidade de aparecer uma moeda = 1 / 600
 	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
+
+	// Probabilidade de aparecer uma portal = 1 / 45000
+	state->mapa.qntPortaisNoMapaLength = area / calcularProbabilidadeComDificuldade(500, dificuldade, +1);
 }
 
 void adicionarMoedas(State *state)
@@ -196,6 +199,35 @@ void adicionarMoedas(State *state)
 		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
+	}
+}
+
+void adicionarPortais(State *state)
+{
+	int portalX = 0;
+	int portalY = 0;
+	int distance;
+
+	for (int portais_gerados = 0; portais_gerados < state->mapa.qntPortaisNoMapaLength; portais_gerados++)
+	{
+		int pos_x, pos_y;
+
+		do
+		{
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
+			distance = abs(pos_x - 150) + abs(pos_y - 150);
+			
+		} while (state->mapa.matrix[pos_x][pos_y].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y].tipo != Parede && state->mapa.matrix[pos_x][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x][pos_y+2].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y+2].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y+2].tipo != Parede && distance!=150 ); //distancia minima pode ser maior ou menor
+		state->mapa.matrix[portalX][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX][portalY + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY + 2].tipo = PortaProximoMapa;
 	}
 }
 
@@ -264,9 +296,9 @@ void encontrarPosicaoLivreUser(State *state)
 
 	int x_offset;
 	for (
-			x_offset = 0;
-			x_offset < state->mapa.matrix_width / 2 && !estaTotalmenteLivreParaOUser(state, pos_x + x_offset, pos_y);
-			x_offset++)
+		x_offset = 0;
+		x_offset < state->mapa.matrix_width / 2 && !estaTotalmenteLivreParaOUser(state, pos_x + x_offset, pos_y);
+		x_offset++)
 		;
 
 	state->jogoAtual.jogador.posicao.x = pos_x + x_offset;
@@ -285,6 +317,7 @@ void geraMapa(State *state)
 	// Gerar Elementos
 	calcularQuantidadeElementosMapa(state);
 
+	adicionarPortais(state);
 	adicionarMoedas(state);
 	adicionarArmas(state);
 	adicionarObjetos(state);

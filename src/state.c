@@ -69,12 +69,13 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.terminal.height = linhas;
 	state.mapa.display_width = colunas - 40;
 	state.mapa.display_height = linhas - 10;
-	state.mapa.matrix_width = 300;
-	state.mapa.matrix_height = 300;
+	state.mapa.matrix_width = 200;
+	state.mapa.matrix_height = 200;
 	state.mapa.qntMoedasNoMapaLength = 0;
 	state.mapa.qntObjetosNoMapaLength = 0;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
+	state.mapa.qntPortaisNoMapaLength = 0;
 	state.mapa.matrix = (ElementosDoMapa **)malloc(state.mapa.matrix_width * sizeof(ElementosDoMapa *));
 	for (int i = 0; i < state.mapa.matrix_width; i++)
 		state.mapa.matrix[i] = (ElementosDoMapa *)malloc(state.mapa.matrix_height * sizeof(ElementosDoMapa));

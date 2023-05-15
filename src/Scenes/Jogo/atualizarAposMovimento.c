@@ -4,6 +4,16 @@
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
 
+void atualizarPortais(State *state, int pos_x, int pos_y)
+{
+  ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
+
+  if (elementoMapa.tipo != PortaProximoMapa)
+    return;
+  state->jogoAtual.jogador.numMapaAtual++;
+  geraMapa(state);
+}
+
 void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
   ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
@@ -110,6 +120,7 @@ void atualizarAposMovimento(State *state)
    * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos)
    */
 
+  atualizarPortais(state, pos_x, pos_y);
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
   atualizarObjetos(state);
