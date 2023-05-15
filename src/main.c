@@ -12,6 +12,12 @@
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
 
+#include "Scenes/GameOver/desenhaGameOver.h"
+#include "Scenes/GameOver/eventosGameOver.h"
+
+#include "Scenes/Definicoes/desenhaDefinicoes.h"
+#include "Scenes/Definicoes/eventosDefinicoes.h"
+
 #include "Scenes/Controlos/desenhaControlos.h"
 #include "Scenes/Controlos/eventosControlos.h"
 
@@ -20,9 +26,6 @@
 
 #include "Scenes/Sair/desenhaSair.h"
 #include "Scenes/Sair/eventosSair.h"
-
-#include "Scenes/GameOver/desenhaGameOver.h"
-#include "Scenes/GameOver/eventosGameOver.h"
 
 int main()
 {
@@ -118,7 +121,16 @@ int main()
 			desenhaMenusLaterais(window, &state);
 			desenhaJogo(janela_do_jogo, &state);
 			eventosJogo(&state);
-
+			break;
+		
+		case GameOver:
+			desenhaGameOver(window, &state);
+			eventosGameOver(&state);
+			break;
+		
+		case Definicoes:
+			desenhaDefinicoes(window, &state);
+			eventosDefinicoes(&state);
 			break;
 
 		case Controlos:
@@ -135,10 +147,6 @@ int main()
 			desenhaSair(window, &state);
 			eventosSair(&state);
 			break;
-
-		case GameOver:
-			desenhaGameOver(window, &state);
-			eventosGameOver(&state);
 		}
 
 		move(0, 0);

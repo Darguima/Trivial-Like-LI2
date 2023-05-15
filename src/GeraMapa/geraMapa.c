@@ -4,14 +4,14 @@
 #include "../state.h"
 #include "../MapaUtils/mapaUtils.h"
 
-void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa)
+void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa, int mapa_desconhecido_ativo)
 {
 	for (int i = 0; i < linhas; i++)
 	{
 		for (int n = 0; n < (colunas); n++)
 		{
 			mapa[i][n].visivel = 1;
-			mapa[i][n].descoberto = 0;
+			mapa[i][n].descoberto = mapa_desconhecido_ativo ? 0 : 1;
 
 			if (i == 0 || i == linhas - 1 || n == 0 || (i == linhas - 1 && n == colunas - 1) || n == colunas - 1)
 			{
@@ -279,7 +279,7 @@ void geraMapa(State *state)
 	int altura_mapa = state->mapa.matrix_height;
 
 	// Gerar paredes
-	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
+	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix, state->jogoAtual.mapa_desconhecido_ativo);
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
 
 	// Gerar Elementos

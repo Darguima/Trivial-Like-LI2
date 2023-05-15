@@ -10,16 +10,20 @@ void eventosMenuInicial(State *state)
 	case '1':
 		state->sceneAtual = SelecionarJogador;
 		break;
-
+	
 	case '2':
-		state->sceneAtual = Controlos;
+		state->sceneAtual = Definicoes;
 		break;
 
 	case '3':
-		state->sceneAtual = Sobre;
+		state->sceneAtual = Controlos;
 		break;
 
 	case '4':
+		state->sceneAtual = Sobre;
+		break;
+
+	case '5':
 		state->sceneAtual = Sair;
 		break;
 	}

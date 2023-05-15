@@ -7,10 +7,11 @@ typedef enum scene
 	MenuInicial,			 /* Primeira página que aparece no jogo */
 	SelecionarJogador, /* Transição entre Menu Inicial e Jogo (para escolher o jogador) */
 	Jogo,							 /* O jogo em si, com o status do jogador, mapa e inventário */
+	GameOver,
+	Definicoes,
 	Controlos,
 	Sobre,
 	Sair,
-	GameOver,
 } Scene;
 
 typedef enum colors
@@ -203,6 +204,8 @@ typedef struct jogoAtual
 {
 	StatusJogador jogador;
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
+	int iluminacao_ativa; // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
+	int mapa_desconhecido_ativo; // Se 0, todos os blocos passam a ser conhecidos
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
 	ObjetoNoMapa *objetos;

@@ -139,7 +139,10 @@ void desenhaJogo(WINDOW *window, State *state)
 {
 	ElementosDoMapa **mapa = state->mapa.matrix;
 
-	visao(state->mapa.matrix_width, state->mapa.matrix_height, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+	if (state->jogoAtual.iluminacao_ativa)
+	{
+		visao(state->mapa.matrix_width, state->mapa.matrix_height, mapa, state->jogoAtual.jogador.posicao.x, state->jogoAtual.jogador.posicao.y);
+	}
 
 	Coordenadas player_pos = state->jogoAtual.jogador.posicao;
 	int display_width = state->mapa.display_width,

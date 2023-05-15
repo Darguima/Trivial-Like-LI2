@@ -90,6 +90,8 @@ State criarEstado(int colunas, int linhas)
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
 	state.jogoAtual.dificuldade = FACIL;
+	state.jogoAtual.iluminacao_ativa = 1;
+	state.jogoAtual.mapa_desconhecido_ativo = 1;
 	state.jogoAtual.mobs = NULL;		// Alocado depois
 	state.jogoAtual.armas = NULL;		// Alocado depois
 	state.jogoAtual.objetos = NULL; // Alocado depois
