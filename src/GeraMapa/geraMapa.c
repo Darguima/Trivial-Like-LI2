@@ -169,6 +169,11 @@ void calcularQuantidadeElementosMapa(State *state)
 	free(state->jogoAtual.armas);
 	state->jogoAtual.armas = malloc(state->mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
 
+	// Probabilidade de aparecer uma arma = 1 / 1500
+	state->mapa.qntObjetosNoMapaLength = area / calcularProbabilidadeComDificuldade(1500, dificuldade, +1);
+	free(state->jogoAtual.objetos);
+	state->jogoAtual.objetos = malloc(state->mapa.qntObjetosNoMapaLength * sizeof(ObjetoNoMapa));
+
 	// Probabilidade de aparecer um mob = 1 / 600
 	state->mapa.qntMobsNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, -1);
 	free(state->jogoAtual.mobs);
@@ -188,7 +193,7 @@ void adicionarMoedas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaSemParede(state->mapa, pos_x, pos_y));
+		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
 	}
@@ -204,12 +209,31 @@ void adicionarArmas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaSemParede(state->mapa, pos_x, pos_y));
+		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.armas[armas_geradas].posicao = pos;
 		state->jogoAtual.armas[armas_geradas].disponivel = 1;
 		state->jogoAtual.armas[armas_geradas].arma = catalogoArmas[rand() % catalogoArmasLength];
+	}
+}
+
+void adicionarObjetos(State *state)
+{
+	for (int objetos_gerados = 0; objetos_gerados < state->mapa.qntObjetosNoMapaLength; objetos_gerados++)
+	{
+		int pos_x, pos_y;
+
+		do
+		{
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
+		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
+
+		Coordenadas pos = {pos_x, pos_y};
+		state->jogoAtual.objetos[objetos_gerados].posicao = pos;
+		state->jogoAtual.objetos[objetos_gerados].disponivel = 1;
+		state->jogoAtual.objetos[objetos_gerados].objeto = catalogoObjetos[rand() % catalogoObjetosLength];
 	}
 }
 
@@ -223,7 +247,7 @@ void adicionarMobs(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaSemParede(state->mapa, pos_x, pos_y));
+		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.mobs[mobs_gerados].posicao = pos;
@@ -236,15 +260,19 @@ void geraMapa(State *state)
 	int largura_mapa = state->mapa.matrix_width;
 	int altura_mapa = state->mapa.matrix_height;
 
+	// Gerar paredes
 	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix);
 	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
 
+	// Gerar Elementos
 	calcularQuantidadeElementosMapa(state);
 
 	adicionarMoedas(state);
 	adicionarArmas(state);
+	adicionarObjetos(state);
 	adicionarMobs(state);
 
+	// Encontrar uma posição livre para o user dar spawn
 	int pos_x = 1;
 	int pos_y = 1;
 
@@ -254,20 +282,20 @@ void geraMapa(State *state)
 	{
 		for (
 				x_offset = radius, y_offset = 0;
-				y_offset <= radius && !estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				y_offset <= radius && !estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset);
 				y_offset++)
 			;
 
-		if (estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset))
+		if (estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset))
 			break;
 
 		for (
 				y_offset = radius, x_offset = 0;
-				x_offset <= radius && !estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset);
+				x_offset <= radius && !estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset);
 				x_offset++)
 			;
 
-		if (estaSemParede(state->mapa, pos_x + x_offset, pos_y + y_offset))
+		if (estaTotalmenteLivre(state, pos_x + x_offset, pos_y + y_offset))
 			break;
 	}
 

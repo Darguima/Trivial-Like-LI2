@@ -25,6 +25,7 @@ typedef enum colors
 	CYAN,
 	WHITE,
 
+	// cores do FG-Foreground BG-Background
 	FG_MapaVisivel,
 	BG_MapaVisivel,
 
@@ -35,9 +36,10 @@ typedef enum colors
 	BG_MapaDesconhecido,
 
 	FG_Player,
-	FG_Mob,
-	FG_Arma,
 	FG_Moeda,
+	FG_Arma,
+	FG_Objeto,
+	FG_Mob,
 } Colors;
 
 typedef enum colorsSchema
@@ -56,15 +58,48 @@ typedef enum colorsSchema
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
-	MobColor,
-	ArmaColor,
 	MoedaColor,
+	ArmaColor,
+	ObjetoColor,
+	MobColor,
+
+	ArmaBox,
+	ObjetoBox,
+	MobBox
 } ColorsScheme;
 
 typedef struct coordenadas
 {
 	int x, y;
 } Coordenadas;
+
+typedef enum catalogoObjetos
+{
+	PocaoVidaD,				// poção de vida que recupera toda a vida
+	PocaoVidaG,				// poção de vida Grande (60 vida)
+	PocaoVidaP,				// poção de vida Pequena (25 vida)
+	PocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
+	PocaoMagica,			// poção que recupera toda a vida e aumenta a vida máxima
+	PortalDeBolso,		// um portal que envia o jogador ao próximo mapa
+
+} CatalogoObjetos;
+
+typedef struct objeto
+{
+	int index;
+	CatalogoObjetos objeto;
+	char *nome;			// nome para ser mostrado no inventário
+	int quantidade; // quantidade desse objeto
+	char *mensagem; // mensagem mostrada ao pegar no objeto
+
+} Objeto;
+
+typedef struct objetoNoMapa
+{
+	Coordenadas posicao;
+	int disponivel; // 1 se está disponível no mapa; 0 se o objeto já foi apanhada
+	Objeto objeto;
+} ObjetoNoMapa;
 
 /* Diferentes armas que o player e mobs pode ter */
 typedef enum catalogoArmas
@@ -91,7 +126,7 @@ typedef struct arma
 typedef struct armaNoMapa
 {
 	Coordenadas posicao;
-	int disponivel; /* 1 se está disponível no a mapa; 0 se a arma já foi apanhada */
+	int disponivel; /* 1 se está disponível no mapa; 0 se a arma já foi apanhada */
 	Arma arma;
 } ArmaNoMapa;
 
@@ -134,10 +169,10 @@ typedef struct statusJogador
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
-	Arma *inventario;
 } StatusJogador;
 
-typedef enum dificuldadeJogo {
+typedef enum dificuldadeJogo
+{
 	FACIL = 0,
 	MEDIO = 1,
 	DIFICIL = 2,
@@ -155,6 +190,7 @@ typedef struct selecionarJogadorSceneVars
 	int delete;			// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
 	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
+	int confirmarPocao;
 } SelecionarJogadorSceneVars;
 
 typedef struct scenesVariables
@@ -169,8 +205,11 @@ typedef struct jogoAtual
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
-	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
-	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
+	ObjetoNoMapa *objetos;
+	char *mensagem_descricao;	 /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_controlos;	 /* Mensagem para mostrar um como interagir com o mapa */
+	char *mensagem_inventario; /* mensagem de baixo direita*/
+	char *mensagem_inventario_controlos;
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo
@@ -205,9 +244,10 @@ typedef struct mapa
 	int matrix_height;
 	int matrix_width;
 
-	int qntArmasNoMapaLength;
-	int qntMobsNoMapaLength;
 	int qntMoedasNoMapaLength;
+	int qntArmasNoMapaLength;
+	int qntObjetosNoMapaLength;
+	int qntMobsNoMapaLength;
 
 	ElementosDoMapa **matrix;
 } Mapa;
@@ -249,5 +289,15 @@ extern Mob const zombie1;
 
 extern int const catalogoMobsLength;
 extern Mob const catalogoMobs[];
+
+extern Objeto const pocaoVidaD;
+extern Objeto const pocaoVidaG;
+extern Objeto const pocaoVidaP;
+extern Objeto const pocaoAumentoVida;
+extern Objeto const pocaoMagica;
+extern Objeto const portalDeBolso;
+
+extern int const catalogoObjetosLength;
+extern Objeto const catalogoObjetos[];
 
 #endif

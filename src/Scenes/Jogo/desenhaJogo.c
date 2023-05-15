@@ -97,6 +97,29 @@ void desenhaArmas(WINDOW *window, State *state, int initial_x, int initial_y)
 	}
 }
 
+void desenhaObjetos(WINDOW *window, State *state, int initial_x, int initial_y)
+{
+	for (int objeto = 0; objeto < state->mapa.qntObjetosNoMapaLength; objeto++)
+	{
+		ObjetoNoMapa objetoAtual = state->jogoAtual.objetos[objeto];
+
+		if (!objetoAtual.disponivel || state->mapa.matrix[objetoAtual.posicao.x][objetoAtual.posicao.y].descoberto == 0)
+			continue;
+
+		wattron(window, COLOR_PAIR(MapaMemoriaColor));
+		if (state->mapa.matrix[objetoAtual.posicao.x][objetoAtual.posicao.y].visivel == 1)
+		{
+			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+			wattron(window, COLOR_PAIR(ObjetoColor));
+		}
+
+		mvwaddch(window, objetoAtual.posicao.y - initial_y, objetoAtual.posicao.x - initial_x, 'P');
+
+		wattroff(window, COLOR_PAIR(MapaMemoriaColor));
+		wattroff(window, COLOR_PAIR(ObjetoColor));
+	}
+}
+
 void desenhaMobs(WINDOW *window, State *state, int initial_x, int initial_y)
 {
 	for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
@@ -155,9 +178,11 @@ void desenhaJogo(WINDOW *window, State *state)
 	 * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final do mapa.
 	 * Quanto mais para o fim estiver a função, maior prioridade tem ao ser desenhada no mapa
 	 */
-	
+
+	// as moedas são gravadas dentro do mapa, então a sua prioridade é igual a este
 	desenhaMapa(window, state, initial_x, final_x, initial_y, final_y);
 	desenhaArmas(window, state, initial_x, initial_y);
+	desenhaObjetos(window, state, initial_x, initial_y);
 	desenhaMobs(window, state, initial_x, initial_y);
 
 	wattron(window, COLOR_PAIR(MapaPlayerColor));
@@ -222,6 +247,24 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira menu direito
 	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
+	mvwprintw(r_win, 1, 1, "[1]Pocao Vida P");
+	mvwprintw(r_win, 2, 1, "................X%s", "0"); // nestes 0' vão as quantidades dos itens
+
+	mvwprintw(r_win, 5, 1, "[2]Pocao Vida G");
+	mvwprintw(r_win, 6, 1, "................X%s", "2");
+
+	mvwprintw(r_win, 9, 1, "[3]Pocao Vida D");
+	mvwprintw(r_win, 10, 1, "................X%s", "1");
+
+	mvwprintw(r_win, 13, 1, "[4]Pocao Aumento");
+	mvwprintw(r_win, 14, 1, "................X%s", "0");
+
+	mvwprintw(r_win, 17, 1, "[5]Pocao Magica");
+	mvwprintw(r_win, 18, 1, "................X%s", "0");
+
+	mvwprintw(r_win, 21, 1, "[6]Portal de Bolso");
+	mvwprintw(r_win, 22, 1, "................X%s", "1");
+
 	wrefresh(r_win);
 
 	// fronteira esquerda menu de baixo
@@ -235,11 +278,39 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	// fronteira direita menu de baixo
 	WINDOW *b_d_win = newwin(5, state->mapa.terminal.width / 2 - 16, state->mapa.display_height + 5, state->mapa.terminal.width / 2 + 17);
 	box(b_d_win, 0, 0);
+
+	mvwprintw(b_d_win, 1, 1, "%s", state->jogoAtual.mensagem_inventario);
+	mvwprintw(b_d_win, 3, 1, "%s", state->jogoAtual.mensagem_inventario_controlos);
+
 	wrefresh(b_d_win);
 
 	// fronteira centro menu de baixo
 	WINDOW *b_c_win = newwin(5, 33, state->mapa.display_height + 5, state->mapa.terminal.width / 2 - 16);
 	box(b_c_win, 0, 0);
+
+	ArmaNoMapa *armaSobreposta;
+	if (esta_sobre_arma(state, &armaSobreposta))
+	{
+		char armaLen = (strlen(armaSobreposta->arma.nome)) / 2;
+
+		wbkgd(b_c_win, COLOR_PAIR(ArmaBox));
+
+		// desenha nome da arma
+		mvwprintw(b_c_win, 1, 16 - armaLen, "%s", armaSobreposta->arma.nome);
+		mvwprintw(b_c_win, 2, 9, "%d pts de dano", armaSobreposta->arma.dano);
+		mvwprintw(b_c_win, 3, 9, "%d%% de acertar", armaSobreposta->arma.probabilidade);
+	}
+
+	ObjetoNoMapa *objetoSobreposto;
+	if (esta_sobre_objeto(state, &objetoSobreposto))
+	{
+		char objetoLen = (strlen(objetoSobreposto->objeto.nome)) / 2;
+
+		wbkgd(b_c_win, COLOR_PAIR(ObjetoBox));
+
+		// desenha nome da arma
+		mvwprintw(b_c_win, 1, 16 - objetoLen, "%s", objetoSobreposto->objeto.nome);
+	}
 
 	MobNoMapa *mobSobreposto;
 	if (esta_sobre_mob(state, &mobSobreposto))
@@ -260,19 +331,6 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 				mvwprintw(b_c_win, 3, 9 + i, "#");
 			}
 		}
-	}
-
-	ArmaNoMapa *armaSobreposta;
-	if (esta_sobre_arma(state, &armaSobreposta) && armaSobreposta->disponivel)
-	{
-		char armaLen = (strlen(armaSobreposta->arma.nome)) / 2;
-
-		wbkgd(b_c_win, COLOR_PAIR(GreenBlack));
-
-		// desenha nome da arma
-		mvwprintw(b_c_win, 1, 16 - armaLen, "%s", armaSobreposta->arma.nome);
-		mvwprintw(b_c_win, 2, 9, "%d pts de dano", armaSobreposta->arma.dano);
-		mvwprintw(b_c_win, 3, 9, "%d%% de acertar", armaSobreposta->arma.probabilidade);
 	}
 
 	wrefresh(b_c_win);
