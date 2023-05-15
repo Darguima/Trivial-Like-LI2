@@ -64,6 +64,7 @@ State criarEstado(int colunas, int linhas)
 	state.scenesVariables.selecionarJogadorSceneVars.delete = 0;
 	state.scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
 	state.scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+	state.scenesVariables.definicoesSceneVars.ask_matrix_size = 0;
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;

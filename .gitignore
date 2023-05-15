@@ -2,3 +2,4 @@ triviallike
 *.o
 *.json 
 .vscode
+.gdb_history

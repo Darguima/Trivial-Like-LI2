@@ -195,10 +195,16 @@ typedef struct selecionarJogadorSceneVars
 	int confirmarPocao;
 } SelecionarJogadorSceneVars;
 
+typedef struct definicoesSceneVars
+{
+	int ask_matrix_size;
+} DefinicoesSceneVars;
+
 typedef struct scenesVariables
 {
 	ControlosSceneVars controlosSceneVars;
 	SelecionarJogadorSceneVars selecionarJogadorSceneVars;
+	DefinicoesSceneVars definicoesSceneVars;
 } ScenesVariables;
 
 typedef struct jogoAtual
