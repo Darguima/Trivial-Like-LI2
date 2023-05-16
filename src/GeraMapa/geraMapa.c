@@ -4,6 +4,8 @@
 #include "../state.h"
 #include "../MapaUtils/mapaUtils.h"
 
+#include "../Scenes/GerandoMapa/desenhaGerandoMapa.h"
+
 void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa, int mapa_desconhecido_ativo)
 {
 	for (int i = 0; i < linhas; i++)
@@ -271,6 +273,9 @@ void encontrarPosicaoLivreUser(State *state)
 
 void geraMapa(State *state)
 {
+	werase(state->ncurses_screen);
+	desenhaGerandoMapa(state->ncurses_screen, "A povoar Mapa com paredes.");
+
 	int largura_mapa = state->mapa.matrix_width;
 	int altura_mapa = state->mapa.matrix_height;
 
@@ -279,14 +284,19 @@ void geraMapa(State *state)
 	applyCelular(state, largura_mapa, altura_mapa);
 
 	// Gerar Elementos
+	desenhaGerandoMapa(state->ncurses_screen, "Calcular quantidades de elementos do mapa.");
+
 	calcularQuantidadeElementosMapa(state);
 
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar moedas ao mapa.");
 	adicionarMoedas(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar armas ao mapa.");
 	adicionarArmas(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar objetos ao mapa.");
 	adicionarObjetos(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar mobs ao mapa.");
 	adicionarMobs(state);
 
+	desenhaGerandoMapa(state->ncurses_screen, "A encontrar uma posição para dar spawn.");
 	encontrarPosicaoLivreUser(state);
-
-	return;
 }

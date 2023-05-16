@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <time.h>
 #include "state.h"
+#include "colors.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"
@@ -32,82 +33,38 @@ int main()
 {
 	// Active unicode chars
 	setlocale(LC_ALL, "");
-	
-	WINDOW *window = initscr();
 
-	int nrows, ncols;
-	getmaxyx(window, nrows, ncols);
-	State state = criarEstado(ncols, nrows);
+	WINDOW *window = initscr();
 
 	/* Configuring Window */
 	srand48(time(NULL));
 	srand(time(NULL));
-	// Desativa o cursor do ecrã
 	curs_set(0);
-
 	cbreak();
 	noecho();
 	nonl();
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
 
-	/* Starting colors & colors pairs */
-	start_color();
+	/* Iniciar e definir as nossas cores*/
+	start_state_colors();
 
-	init_color(FG_MapaVisivel, 1000, 1000, 1000);
-	init_color(FG_MapaMemoria, 250, 250, 250);
-	init_color(FG_MapaDesconhecido, 100, 100, 100);
-
-	init_color(BG_MapaVisivel, 250, 250, 250);
-	init_color(BG_MapaMemoria, 150, 150, 150);
-	init_color(BG_MapaDesconhecido, 125, 125, 125);
-
-	init_color(FG_Player, 0, 0, 1000);
-	init_color(FG_Moeda, 1000, 1000, 0);
-	init_color(FG_Arma, 0, 1000, 0);
-	init_color(FG_Objeto, 0, 0, 1000);
-	init_color(FG_Mob, 1000, 0, 0);
-
-	init_pair(WhiteBlack, COLOR_WHITE, COLOR_BLACK);
-	init_pair(YellowBlack, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(BlueBlack, COLOR_BLUE, COLOR_BLACK);
-	init_pair(GreenBlack, COLOR_GREEN, COLOR_BLACK);
-	init_pair(BlackYellow, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(BlackRed, COLOR_BLACK, COLOR_RED);
-	init_pair(RedBlack, COLOR_RED, COLOR_BLACK);
-
-	init_pair(MapaPlayerColor, FG_Player, BG_MapaVisivel);
-	init_pair(MapaPlayerSobAtaqueColor, FG_Player, FG_Mob);
-
-	init_pair(MapaVisivelColor, FG_MapaVisivel, BG_MapaVisivel);
-	init_pair(MapaMemoriaColor, FG_MapaMemoria, BG_MapaMemoria);
-	init_pair(MapaDesconhecidoColor, FG_MapaDesconhecido, BG_MapaDesconhecido);
-
-	init_pair(MoedaColor, FG_Moeda, BG_MapaVisivel);
-	init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
-	init_pair(ObjetoColor, FG_Objeto, BG_MapaVisivel);
-	init_pair(MobColor, FG_Mob, BG_MapaVisivel);
-
-	init_pair(ArmaBox, FG_Arma, COLOR_BLACK);
-	init_pair(ObjetoBox, FG_Objeto, COLOR_BLACK);
-	init_pair(MobBox, FG_Mob, COLOR_BLACK);
-
-	WINDOW *janela_do_jogo = newwin(nrows - 10, ncols - 40, 5, 20);
+	/* Criar um estado ss*/
+	int n_linhas, n_colunas;
+	getmaxyx(window, n_linhas, n_colunas);
+	State state = criarEstado(window, n_colunas, n_linhas);
 
 	Scene sceneAnterior = state.sceneAtual;
+	WINDOW *window_game = newwin(n_linhas - 10, n_colunas - 40, 5, 20);
 
 	while (1)
 	{
-		/* Limpar o conteúdo do terminal caso se tenha alterado a scene */
-		if (state.sceneAtual != sceneAnterior)
-		{
-			for (int x = 0; x < ncols; x++)
-				for (int y = 0; y < nrows; y++)
-					mvaddch(y, x, ' ');
-
+		if (state.sceneAtual != sceneAnterior) {
+			werase(window);
 			sceneAnterior = state.sceneAtual;
 		}
 
+		// Existe uma scene, GerandoMapa, que não é renderizada por aqui; é renderizada pela GeraMapa
 		switch (state.sceneAtual)
 		{
 		case MenuInicial:
@@ -124,7 +81,7 @@ int main()
 		case Jogo:
 			wrefresh(window);
 			desenhaMenusLaterais(window, &state);
-			desenhaJogo(janela_do_jogo, &state);
+			desenhaJogo(window_game, &state);
 			eventosJogo(&state);
 			break;
 

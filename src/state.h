@@ -1,3 +1,5 @@
+#include <ncurses.h>
+
 #ifndef ___State_H___
 #define ___State_H___
 
@@ -271,9 +273,11 @@ typedef struct state
 	JogoAtual jogoAtual;
 	Mapa mapa;
 
+	WINDOW *ncurses_screen;
+
 } State;
 
-State criarEstado(int colunas, int linhas);
+State criarEstado(WINDOW *window, int colunas, int linhas);
 
 extern Arma const punhos;
 extern Arma const garras;
