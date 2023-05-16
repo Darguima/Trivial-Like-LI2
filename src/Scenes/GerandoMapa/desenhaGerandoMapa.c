@@ -11,7 +11,7 @@ void desenhaGerandoMapa(WINDOW *window, char *status)
 
   move(y, 0);
   clrtoeol();
-  mvwprintw(window, y, x - (strlen(status) / 2), status);
+  mvwprintw(window, y, x - (strlen(status) / 2), "%s", status);
   
   box(window, 0, 0); // desenhar caixa
 
