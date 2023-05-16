@@ -1,4 +1,19 @@
+#include <stdlib.h>
 #include "../state.h"
+
+ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height) {
+  ElementosDoMapa** matrix = (ElementosDoMapa **)malloc(matrix_width * sizeof(ElementosDoMapa *));
+	for (int i = 0; i < matrix_width; i++)
+		matrix[i] = (ElementosDoMapa *)malloc(matrix_height * sizeof(ElementosDoMapa));
+  
+  return matrix;
+}
+
+void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width) {
+	for (int i = 0; i < matrix_width; i++)
+		free(matrix[i]);
+  free(matrix);
+}
 
 int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
 {

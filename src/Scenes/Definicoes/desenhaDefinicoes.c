@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../../state.h"
+#include "../../MapaUtils/mapaUtils.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -93,18 +94,12 @@ void desenhaDefinicoes(WINDOW *window, State *state)
 
     if (state->mapa.display_height <= new_height && new_height <= 1500 && state->mapa.display_width <= new_width && new_width <= 1500)
     {
-      // Desalocar espaço para mapa antigo
-      for (int i = 0; i < state->mapa.matrix_width; i++)
-        free(state->mapa.matrix[i]);
-      free(state->mapa.matrix);
+      libertar_matrix_mapa(state->mapa.matrix, state->mapa.matrix_width);
 
       state->mapa.matrix_height = new_height;
       state->mapa.matrix_width = new_width;
 
-      // Alocar espaço para o mapa novo
-      state->mapa.matrix = (ElementosDoMapa **)malloc(state->mapa.matrix_width * sizeof(ElementosDoMapa *));
-      for (int i = 0; i < state->mapa.matrix_width; i++)
-        state->mapa.matrix[i] = (ElementosDoMapa *)malloc(state->mapa.matrix_height * sizeof(ElementosDoMapa));
+      state->mapa.matrix = alocar_matrix_mapa(state->mapa.matrix_width, state->mapa.matrix_height);
 
       // Escrever o novo tamanho no ecrâ
       desenhaDefinicoes(window, state);

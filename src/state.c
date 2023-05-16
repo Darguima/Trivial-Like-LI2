@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "state.h"
+#include "MapaUtils/mapaUtils.h"
 
 Arma const punhos = {0, Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
 Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
@@ -76,9 +77,7 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.qntObjetosNoMapaLength = 0;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
-	state.mapa.matrix = (ElementosDoMapa **)malloc(state.mapa.matrix_width * sizeof(ElementosDoMapa *));
-	for (int i = 0; i < state.mapa.matrix_width; i++)
-		state.mapa.matrix[i] = (ElementosDoMapa *)malloc(state.mapa.matrix_height * sizeof(ElementosDoMapa));
+	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);
 
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);

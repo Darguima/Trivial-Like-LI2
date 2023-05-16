@@ -18,7 +18,3 @@ clean:
 dev:
     # Clean, compile and run 
 	make clean && make && make clean && ./triviallike
-
-debug: $(OBJECTS)
-    # Clean, compile and run debbuger 
-	$(CC) $(CFLAGS) -g -o $@ $^ $(LIBS) && gdb ./triviallike
