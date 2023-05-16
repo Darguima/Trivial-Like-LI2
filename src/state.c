@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include <stdlib.h>
 #include "state.h"
 #include "MapaUtils/mapaUtils.h"
@@ -51,7 +52,7 @@ vais aos eventosJogo.c, descobres o tipo de objeto q estas sobreposto, encontras
 int const catalogoObjetosLength = 6;
 Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG, pocaoVidaP, pocaoAumentoVida, pocaoMagica, portalDeBolso};
 
-State criarEstado(int colunas, int linhas)
+State criarEstado(WINDOW *window, int colunas, int linhas)
 {
 	State state;
 
@@ -66,6 +67,8 @@ State criarEstado(int colunas, int linhas)
 	state.scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
 	state.scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 	state.scenesVariables.definicoesSceneVars.ask_matrix_size = 0;
+
+	state.ncurses_screen = window;
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;
