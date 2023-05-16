@@ -99,7 +99,9 @@ void eventosJogo(State *state)
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
+			
 			objetoSobreposto->disponivel = 0;
+			objetoSobreposto->objeto.quantidade++;
 		}
 		break;
 

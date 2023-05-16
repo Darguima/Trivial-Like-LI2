@@ -253,22 +253,22 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
 	box(r_win, 0, 0);
 	mvwprintw(r_win, 1, 1, "[1]Pocao Vida P");
-	mvwprintw(r_win, 2, 1, "................X%s", "0"); // nestes 0' vão as quantidades dos itens
+	mvwprintw(r_win, 2, 1, "................X%d", pocaoVidaP.quantidade); // nestes 0' vão as quantidades dos itens
 
 	mvwprintw(r_win, 5, 1, "[2]Pocao Vida G");
-	mvwprintw(r_win, 6, 1, "................X%s", "2");
+	mvwprintw(r_win, 6, 1, "................X%d", pocaoVidaG.quantidade);
 
 	mvwprintw(r_win, 9, 1, "[3]Pocao Vida D");
-	mvwprintw(r_win, 10, 1, "................X%s", "1");
+	mvwprintw(r_win, 10, 1, "................X%d", pocaoVidaD.quantidade);
 
 	mvwprintw(r_win, 13, 1, "[4]Pocao Aumento");
-	mvwprintw(r_win, 14, 1, "................X%s", "0");
+	mvwprintw(r_win, 14, 1, "................X%d", pocaoAumentoVida.quantidade);
 
 	mvwprintw(r_win, 17, 1, "[5]Pocao Magica");
-	mvwprintw(r_win, 18, 1, "................X%s", "0");
+	mvwprintw(r_win, 18, 1, "................X%d", pocaoMagica.quantidade);
 
 	mvwprintw(r_win, 21, 1, "[6]Portal de Bolso");
-	mvwprintw(r_win, 22, 1, "................X%s", "1");
+	mvwprintw(r_win, 22, 1, "................X%d", portalDeBolso.quantidade);
 
 	wrefresh(r_win);
 
