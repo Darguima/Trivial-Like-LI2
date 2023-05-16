@@ -1,5 +1,7 @@
+#include <ncurses.h>
 #include <stdlib.h>
 #include "state.h"
+#include "MapaUtils/mapaUtils.h"
 
 Arma const punhos = {0, Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
 Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
@@ -50,7 +52,7 @@ vais aos eventosJogo.c, descobres o tipo de objeto q estas sobreposto, encontras
 int const catalogoObjetosLength = 6;
 Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG, pocaoVidaP, pocaoAumentoVida, pocaoMagica, portalDeBolso};
 
-State criarEstado(int colunas, int linhas)
+State criarEstado(WINDOW *window, int colunas, int linhas)
 {
 	State state;
 
@@ -64,6 +66,9 @@ State criarEstado(int colunas, int linhas)
 	state.scenesVariables.selecionarJogadorSceneVars.delete = 0;
 	state.scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
 	state.scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+	state.scenesVariables.definicoesSceneVars.ask_matrix_size = 0;
+
+	state.ncurses_screen = window;
 
 	state.mapa.terminal.width = colunas;
 	state.mapa.terminal.height = linhas;
@@ -76,9 +81,8 @@ State criarEstado(int colunas, int linhas)
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
 	state.mapa.qntPortaisNoMapaLength = 0;
-	state.mapa.matrix = (ElementosDoMapa **)malloc(state.mapa.matrix_width * sizeof(ElementosDoMapa *));
-	for (int i = 0; i < state.mapa.matrix_width; i++)
-		state.mapa.matrix[i] = (ElementosDoMapa *)malloc(state.mapa.matrix_height * sizeof(ElementosDoMapa));
+	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);
+
 
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);
