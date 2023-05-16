@@ -5,7 +5,6 @@
 #include <json-c/json.h>
 
 #include "../../state.h"
-#include "../../GeraMapa/geraMapa.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -19,17 +18,6 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 {
   UNUSED(window);
   UNUSED(state);
-
-  // Resetar valores para um novo jogo
-  state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
-  state->jogoAtual.jogador.posicao.x = 1;
-  state->jogoAtual.jogador.posicao.y = 1;
-  state->jogoAtual.jogador.numMapaAtual = 1;
-  state->jogoAtual.jogador.dinheiro = 0;
-  state->jogoAtual.jogador.armaPrincipal = punhos;
-  state->jogoAtual.jogador.armaSecundaria = punhos;
-
-  geraMapa(state);
 
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);
@@ -49,7 +37,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   mvaddstr(y + 2, x - 17, "2.");
   mvaddstr(y + 4, x - 17, "3.");
   mvaddstr(nrows - 6, 2, "Para apagar jogador pressione d");
-  mvaddstr(nrows - 4, 2, "Pressione num jogador para jogar");
+  mvaddstr(nrows - 4, 2, state->scenesVariables.selecionarJogadorSceneVars.gerarMapaMsg);
   mvaddstr(nrows - 2, 2, "Pressione q para voltar");
 
   if (state->scenesVariables.selecionarJogadorSceneVars.delete == 1)
