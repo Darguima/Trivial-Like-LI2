@@ -1,5 +1,8 @@
 #include "../state.h"
 
+ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height);
+void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width);
+
 int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta);
 int esta_sobre_objeto(State *state, ObjetoNoMapa **ObjetoSobreposto);
 int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto);
