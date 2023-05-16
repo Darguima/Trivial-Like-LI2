@@ -183,7 +183,7 @@ void calcularQuantidadeElementosMapa(State *state)
 	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
 
 	// Probabilidade de aparecer uma portal = 1 / 45000
-	state->mapa.qntPortaisNoMapaLength = area / calcularProbabilidadeComDificuldade(500, dificuldade, +1);
+	state->mapa.qntPortaisNoMapaLength = area / calcularProbabilidadeComDificuldade(45000, dificuldade, +1);
 }
 
 void adicionarMoedas(State *state)
@@ -216,9 +216,9 @@ void adicionarPortais(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-			distance = abs(pos_x - 150) + abs(pos_y - 150);
+			distance = abs(pos_x - state->mapa.matrix_width / 2) + abs(pos_y - state->mapa.matrix_height / 2);
 			
-		} while (state->mapa.matrix[pos_x][pos_y].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y].tipo != Parede && state->mapa.matrix[pos_x][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y+1].tipo != Parede && state->mapa.matrix[pos_x][pos_y+2].tipo != Parede && state->mapa.matrix[pos_x+1][pos_y+2].tipo != Parede && state->mapa.matrix[pos_x+2][pos_y+2].tipo != Parede && distance!=150 ); //distancia minima pode ser maior ou menor
+		} while (!estaSemParede(state->mapa,pos_x,pos_y) || !estaSemParede(state->mapa,pos_x+1,pos_y) || !estaSemParede(state->mapa,pos_x+2,pos_y) || !estaSemParede(state->mapa,pos_x,pos_y+1) || !estaSemParede(state->mapa,pos_x+1,pos_y+1) || !estaSemParede(state->mapa,pos_x+2,pos_y+1) || !estaSemParede(state->mapa,pos_x,pos_y+2) || !estaSemParede(state->mapa,pos_x+1,pos_y+2) || !estaSemParede(state->mapa,pos_x+2,pos_y+2) || distance > ((state->mapa.matrix_width + state->mapa.matrix_height)/4) ); //distancia minima pode ser maior ou menor
 		state->mapa.matrix[portalX][portalY].tipo = PortaProximoMapa;
 		state->mapa.matrix[portalX + 1][portalY].tipo = PortaProximoMapa;
 		state->mapa.matrix[portalX + 2][portalY].tipo = PortaProximoMapa;
