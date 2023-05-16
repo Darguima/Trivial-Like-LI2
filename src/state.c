@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "state.h"
 #include "MapaUtils/mapaUtils.h"
+#include "SalvarJogo/salvarJogo.h"
 
 Arma const punhos = {0, Punhos, "Punhos", 15, 50, "Um par de punhos que, nas mãos adequadas, fazem grandes estragos "};
 Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que saem das mãos de um grotesco monstro. Urghh..."};
@@ -80,7 +81,7 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.mapa.qntObjetosNoMapaLength = 0;
 	state.mapa.qntArmasNoMapaLength = 0;
 	state.mapa.qntMobsNoMapaLength = 0;
-	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);
+	state.mapa.matrix = NULL; // Alocado no fim da função
 
 	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);
@@ -102,6 +103,9 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 	state.jogoAtual.mensagem_inventario = "Este é o teu inventário!";
 	state.jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
+
+	load_settings_state(&state);
+	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);
 
 	return state;
 }
