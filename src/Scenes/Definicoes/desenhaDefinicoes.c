@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "../../state.h"
 #include "../../MapaUtils/mapaUtils.h"
+#include "../../SalvarJogo/salvarJogo.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -101,7 +102,9 @@ void desenhaDefinicoes(WINDOW *window, State *state)
 
       state->mapa.matrix = alocar_matrix_mapa(state->mapa.matrix_width, state->mapa.matrix_height);
 
-      // Escrever o novo tamanho no ecrâ
+      save_settings_state(state);
+
+      // Escrever o novo tamanho no ecrã
       desenhaDefinicoes(window, state);
     }
 
