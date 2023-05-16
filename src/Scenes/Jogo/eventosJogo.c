@@ -106,47 +106,79 @@ void eventosJogo(State *state)
 		break;
 
 		/* Setas */
-	case KEY_A1:
-	case '7':
-		mover_jogador(state, -1, -1);
-		break;
-
 	case KEY_UP:
-	case '8':
 		mover_jogador(state, 0, -1);
 		break;
 
-	case KEY_A3:
-	case '9':
-		mover_jogador(state, +1, -1);
-		break;
-
 	case KEY_LEFT:
-	case '4':
 		mover_jogador(state, -1, 0);
 		break;
 
 	case KEY_RIGHT:
-	case '6':
 		mover_jogador(state, +1, 0);
 		break;
 
-	case KEY_C1:
-	case '1':
-		mover_jogador(state, -1, +1);
-		break;
-
 	case KEY_DOWN:
-	case '2':
 		mover_jogador(state, 0, +1);
-
 		break;
 
-	case KEY_C3:
+		/* inventário */
+	case '1':
+		state->jogoAtual.mensagem_inventario = pocaoVidaP.mensagem;
+		if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 40)
+		{
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 40;
+		}
+		else
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		break;
+	
+	case '2':
+		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
+		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
+		if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 70)
+		{
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 70;
+		}
+		else
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		break;
+	
 	case '3':
-		mover_jogador(state, +1, +1);
-		break;
+		state->jogoAtual.mensagem_inventario = pocaoVidaD.mensagem;
 
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		break;
+	
+	case '4':
+		state->jogoAtual.mensagem_inventario = pocaoAumentoVida.mensagem;
+
+		if (state->jogoAtual.jogador.vidaMaxima < 275)
+		{
+			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 25;
+		}
+		else 
+		state->jogoAtual.jogador.vidaMaxima = 300;
+		break;
+	
+	case '5':
+		state->jogoAtual.mensagem_inventario = pocaoMagica.mensagem;
+
+		if (state->jogoAtual.jogador.vidaMaxima < 285)
+		{
+			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 15;
+		}
+		else 
+		state->jogoAtual.jogador.vidaMaxima = 300;
+
+		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		break;
+	
+	case '6':
+		state->jogoAtual.mensagem_inventario = portalDeBolso.mensagem;
+		break;
+	
+		/* Sair */
 	case 'q':
 		state->sceneAtual = MenuInicial;
 		break;
