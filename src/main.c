@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
+#include <locale.h>
 #include <time.h>
 #include "state.h"
 
@@ -29,6 +30,9 @@
 
 int main()
 {
+	// Active unicode chars
+	setlocale(LC_ALL, "");
+	
 	WINDOW *window = initscr();
 
 	int nrows, ncols;
@@ -123,12 +127,12 @@ int main()
 			desenhaJogo(janela_do_jogo, &state);
 			eventosJogo(&state);
 			break;
-		
+
 		case GameOver:
 			desenhaGameOver(window, &state);
 			eventosGameOver(&state);
 			break;
-		
+
 		case Definicoes:
 			desenhaDefinicoes(window, &state);
 			eventosDefinicoes(&state);
