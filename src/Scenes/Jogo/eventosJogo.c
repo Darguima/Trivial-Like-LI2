@@ -48,6 +48,8 @@ void eventosJogo(State *state)
 	ObjetoNoMapa *objetoSobreposto;
 	MobNoMapa *mob_sobreposto;
 
+	int *quantidadesInventario = state->jogoAtual.inventarioQuantidades;
+
 	switch (key)
 	{
 	case 's':
@@ -99,13 +101,12 @@ void eventosJogo(State *state)
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
-			
 			objetoSobreposto->disponivel = 0;
-			objetoSobreposto->objeto.quantidade++;
+			quantidadesInventario[objetoSobreposto->objeto.index]++;
 		}
 		break;
 
-		/* Setas */
+	/* Setas */
 	case KEY_UP:
 		mover_jogador(state, 0, -1);
 		break;
@@ -130,9 +131,11 @@ void eventosJogo(State *state)
 			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 40;
 		}
 		else
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
+		quantidadesInventario[0]--;
 		break;
-	
+
 	case '2':
 		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
 		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
@@ -141,15 +144,19 @@ void eventosJogo(State *state)
 			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 70;
 		}
 		else
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
+		quantidadesInventario[1]--;
 		break;
-	
+
 	case '3':
 		state->jogoAtual.mensagem_inventario = pocaoVidaD.mensagem;
 
 		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
+		quantidadesInventario[2]--;
 		break;
-	
+
 	case '4':
 		state->jogoAtual.mensagem_inventario = pocaoAumentoVida.mensagem;
 
@@ -157,10 +164,12 @@ void eventosJogo(State *state)
 		{
 			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 25;
 		}
-		else 
-		state->jogoAtual.jogador.vidaMaxima = 300;
+		else
+			state->jogoAtual.jogador.vidaMaxima = 300;
+
+		quantidadesInventario[3]--;
 		break;
-	
+
 	case '5':
 		state->jogoAtual.mensagem_inventario = pocaoMagica.mensagem;
 
@@ -168,16 +177,20 @@ void eventosJogo(State *state)
 		{
 			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 15;
 		}
-		else 
-		state->jogoAtual.jogador.vidaMaxima = 300;
+		else
+			state->jogoAtual.jogador.vidaMaxima = 300;
 
 		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
+		quantidadesInventario[4]--;
 		break;
-	
+
 	case '6':
 		state->jogoAtual.mensagem_inventario = portalDeBolso.mensagem;
+
+		quantidadesInventario[5]--;
 		break;
-	
+
 		/* Sair */
 	case 'q':
 		state->sceneAtual = MenuInicial;

@@ -93,7 +93,6 @@ typedef struct objeto
 	int index;
 	CatalogoObjetos objeto;
 	char *nome;			// nome para ser mostrado no inventário
-	int quantidade; // quantidade desse objeto
 	char *mensagem; // mensagem mostrada ao pegar no objeto
 
 } Objeto;
@@ -222,6 +221,7 @@ typedef struct jogoAtual
 	char *mensagem_controlos;	 /* Mensagem para mostrar um como interagir com o mapa */
 	char *mensagem_inventario; /* mensagem de baixo direita*/
 	char *mensagem_inventario_controlos;
+	int *inventarioQuantidades;
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo

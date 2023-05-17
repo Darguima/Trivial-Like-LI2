@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <ncurses.h>
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
@@ -15,6 +16,7 @@ void jogar(State *state)
 		state->jogoAtual.jogador.dinheiro = 0;
 		state->jogoAtual.jogador.armaPrincipal = punhos;
 		state->jogoAtual.jogador.armaSecundaria = punhos;
+		state->jogoAtual.inventarioQuantidades = calloc(catalogoObjetosLength, sizeof(int));
 
 		geraMapa(state);
 
