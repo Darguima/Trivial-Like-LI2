@@ -13,7 +13,7 @@ void atualizarPortais(State *state, int pos_x, int pos_y)
     return;
 
   state->jogoAtual.jogador.numMapaAtual++;
-  
+
   geraMapa(state);
 
   save_game_state(state);
@@ -118,6 +118,8 @@ void atualizarAposMovimento(State *state)
 
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
+  state->jogoAtual.mensagem_inventario = "Este é o teu inventário!";
+  state->jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
 
   /*
    * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.

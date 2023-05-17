@@ -29,26 +29,12 @@ Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 int const catalogoMobsLength = 10;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
-Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", 1, "Recupera 40 pts de vida."};
-Objeto const pocaoVidaG = {1, PocaoVidaG, "Poção de Vida Grande", 0, "Recupera 70 pts de vida."};
-Objeto const pocaoVidaD = {2, PocaoVidaD, "Poção de Vida Definitiva", 0, "Recupera toda a vida."};
-Objeto const pocaoAumentoVida = {3, PocaoAumentoVida, "Poção de Aumento de Vida", 0, "Aumenta a vida máxima em 25 pts."};
-Objeto const pocaoMagica = {4, PocaoMagica, "Poção Mágica", 0, "Recupera toda a vida e aumenta a vida máxima em 15 pts."};
-Objeto const portalDeBolso = {5, PortalDeBolso, "Portal de Bolso", 0, "Portal de uma só uso que muda o mapa. Amentando a vida máxima em 5 pts."};
-
-/*
-Objeto const ...
-não pode conter quantidade
-
-ObjetoNoMapa -> coordenadas
-ObjetoNoInventario -> quantidade.
-
-struct statusJogador.inventario é do tipo *ObjetoNoInventario (array de ObjetoNoInventario). DEfine-lo no state.c com malloc. E no selecionarJogador, crias um loop para atribuir 0 quantidade a todos os elementos
-tamanho do array = catalogoObjetosLength;
-
-vais aos eventosJogo.c, descobres o tipo de objeto q estas sobreposto, encontras esse objeot no array inventario, e aumentas 1 À sua quantidade.
-
-*/
+Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", "Recupera 40 pts de vida."};
+Objeto const pocaoVidaG = {1, PocaoVidaG, "Poção de Vida Grande", "Recupera 70 pts de vida."};
+Objeto const pocaoVidaD = {2, PocaoVidaD, "Poção de Vida Definitiva", "Recupera toda a vida."};
+Objeto const pocaoAumentoVida = {3, PocaoAumentoVida, "Poção de Aumento de Vida", "Aumenta a vida máxima em 25 pts."};
+Objeto const pocaoMagica = {4, PocaoMagica, "Poção Mágica", "Aumenta a vida máxima em 15 pts e recupera-a toda."};
+Objeto const portalDeBolso = {5, PortalDeBolso, "Portal de Bolso", "Portal de um só uso que muda o mapa. Amentando a vida máxima em 5 pts."};
 
 int const catalogoObjetosLength = 6;
 Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG, pocaoVidaP, pocaoAumentoVida, pocaoMagica, portalDeBolso};
@@ -83,8 +69,8 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.mapa.qntMobsNoMapaLength = 0;
 	state.mapa.matrix = NULL; // Alocado no fim da função
 
-	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);
+	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.vidaMaxima = 100;
 	state.jogoAtual.jogador.posicao.x = 1;
 	state.jogoAtual.jogador.posicao.y = 1;
@@ -103,6 +89,7 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 	state.jogoAtual.mensagem_inventario = "Este é o teu inventário!";
 	state.jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
+	state.jogoAtual.quantidadeObjetos = NULL; // Alocado depois
 
 	load_settings_state(&state);
 	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);

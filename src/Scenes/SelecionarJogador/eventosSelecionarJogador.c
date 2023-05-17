@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <stdlib.h>
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../GeraMapa/geraMapa.h"
@@ -13,6 +14,7 @@ void prepararJogo(State *state)
 	state->jogoAtual.jogador.dinheiro = 0;
 	state->jogoAtual.jogador.armaPrincipal = punhos;
 	state->jogoAtual.jogador.armaSecundaria = punhos;
+	state->jogoAtual.quantidadeObjetos = calloc(catalogoObjetosLength, sizeof(int));
 
 	load_game_state(state);
 

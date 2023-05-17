@@ -95,7 +95,6 @@ typedef struct objeto
 	int index;
 	CatalogoObjetos objeto;
 	char *nome;			// nome para ser mostrado no inventário
-	int quantidade; // quantidade desse objeto
 	char *mensagem; // mensagem mostrada ao pegar no objeto
 
 } Objeto;
@@ -214,7 +213,7 @@ typedef struct jogoAtual
 {
 	StatusJogador jogador;
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
-	int iluminacao_ativa; // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
+	int iluminacao_ativa;				 // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
 	int mapa_desconhecido_ativo; // Se 0, todos os blocos passam a ser conhecidos
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
@@ -223,6 +222,7 @@ typedef struct jogoAtual
 	char *mensagem_controlos;	 /* Mensagem para mostrar um como interagir com o mapa */
 	char *mensagem_inventario; /* mensagem de baixo direita*/
 	char *mensagem_inventario_controlos;
+	int *quantidadeObjetos; // a quantidade de objetos que há no inventário
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo
