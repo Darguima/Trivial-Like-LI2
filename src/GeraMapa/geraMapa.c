@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 #include "../state.h"
 #include "../MapaUtils/mapaUtils.h"
 
@@ -151,10 +152,13 @@ void applyCelular(State *state, int matrix_width, int matrix_height)
 // sinal deve ser 1 ou -1 para mudar o sinal do offset
 // -1 vai aumentar a probabilidade de aparecer o elemento
 // +1 vai diminuir a probabilidade de aparecer o elemento
-int calcularProbabilidadeComDificuldade(int probabilidade, DificuldadeJogo dificuldade, int sinal)
+int calcularQuantidadeComDificuldade(int area, int probabilidade, DificuldadeJogo dificuldade, int sinal)
 {
-	int result = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
-	return result > 0 ? result : 1;
+	int probabilidade_final = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
+
+	int quantidade = area / probabilidade_final;
+
+	return quantidade > 0 ? quantidade : 1;
 }
 
 void calcularQuantidadeElementosMapa(State *state)
@@ -163,22 +167,69 @@ void calcularQuantidadeElementosMapa(State *state)
 	DificuldadeJogo dificuldade = state->jogoAtual.dificuldade;
 
 	// Probabilidade de aparecer uma arma = 1 / 3000
-	state->mapa.qntArmasNoMapaLength = area / calcularProbabilidadeComDificuldade(3000, dificuldade, +1);
+	state->mapa.qntArmasNoMapaLength = calcularQuantidadeComDificuldade(area, 3000, dificuldade, +1);
 	free(state->jogoAtual.armas);
 	state->jogoAtual.armas = malloc(state->mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
 
 	// Probabilidade de aparecer uma arma = 1 / 1500
-	state->mapa.qntObjetosNoMapaLength = area / calcularProbabilidadeComDificuldade(1500, dificuldade, +1);
+	state->mapa.qntObjetosNoMapaLength = calcularQuantidadeComDificuldade(area, 1500, dificuldade, +1);
 	free(state->jogoAtual.objetos);
 	state->jogoAtual.objetos = malloc(state->mapa.qntObjetosNoMapaLength * sizeof(ObjetoNoMapa));
 
 	// Probabilidade de aparecer um mob = 1 / 600
-	state->mapa.qntMobsNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, -1);
+	state->mapa.qntMobsNoMapaLength = calcularQuantidadeComDificuldade(area, 600, dificuldade, -1);
 	free(state->jogoAtual.mobs);
 	state->jogoAtual.mobs = malloc(state->mapa.qntMobsNoMapaLength * sizeof(MobNoMapa));
 
 	// Probabilidade de aparecer uma moeda = 1 / 600
-	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
+	state->mapa.qntMoedasNoMapaLength = calcularQuantidadeComDificuldade(area, 600, dificuldade, +1);
+
+	// Probabilidade de aparecer uma portal = 1 / 45000
+	state->mapa.qntPortaisNoMapaLength = calcularQuantidadeComDificuldade(area, 45000, dificuldade, +1);
+}
+
+void adicionarPortais(State *state)
+{
+	int portalX = 0;
+	int portalY = 0;
+	int distance,
+			min_distance = (state->mapa.matrix_width + state->mapa.matrix_height) / 4;
+
+	for (int portais_gerados = 0; portais_gerados < state->mapa.qntPortaisNoMapaLength; portais_gerados++)
+	{
+		int pos_x, pos_y;
+
+		do
+		{
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
+			distance = sqrt(pow(abs(pos_x - state->mapa.matrix_width / 2), 2) + pow(abs(pos_y - state->mapa.matrix_height / 2), 2));
+
+		} while (
+				!estaSemParede(state->mapa, pos_x, pos_y) ||
+				!estaSemParede(state->mapa, pos_x + 1, pos_y) ||
+				!estaSemParede(state->mapa, pos_x + 2, pos_y) ||
+				!estaSemParede(state->mapa, pos_x, pos_y + 1) ||
+				!estaSemParede(state->mapa, pos_x + 1, pos_y + 1) ||
+				!estaSemParede(state->mapa, pos_x + 2, pos_y + 1) ||
+				!estaSemParede(state->mapa, pos_x, pos_y + 2) ||
+				!estaSemParede(state->mapa, pos_x + 1, pos_y + 2) ||
+				!estaSemParede(state->mapa, pos_x + 2, pos_y + 2) ||
+				distance < min_distance);
+
+		portalX = pos_x;
+		portalY = pos_y;
+
+		state->mapa.matrix[portalX][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX][portalY + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 1][portalY + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[portalX + 2][portalY + 2].tipo = PortaProximoMapa;
+	}
 }
 
 void adicionarMoedas(State *state)
@@ -288,6 +339,8 @@ void geraMapa(State *state)
 
 	calcularQuantidadeElementosMapa(state);
 
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar portais ao mapa.");
+	adicionarPortais(state);
 	desenhaGerandoMapa(state->ncurses_screen, "A adicionar moedas ao mapa.");
 	adicionarMoedas(state);
 	desenhaGerandoMapa(state->ncurses_screen, "A adicionar armas ao mapa.");

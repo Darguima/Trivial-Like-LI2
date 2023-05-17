@@ -3,6 +3,20 @@
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
+#include "../../SalvarJogo/salvarJogo.h"
+
+void atualizarPortais(State *state, int pos_x, int pos_y)
+{
+  char file[10];
+  ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
+
+  if (elementoMapa.tipo != PortaProximoMapa)
+    return;
+  state->jogoAtual.jogador.numMapaAtual++;
+  geraMapa(state);
+  sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
+  save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+}
 
 void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
@@ -110,6 +124,7 @@ void atualizarAposMovimento(State *state)
    * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos)
    */
 
+  atualizarPortais(state, pos_x, pos_y);
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
   atualizarObjetos(state);
