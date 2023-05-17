@@ -3,25 +3,24 @@
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../GeraMapa/geraMapa.h"
 
-void jogar(State *state)
+void prepararJogo(State *state)
 {
-	if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
+	// Resetar valores para um novo jogo
+	state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+	state->jogoAtual.jogador.posicao.x = 1;
+	state->jogoAtual.jogador.posicao.y = 1;
+	state->jogoAtual.jogador.numMapaAtual = 1;
+	state->jogoAtual.jogador.dinheiro = 0;
+	state->jogoAtual.jogador.armaPrincipal = punhos;
+	state->jogoAtual.jogador.armaSecundaria = punhos;
+
+	load_game_state(state);
+
+	if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
 	{
-		// Resetar valores para um novo jogo
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
-		state->jogoAtual.jogador.posicao.x = 1;
-		state->jogoAtual.jogador.posicao.y = 1;
-		state->jogoAtual.jogador.numMapaAtual = 1;
-		state->jogoAtual.jogador.dinheiro = 0;
-		state->jogoAtual.jogador.armaPrincipal = punhos;
-		state->jogoAtual.jogador.armaSecundaria = punhos;
-
-		load_game_state(state);
-
 		geraMapa(state);
-
-		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 		state->sceneAtual = Jogo;
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 	}
 }
 
@@ -40,12 +39,16 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
-			{
-				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-				state->jogoAtual.jogador.numSave = 1;
-				jogar(state);
-			}
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+		{
+			state->jogoAtual.jogador.numSave = 1;
+			prepararJogo(state);
+		}
+		else
+		{
+			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+		}
+
 		break;
 
 	case '2':
@@ -57,12 +60,16 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+		{
+			state->jogoAtual.jogador.numSave = 2;
+			prepararJogo(state);
+		}
+		else
 		{
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-			state->jogoAtual.jogador.numSave = 2;
-			jogar(state);
 		}
+
 		break;
 
 	case '3':
@@ -74,16 +81,20 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+		{
+			state->jogoAtual.jogador.numSave = 3;
+			prepararJogo(state);
+		}
+		else
 		{
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-			state->jogoAtual.jogador.numSave = 3;
-			jogar(state);
 		}
+
 		break;
 
 	case 'j':
-		jogar(state);
+		prepararJogo(state);
 		break;
 
 	case 'd':
@@ -97,6 +108,8 @@ void eventosSelecionarJogador(State *state)
 		break;
 
 	case 'q':
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+		state->jogoAtual.jogador.numSave = 0;
 		state->sceneAtual = MenuInicial;
 		break;
 	}

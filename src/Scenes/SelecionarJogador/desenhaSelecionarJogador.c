@@ -58,9 +58,14 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
     char str[80];
     mvaddstr(nrows - 14, 2, "Qual o username? ( [ENTER] para confirmar)");
     refresh();
+
     getnstr(str, 30);
     strcpy(state->jogoAtual.jogador.username, str);
-    mvprintw(nrows - 14, 2, "Username: %s - [J] para jogar", state->jogoAtual.jogador.username);
+
+    move(nrows - 14, 0);
+    clrtoeol();
+
+    mvprintw(nrows - 14, 2, "Username: %s - [J]", state->jogoAtual.jogador.username);
     refresh();
     state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
   }
