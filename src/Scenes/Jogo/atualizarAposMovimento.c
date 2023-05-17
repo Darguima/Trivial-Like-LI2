@@ -12,8 +12,11 @@ void atualizarPortais(State *state, int pos_x, int pos_y)
 
   if (elementoMapa.tipo != PortaProximoMapa)
     return;
+
   state->jogoAtual.jogador.numMapaAtual++;
+  
   geraMapa(state);
+
   sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
   save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
 }
