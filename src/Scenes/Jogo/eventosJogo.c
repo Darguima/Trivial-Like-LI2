@@ -47,6 +47,8 @@ void eventosJogo(State *state)
 	ObjetoNoMapa *objetoSobreposto;
 	MobNoMapa *mob_sobreposto;
 
+	int *quantidadeInv = state->jogoAtual.quantidadeObjetos;
+
 	switch (key)
 	{
 	/* Interação com mapa */
@@ -92,9 +94,9 @@ void eventosJogo(State *state)
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
-			
+
 			objetoSobreposto->disponivel = 0;
-			objetoSobreposto->objeto.quantidade++;
+			quantidadeInv[objetoSobreposto->objeto.index]++;
 		}
 		break;
 
@@ -118,59 +120,101 @@ void eventosJogo(State *state)
 		/* inventário */
 	case '1':
 		state->jogoAtual.mensagem_inventario = pocaoVidaP.mensagem;
-		if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 40)
+
+		if (quantidadeInv[0] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
 		{
-			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 40;
+			if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 40)
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 40;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			}
+
+			quantidadeInv[0]--;
 		}
-		else
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
 		break;
-	
+
 	case '2':
 		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
-		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
-		if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 70)
+
+		if (quantidadeInv[1] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
 		{
-			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 70;
+			if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 70)
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 70;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			}
+
+			quantidadeInv[1]--;
 		}
-		else
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+
 		break;
-	
+
 	case '3':
 		state->jogoAtual.mensagem_inventario = pocaoVidaD.mensagem;
 
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		if (quantidadeInv[2] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
+		{
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			quantidadeInv[2]--;
+		}
+
 		break;
-	
+
 	case '4':
 		state->jogoAtual.mensagem_inventario = pocaoAumentoVida.mensagem;
 
-		if (state->jogoAtual.jogador.vidaMaxima < 275)
+		if (quantidadeInv[3] > 0)
 		{
-			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 25;
+			if (state->jogoAtual.jogador.vidaMaxima < 275)
+			{
+				state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 25;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vidaMaxima = 300;
+			}
+			quantidadeInv[3]--;
 		}
-		else 
-		state->jogoAtual.jogador.vidaMaxima = 300;
+
 		break;
-	
+
 	case '5':
 		state->jogoAtual.mensagem_inventario = pocaoMagica.mensagem;
 
-		if (state->jogoAtual.jogador.vidaMaxima < 285)
+		if (quantidadeInv[4] > 0)
 		{
-			state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 15;
-		}
-		else 
-		state->jogoAtual.jogador.vidaMaxima = 300;
+			if (state->jogoAtual.jogador.vidaMaxima < 285)
+			{
+				state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 15;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vidaMaxima = 300;
+			}
 
-		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			quantidadeInv[4]--;
+		}
+
 		break;
-	
+
 	case '6':
 		state->jogoAtual.mensagem_inventario = portalDeBolso.mensagem;
+
+		if (quantidadeInv[5] > 0)
+		{
+			quantidadeInv[5]--;
+		}
+		
 		break;
-	
+
 		/* Sair */
 	case 'q':
 		state->sceneAtual = MenuInicial;
