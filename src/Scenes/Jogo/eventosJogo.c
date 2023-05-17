@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <stdlib.h>
 #include "./atualizarAposMovimento.h"
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
@@ -18,6 +19,15 @@ void mover_jogador(State *state, int dx, int dy)
 	atualizarAposMovimento(state);
 }
 
+int ataqueComProbabilidade(Arma arma, int *vida_vitima)
+{
+	int acertou = rand() % 100 < arma.probabilidade ? 1 : 0;
+
+	*vida_vitima -= arma.dano * acertou;
+
+	return acertou;
+}
+
 // a função reageVida verifica se o jogador tá morto para dar GameOver
 void reageVida(State *state)
 {
@@ -32,7 +42,6 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
-	char file[10];
 
 	ArmaNoMapa *armaSobreposta;
 	ObjetoNoMapa *objetoSobreposto;
@@ -40,22 +49,21 @@ void eventosJogo(State *state)
 
 	switch (key)
 	{
-	case 's':
 
+<<<<<<< HEAD
 		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
 		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
 		break;
 
+=======
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	/* Interação com mapa */
 	case 'z':
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			int dano = state->jogoAtual.jogador.armaPrincipal.dano;
-
-			mob_sobreposto->mob.vida -= dano;
-			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-
+			ataqueComProbabilidade(state->jogoAtual.jogador.armaPrincipal, &(mob_sobreposto->mob.vida));
+			ataqueComProbabilidade(mob_sobreposto->mob.arma, &(state->jogoAtual.jogador.vida));
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
@@ -73,11 +81,8 @@ void eventosJogo(State *state)
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
-			int dano = state->jogoAtual.jogador.armaSecundaria.dano;
-
-			mob_sobreposto->mob.vida -= dano;
-			state->jogoAtual.jogador.vida -= mob_sobreposto->mob.arma.dano;
-
+			ataqueComProbabilidade(state->jogoAtual.jogador.armaSecundaria, &(mob_sobreposto->mob.vida));
+			ataqueComProbabilidade(mob_sobreposto->mob.arma, &(state->jogoAtual.jogador.vida));
 			reageVida(state); // verifica se o jogador tem vida 0
 		}
 
@@ -97,6 +102,15 @@ void eventosJogo(State *state)
 		{
 			objetoSobreposto->disponivel = 0;
 		}
+<<<<<<< HEAD
+=======
+		break;
+
+		/* Setas */
+	case KEY_A1:
+	case '7':
+		mover_jogador(state, -1, -1);
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 		break;
 
 		/* Setas */

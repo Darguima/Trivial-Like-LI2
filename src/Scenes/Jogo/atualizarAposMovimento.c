@@ -1,7 +1,22 @@
 #include <stdlib.h>
+#include "./eventosJogo.h"
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
+#include "../../SalvarJogo/salvarJogo.h"
+
+void atualizarPortais(State *state, int pos_x, int pos_y)
+{
+  char file[10];
+  ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
+
+  if (elementoMapa.tipo != PortaProximoMapa)
+    return;
+  state->jogoAtual.jogador.numMapaAtual++;
+  geraMapa(state);
+  sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
+  save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+}
 
 void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
@@ -27,6 +42,16 @@ void atualizarArmas(State *state)
   }
 }
 
+void atualizarObjetos(State *state)
+{
+  ObjetoNoMapa *objetoSobreposto;
+  if (esta_sobre_objeto(state, &objetoSobreposto))
+  {
+    state->jogoAtual.mensagem_descricao = objetoSobreposto->objeto.mensagem;
+    state->jogoAtual.mensagem_controlos = "Encontraste um objeto! Pressiona [E] para pegar nele.";
+  }
+}
+
 void moverMobs(State *state)
 {
   for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
@@ -47,6 +72,7 @@ void moverMobs(State *state)
   }
 }
 
+<<<<<<< HEAD
 void atualizarObjetos(State *state)
 {
   ObjetoNoMapa *objetoSobreposto;
@@ -55,11 +81,37 @@ void atualizarObjetos(State *state)
 		state->jogoAtual.mensagem_direita =  "Encontraste um objeto! Pressiona [E] para pegar nele.";
     state->jogoAtual.mensagem_descricao_direita = objetoSobreposto->objeto.mensagem;
 	}
+=======
+void atacarComMobs(State *state)
+{
+  Coordenadas player_pos = state->jogoAtual.jogador.posicao;
+
+  for (int mob_i = 0; mob_i < state->mapa.qntMobsNoMapaLength; mob_i++)
+  {
+    MobNoMapa mobAtual = state->jogoAtual.mobs[mob_i];
+
+    // Monstros atacam na vertical e horizontal e no sítio
+    if (
+        ((mobAtual.posicao.x - 1 == player_pos.x || mobAtual.posicao.x + 1 == player_pos.x) && mobAtual.posicao.y == player_pos.y) ||
+        ((mobAtual.posicao.y - 1 == player_pos.y || mobAtual.posicao.y + 1 == player_pos.y) && mobAtual.posicao.x == player_pos.x) ||
+        (mobAtual.posicao.x == player_pos.x && mobAtual.posicao.y == player_pos.y))
+    {
+      if (ataqueComProbabilidade(mobAtual.mob.arma, &(state->jogoAtual.jogador.vida)))
+      {
+        state->jogoAtual.mensagem_descricao = "Estás a ser atacado!";
+        state->jogoAtual.mensagem_controlos = "Foge, ou coloca-te em posição de combate.";
+      }
+
+      reageVida(state);
+    }
+  }
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 }
 
 void atualizarMobs(State *state)
 {
   moverMobs(state);
+  atacarComMobs(state);
 
   MobNoMapa *mobSobreposto;
   if (esta_sobre_mob(state, &mobSobreposto))
@@ -78,12 +130,15 @@ void atualizarAposMovimento(State *state)
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 
   /*
-	* A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
-	* Quanto mais para o fim estiver a função, maior prioridade têm as suas alterações, sobrescrevendo
-  * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos) 
-	*/
+   * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
+   * Quanto mais para o fim estiver a função, maior prioridade têm as suas alterações, sobrescrevendo
+   * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos)
+   */
+
+  atualizarPortais(state, pos_x, pos_y);
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
+  atualizarObjetos(state);
   atualizarMobs(state);
 }
 

@@ -1,3 +1,5 @@
+#include <ncurses.h>
+
 #ifndef ___State_H___
 #define ___State_H___
 
@@ -6,11 +8,16 @@ typedef enum scene
 {
 	MenuInicial,	   /* Primeira página que aparece no jogo */
 	SelecionarJogador, /* Transição entre Menu Inicial e Jogo (para escolher o jogador) */
+<<<<<<< HEAD
 	Jogo,			   /* O jogo em si, com o status do jogador, mapa e inventário */
+=======
+	Jogo,							 /* O jogo em si, com o status do jogador, mapa e inventário */
+	GameOver,
+	Definicoes,
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	Controlos,
 	Sobre,
 	Sair,
-	GameOver,
 } Scene;
 
 typedef enum colors
@@ -25,7 +32,11 @@ typedef enum colors
 	CYAN,
 	WHITE,
 
+<<<<<<< HEAD
 	// cores do FG-Foreground BG-Background  
+=======
+	// cores do FG-Foreground BG-Background
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	FG_MapaVisivel,
 	BG_MapaVisivel,
 
@@ -35,6 +46,7 @@ typedef enum colors
 	FG_MapaDesconhecido,
 	BG_MapaDesconhecido,
 
+	FG_Portal,
 	FG_Player,
 	FG_Moeda,
 	FG_Arma,
@@ -53,15 +65,27 @@ typedef enum colorsSchema
 	RedBlack,
 
 	MapaPlayerColor,
+	MapaPlayerSobAtaqueColor,
 
 	MapaVisivelColor,
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
+<<<<<<< HEAD
+=======
+	PortalColor,
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	MoedaColor,
 	ArmaColor,
 	ObjetoColor,
 	MobColor,
+<<<<<<< HEAD
+=======
+
+	ArmaBox,
+	ObjetoBox,
+	MobBox
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 } ColorsScheme;
 
 typedef struct coordenadas
@@ -71,12 +95,21 @@ typedef struct coordenadas
 
 typedef enum catalogoObjetos
 {
+<<<<<<< HEAD
 	PocaoVidaD,		  // poção de vida que recupera toda a vida
 	PocaoVidaG,		  // poção de vida Grande (60 vida)
 	PocaoVidaP,		  // poção de vida Pequena (25 vida)
 	PocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
 	PocaoMagica,	  // poção que recupera toda a vida e aumenta a vida máxima
 	PortalDeBolso,	  // um portal que envia o jogador ao próximo mapa
+=======
+	PocaoVidaD,				// poção de vida que recupera toda a vida
+	PocaoVidaG,				// poção de vida Grande (60 vida)
+	PocaoVidaP,				// poção de vida Pequena (25 vida)
+	PocaoAumentoVida, // poção que faz aumentar a vida máxima sem dar mais vida
+	PocaoMagica,			// poção que recupera toda a vida e aumenta a vida máxima
+	PortalDeBolso,		// um portal que envia o jogador ao próximo mapa
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 
 } CatalogoObjetos;
 
@@ -84,16 +117,26 @@ typedef struct objeto
 {
 	int index;
 	CatalogoObjetos objeto;
+<<<<<<< HEAD
 	char *nome; // nome para ser mostrado no inventário
 	int quantidade;	  // quantidade desse objeto
 	char *mensagem;	  // mensagem mostrada ao pegar no objeto
+=======
+	char *nome;			// nome para ser mostrado no inventário
+	int quantidade; // quantidade desse objeto
+	char *mensagem; // mensagem mostrada ao pegar no objeto
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 
 } Objeto;
 
 typedef struct objetoNoMapa
 {
 	Coordenadas posicao;
+<<<<<<< HEAD
 	int disponivel; // 1 se está disponível no mapa; 0 se o objeto já foi apanhada 
+=======
+	int disponivel; // 1 se está disponível no mapa; 0 se o objeto já foi apanhada
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	Objeto objeto;
 } ObjetoNoMapa;
 
@@ -115,8 +158,13 @@ typedef struct arma
 	CatalogoArmas tipoArma;
 	char *nome; // nome para ser mostrado no inventário
 	int dano;
+<<<<<<< HEAD
 	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 1
 	char *mensagem;	   // texto que descreve a arma
+=======
+	int probabilidade; // probabilidade de o ataque acertar no objetivo, de 0 a 100
+	char *mensagem;		 // texto que descreve a arma
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 } Arma;
 
 typedef struct armaNoMapa
@@ -165,10 +213,14 @@ typedef struct statusJogador
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
+<<<<<<< HEAD
 	char *inventario;
+=======
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 } StatusJogador;
 
-typedef enum dificuldadeJogo {
+typedef enum dificuldadeJogo
+{
 	FACIL = 0,
 	MEDIO = 1,
 	DIFICIL = 2,
@@ -185,27 +237,46 @@ typedef struct selecionarJogadorSceneVars
 {
 	int delete;		// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
+<<<<<<< HEAD
 	int askUser;	// 0nada 1pergunta_username 2continuar_para_jogo
+=======
+	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 	int confirmarPocao;
 } SelecionarJogadorSceneVars;
+
+typedef struct definicoesSceneVars
+{
+	int ask_matrix_size;
+} DefinicoesSceneVars;
 
 typedef struct scenesVariables
 {
 	ControlosSceneVars controlosSceneVars;
 	SelecionarJogadorSceneVars selecionarJogadorSceneVars;
+	DefinicoesSceneVars definicoesSceneVars;
 } ScenesVariables;
 
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
+	int iluminacao_ativa; // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
+	int mapa_desconhecido_ativo; // Se 0, todos os blocos passam a ser conhecidos
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
 	ObjetoNoMapa *objetos;
+<<<<<<< HEAD
 	char *mensagem_descricao; /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
 	char *mensagem_controlos; /* Mensagem para mostrar um como interagir com o mapa */
 	char *mensagem_direita; /* mensagem de baixo direita*/
 	char *mensagem_descricao_direita;
+=======
+	char *mensagem_descricao;	 /* Mensagem para mostrar um texto relevante. ex. algum informação do mapa, arma ou mob */
+	char *mensagem_controlos;	 /* Mensagem para mostrar um como interagir com o mapa */
+	char *mensagem_inventario; /* mensagem de baixo direita*/
+	char *mensagem_inventario_controlos;
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo
@@ -244,6 +315,10 @@ typedef struct mapa
 	int qntArmasNoMapaLength;
 	int qntObjetosNoMapaLength;
 	int qntMobsNoMapaLength;
+<<<<<<< HEAD
+=======
+	int qntPortaisNoMapaLength;
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 
 	ElementosDoMapa **matrix;
 } Mapa;
@@ -257,9 +332,11 @@ typedef struct state
 	JogoAtual jogoAtual;
 	Mapa mapa;
 
+	WINDOW *ncurses_screen;
+
 } State;
 
-State criarEstado(int colunas, int linhas);
+State criarEstado(WINDOW *window, int colunas, int linhas);
 
 extern Arma const punhos;
 extern Arma const garras;
@@ -293,7 +370,10 @@ extern Objeto const pocaoAumentoVida;
 extern Objeto const pocaoMagica;
 extern Objeto const portalDeBolso;
 
+<<<<<<< HEAD
 extern int const objetosNoMapaLength;
+=======
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 extern int const catalogoObjetosLength;
 extern Objeto const catalogoObjetos[];
 

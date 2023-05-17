@@ -13,6 +13,10 @@ void start_state_colors()
   init_color(BG_MapaMemoria, 150, 150, 150);
   init_color(BG_MapaDesconhecido, 125, 125, 125);
 
+<<<<<<< HEAD
+=======
+  init_color(FG_Portal, 752, 148, 988);
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
   init_color(FG_Player, 0, 0, 1000);
   init_color(FG_Moeda, 1000, 1000, 0);
   init_color(FG_Arma, 0, 1000, 0);
@@ -34,6 +38,10 @@ void start_state_colors()
   init_pair(MapaMemoriaColor, FG_MapaMemoria, BG_MapaMemoria);
   init_pair(MapaDesconhecidoColor, FG_MapaDesconhecido, BG_MapaDesconhecido);
 
+<<<<<<< HEAD
+=======
+  init_pair(PortalColor, FG_Portal, BG_MapaVisivel);
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
   init_pair(MoedaColor, FG_Moeda, BG_MapaVisivel);
   init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
   init_pair(ObjetoColor, FG_Objeto, BG_MapaVisivel);

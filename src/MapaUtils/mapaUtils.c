@@ -1,5 +1,23 @@
+#include <stdlib.h>
 #include "../state.h"
 
+<<<<<<< HEAD
+=======
+ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height) {
+  ElementosDoMapa** matrix = (ElementosDoMapa **)malloc(matrix_width * sizeof(ElementosDoMapa *));
+	for (int i = 0; i < matrix_width; i++)
+		matrix[i] = (ElementosDoMapa *)malloc(matrix_height * sizeof(ElementosDoMapa));
+  
+  return matrix;
+}
+
+void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width) {
+	for (int i = 0; i < matrix_width; i++)
+		free(matrix[i]);
+  free(matrix);
+}
+
+>>>>>>> eed931ca12c1ac2b107966dc10c7cde5e43994cb
 int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
 {
   int pos_x = state->jogoAtual.jogador.posicao.x;
