@@ -23,7 +23,7 @@ Mob const aranha1 = {Aranha, "Aranha", 'A', acido, 30, 30, 10};
 Mob const aranha2 = {Aranha, "Aranha", 'A', acido, 40, 40, 8};
 Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
 
-int const catalogoMobsLength = 10;
+int const catalogoMobsLength = 10;/*  */
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
 
 Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", 1, "Recupera 40 pts de vida."};

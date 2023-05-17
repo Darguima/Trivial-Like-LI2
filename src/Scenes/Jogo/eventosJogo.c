@@ -61,7 +61,7 @@ void eventosJogo(State *state)
 
 	/* Interação com mapa */
 	case 'z':
-	   
+	   atualizarAposMovimento(state);
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -77,12 +77,11 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-		atualizarAposMovimento(state);
 
 		break;
 
 	case 'x':
-	
+	atualizarAposMovimento(state);
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -98,17 +97,15 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-atualizarAposMovimento(state);
 		break;
 
 	case 'e':
-
+         atualizarAposMovimento(state);
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
 			objetoSobreposto->disponivel = 0;
 		}
-		atualizarAposMovimento(state);
 		break;
 
 		/* Setas */
