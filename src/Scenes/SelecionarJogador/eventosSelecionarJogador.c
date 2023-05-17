@@ -16,6 +16,10 @@ void jogar(State *state)
 		state->jogoAtual.jogador.armaPrincipal = punhos;
 		state->jogoAtual.jogador.armaSecundaria = punhos;
 
+		char filename[10];
+		sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
+		load_game_state(filename, state);
+
 		geraMapa(state);
 
 		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
@@ -38,16 +42,12 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else
-		{
-			if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
 			{
 				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
 				state->jogoAtual.jogador.numSave = 1;
-				load_game_state("1.json", state);
 				jogar(state);
 			}
-		}
 		break;
 
 	case '2':
@@ -59,15 +59,11 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
 		{
-			if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
-			{
-				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-				state->jogoAtual.jogador.numSave = 2;
-				load_game_state("2.json", state);
-				jogar(state);
-			}
+			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+			state->jogoAtual.jogador.numSave = 2;
+			jogar(state);
 		}
 		break;
 
@@ -80,16 +76,11 @@ void eventosSelecionarJogador(State *state)
 			}
 			state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
 		}
-		else
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
 		{
-
-			if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0 || state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
-			{
-				state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
-				state->jogoAtual.jogador.numSave = 3;
-				load_game_state("3.json", state);
-				jogar(state);
-			}
+			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+			state->jogoAtual.jogador.numSave = 3;
+			jogar(state);
 		}
 		break;
 
