@@ -16,9 +16,7 @@ void jogar(State *state)
 		state->jogoAtual.jogador.armaPrincipal = punhos;
 		state->jogoAtual.jogador.armaSecundaria = punhos;
 
-		char filename[10];
-		sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
-		load_game_state(filename, state);
+		load_game_state(state);
 
 		geraMapa(state);
 

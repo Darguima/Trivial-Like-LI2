@@ -7,7 +7,6 @@
 
 void atualizarPortais(State *state, int pos_x, int pos_y)
 {
-  char file[10];
   ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
 
   if (elementoMapa.tipo != PortaProximoMapa)
@@ -17,8 +16,7 @@ void atualizarPortais(State *state, int pos_x, int pos_y)
   
   geraMapa(state);
 
-  sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
-  save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
+  save_game_state(state);
 }
 
 void atualizarMoedas(State *state, int pos_x, int pos_y)
