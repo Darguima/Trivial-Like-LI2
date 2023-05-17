@@ -229,7 +229,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 		{
 			if ((float)i / 18 < vida200)
 			{
+				wattron(l_win,COLOR_PAIR(YellowBlack));
 				mvwprintw(l_win, 5, 1 + i, "#");
+				wattroff(l_win,COLOR_PAIR(YellowBlack));
 			}
 		}
 	}
@@ -240,7 +242,9 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 		{
 			if ((float)i / 18 < vida300)
 			{
+				wattron(l_win,COLOR_PAIR(YellowBlack));
 				mvwprintw(l_win, 6, 1 + i, "#");
+				wattroff(l_win,COLOR_PAIR(YellowBlack));
 			}
 		}
 	}
