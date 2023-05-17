@@ -195,8 +195,7 @@ typedef struct selecionarJogadorSceneVars
 {
 	int delete;			// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
-	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
-	int confirmarPocao;
+	int askUser;		// 0 - nada; 1 - pergunta_username; 2 - continuar_para_jogo
 } SelecionarJogadorSceneVars;
 
 typedef struct definicoesSceneVars

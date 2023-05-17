@@ -49,7 +49,6 @@ void eventosJogo(State *state)
 
 	switch (key)
 	{
-
 	/* Interação com mapa */
 	case 'z':
 		// atacar com principal

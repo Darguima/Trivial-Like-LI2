@@ -3,18 +3,27 @@
 #include "../state.h"
 
 // salvar jogo pra um JSON
-void save_game_state(const char *filename, int vida, const char *username, int numMapaAtual, int dinheiro, int armaPrincipalIndex, int armaSecundariaIndex)
+void save_game_state(State *state)
 {
+	// Jogo Rápido [J] gerava o ficheiro "0.json"
+	if (state->jogoAtual.jogador.numSave <= 0)
+		return;
+
+	char filename[16];
+	sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
+
+	StatusJogador jogador = state->jogoAtual.jogador;
+
 	// Criar objeto JSON para reter estado do Jogo
 	json_object *game_state = json_object_new_object();
 
 	// Pares estado do Jogo
-	json_object_object_add(game_state, "vida", json_object_new_int(vida));
-	json_object_object_add(game_state, "username", json_object_new_string(username));
-	json_object_object_add(game_state, "numMapaAtual", json_object_new_int(numMapaAtual));
-	json_object_object_add(game_state, "dinheiro", json_object_new_int(dinheiro));
-	json_object_object_add(game_state, "armaPrincipalIndex", json_object_new_int(armaPrincipalIndex));
-	json_object_object_add(game_state, "armaSecundariaIndex", json_object_new_int(armaSecundariaIndex));
+	json_object_object_add(game_state, "vida", json_object_new_int(jogador.vida));
+	json_object_object_add(game_state, "username", json_object_new_string(jogador.username));
+	json_object_object_add(game_state, "numMapaAtual", json_object_new_int(jogador.numMapaAtual));
+	json_object_object_add(game_state, "dinheiro", json_object_new_int(jogador.dinheiro));
+	json_object_object_add(game_state, "armaPrincipalIndex", json_object_new_int(jogador.armaPrincipal.index));
+	json_object_object_add(game_state, "armaSecundariaIndex", json_object_new_int(jogador.armaSecundaria.index));
 
 	// Converter objeto JSON para string
 	const char *json_str = json_object_to_json_string_ext(game_state, JSON_C_TO_STRING_PRETTY);
@@ -36,8 +45,18 @@ void save_game_state(const char *filename, int vida, const char *username, int n
 }
 
 // carregar jogo
-void load_game_state(const char *filename, State *state)
+void load_game_state(State *state)
 {
+	// No jogo rápido, o numMapaAtual == 1
+	if (state->jogoAtual.jogador.numSave <= 0)
+	{
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
+		return;
+	}
+
+	char filename[16];
+	sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
+
 	int arma1_index, arma2_index;
 	FILE *fp;
 	char buffer[1024];
@@ -53,7 +72,8 @@ void load_game_state(const char *filename, State *state)
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		state->scenesVariables.selecionarJogadorSceneVars.askUser = 1;
+		if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+			state->scenesVariables.selecionarJogadorSceneVars.askUser = 1;
 	}
 	else
 	{
@@ -80,6 +100,8 @@ void load_game_state(const char *filename, State *state)
 
 		state->jogoAtual.jogador.armaPrincipal = catalogoArmas[arma1_index];
 		state->jogoAtual.jogador.armaSecundaria = catalogoArmas[arma2_index];
+
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
 	}
 }
 

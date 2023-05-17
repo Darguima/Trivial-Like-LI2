@@ -48,9 +48,14 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 			case Parede:
 				mvwaddch(window, window_y, window_x, '#');
 				break;
+				
 			case PortaProximoMapa:
-				wattron(window, COLOR_PAIR(PortalColor));
+				if (bloco_visivel)
+					wattron(window, COLOR_PAIR(PortalColor));
+
 				mvwaddch(window, window_y, window_x, '+');
+				
+				wattroff(window, COLOR_PAIR(PortalColor));
 				break;
 
 			case Moeda:
