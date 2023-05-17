@@ -8,7 +8,7 @@ void save_game_state(State *state)
 	// Jogo Rápido [J] gerava o ficheiro "0.json"
 	if (state->jogoAtual.jogador.numSave <= 0)
 		return;
-	
+
 	char filename[16];
 	sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
 
@@ -47,7 +47,14 @@ void save_game_state(State *state)
 // carregar jogo
 void load_game_state(State *state)
 {
-	char filename[10];
+	// No jogo rápido, o numMapaAtual == 1
+	if (state->jogoAtual.jogador.numSave <= 0)
+	{
+		state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
+		return;
+	}
+
+	char filename[16];
 	sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
 
 	int arma1_index, arma2_index;
@@ -65,10 +72,7 @@ void load_game_state(State *state)
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		// No jogo rápido, o numMapaAtual == 1
-		if (state->jogoAtual.jogador.numSave <= 0)
-			state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
-		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+		if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 1;
 	}
 	else

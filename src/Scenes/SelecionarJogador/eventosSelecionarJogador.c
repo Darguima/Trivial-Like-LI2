@@ -47,6 +47,7 @@ void eventosSelecionarJogador(State *state)
 		else
 		{
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+			state->jogoAtual.jogador.numSave = 0;
 		}
 
 		break;
@@ -68,6 +69,7 @@ void eventosSelecionarJogador(State *state)
 		else
 		{
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+			state->jogoAtual.jogador.numSave = 0;
 		}
 
 		break;
@@ -89,6 +91,7 @@ void eventosSelecionarJogador(State *state)
 		else
 		{
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+			state->jogoAtual.jogador.numSave = 0;
 		}
 
 		break;
