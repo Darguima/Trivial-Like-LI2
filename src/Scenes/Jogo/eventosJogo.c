@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "./atualizarAposMovimento.h"
+#include "../../GeraMapa/geraMapa.h"
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../MapaUtils/mapaUtils.h"
@@ -210,6 +211,9 @@ void eventosJogo(State *state)
 
 		if (quantidadeInv[5] > 0)
 		{
+			state->jogoAtual.jogador.numMapaAtual++;
+			geraMapa(state);
+			save_game_state(state);
 			quantidadeInv[5]--;
 		}
 		
