@@ -8,6 +8,7 @@ int esta_sobre_objeto(State *state, ObjetoNoMapa **ObjetoSobreposto);
 int esta_sobre_mob(State *state, MobNoMapa **mobSobreposto);
 
 int estaDentroDoMapa(int x, int y, int xmax, int ymax);
+int estaVazio(Mapa mapa, int x, int y);
 int estaSemParede(Mapa mapa, int x, int y);
 int estaTotalmenteLivreParaOUser(State *state, int x, int y);
 int estaTotalmenteLivre(State *state, int x, int y);
