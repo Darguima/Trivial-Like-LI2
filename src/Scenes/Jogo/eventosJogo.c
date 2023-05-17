@@ -95,7 +95,6 @@ void eventosJogo(State *state)
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
-
 			objetoSobreposto->disponivel = 0;
 			quantidadeInv[objetoSobreposto->objeto.index]++;
 		}
@@ -135,6 +134,10 @@ void eventosJogo(State *state)
 
 			quantidadeInv[0]--;
 		}
+		else if (quantidadeInv[0] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
 
 		break;
 
@@ -154,6 +157,10 @@ void eventosJogo(State *state)
 
 			quantidadeInv[1]--;
 		}
+		else if (quantidadeInv[1] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
 
 		break;
 
@@ -164,6 +171,10 @@ void eventosJogo(State *state)
 		{
 			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
 			quantidadeInv[2]--;
+		}
+		else if (quantidadeInv[2] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
 		}
 
 		break;
@@ -182,6 +193,10 @@ void eventosJogo(State *state)
 				state->jogoAtual.jogador.vidaMaxima = 300;
 			}
 			quantidadeInv[3]--;
+		}
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
 		}
 
 		break;
@@ -203,6 +218,10 @@ void eventosJogo(State *state)
 			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
 			quantidadeInv[4]--;
 		}
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
 
 		break;
 
@@ -211,12 +230,18 @@ void eventosJogo(State *state)
 
 		if (quantidadeInv[5] > 0)
 		{
+			state->jogoAtual.jogador.vidaMaxima += 5;
+
 			state->jogoAtual.jogador.numMapaAtual++;
 			geraMapa(state);
 			save_game_state(state);
 			quantidadeInv[5]--;
 		}
-		
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
 		break;
 
 		/* Sair */

@@ -48,13 +48,13 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 			case Parede:
 				mvwaddch(window, window_y, window_x, '#');
 				break;
-				
+
 			case PortaProximoMapa:
 				if (bloco_visivel)
 					wattron(window, COLOR_PAIR(PortalColor));
 
 				mvwaddch(window, window_y, window_x, '+');
-				
+
 				wattroff(window, COLOR_PAIR(PortalColor));
 				break;
 
@@ -155,14 +155,14 @@ void desenhaJogo(WINDOW *window, State *state)
 
 	Coordenadas player_pos = state->jogoAtual.jogador.posicao;
 	int display_width = state->mapa.display_width,
-		display_height = state->mapa.display_height,
-		matrix_width = state->mapa.matrix_width,
-		matrix_height = state->mapa.matrix_height;
+			display_height = state->mapa.display_height,
+			matrix_width = state->mapa.matrix_width,
+			matrix_height = state->mapa.matrix_height;
 
 	int initial_x = player_pos.x - (display_width - 1) / 2,
-		final_x = initial_x + display_width,
-		initial_y = player_pos.y - (display_height - 1) / 2,
-		final_y = initial_y + display_height;
+			final_x = initial_x + display_width,
+			initial_y = player_pos.y - (display_height - 1) / 2,
+			final_y = initial_y + display_height;
 
 	if (initial_x < 0)
 	{
@@ -220,45 +220,26 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvwprintw(l_win, 1, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
 
 	// vida
-	mvwprintw(l_win, 3, 1, "VIDA: %d/%d", state->jogoAtual.jogador.vida ,state->jogoAtual.jogador.vidaMaxima);
+	mvwprintw(l_win, 3, 1, "VIDA: %d/%d", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.vidaMaxima);
 
-	float vida100 = (float)state->jogoAtual.jogador.vida / 100;
-
-	for (int i = 0; i < 15; i++)
-		{
-			if ((float)i / 18 < vida100)
-			{
-				mvwprintw(l_win, 4, 1 + i, "#");
-			}
-		}
-	if (state->jogoAtual.jogador.vidaMaxima > 100)
+	for (int centena = 0; centena < 3; centena++)
 	{
-		float vida200 = ((float)state->jogoAtual.jogador.vida - 100) / 100;
-		for (int i = 0; i < 15; i++)
-		{
-			if ((float)i / 18 < vida200)
+		float vidaCentenaPercentagem = ((float)state->jogoAtual.jogador.vida - 100 * centena) / 100;
+
+			for (int i = 0; i < 15; i++)
 			{
-				wattron(l_win,COLOR_PAIR(YellowBlack));
-				mvwprintw(l_win, 5, 1 + i, "#");
-				wattroff(l_win,COLOR_PAIR(YellowBlack));
-			}
+				if ((float)i / 18 < vidaCentenaPercentagem)
+				{
+					// Vida extra a dourado
+					if (centena > 0) {
+						wattron(l_win, COLOR_PAIR(YellowBlack));
+					}
+
+					mvwprintw(l_win, 4 + centena, 1 + i, "#");
+					wattroff(l_win, COLOR_PAIR(YellowBlack));
+				}
 		}
 	}
-	if (state->jogoAtual.jogador.vidaMaxima > 200)
-	{
-		float vida300 = ((float)state->jogoAtual.jogador.vida - 200) / 100;
-		for (int i = 0; i < 15; i++)
-		{
-			if ((float)i / 18 < vida300)
-			{
-				wattron(l_win,COLOR_PAIR(YellowBlack));
-				mvwprintw(l_win, 6, 1 + i, "#");
-				wattroff(l_win,COLOR_PAIR(YellowBlack));
-			}
-		}
-	}
-
-	// Vida Máxima
 
 	// arma principal
 	attron(A_BOLD);
@@ -287,7 +268,7 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 
 	// fronteira menu direito
 	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
-	
+
 	// a quantidade dos objetos num array
 	int *quantidade = state->jogoAtual.quantidadeObjetos;
 
@@ -386,6 +367,3 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvprintw(3, state->mapa.terminal.width / 2 - 20, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
 	mvprintw(4, state->mapa.terminal.width / 2 - 20, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
 }
-
-
-

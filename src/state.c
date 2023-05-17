@@ -33,8 +33,8 @@ Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", "Recupera 4
 Objeto const pocaoVidaG = {1, PocaoVidaG, "Poção de Vida Grande", "Recupera 70 pts de vida."};
 Objeto const pocaoVidaD = {2, PocaoVidaD, "Poção de Vida Definitiva", "Recupera toda a vida."};
 Objeto const pocaoAumentoVida = {3, PocaoAumentoVida, "Poção de Aumento de Vida", "Aumenta a vida máxima em 25 pts."};
-Objeto const pocaoMagica = {4, PocaoMagica, "Poção Mágica", "Recupera toda a vida e aumenta a vida máxima em 15 pts."};
-Objeto const portalDeBolso = {5, PortalDeBolso, "Portal de Bolso", "Portal de uma só uso que muda o mapa. Amentando a vida máxima em 5 pts."};
+Objeto const pocaoMagica = {4, PocaoMagica, "Poção Mágica", "Aumenta a vida máxima em 15 pts e recupera-a toda."};
+Objeto const portalDeBolso = {5, PortalDeBolso, "Portal de Bolso", "Portal de um só uso que muda o mapa. Amentando a vida máxima em 5 pts."};
 
 int const catalogoObjetosLength = 6;
 Objeto const catalogoObjetos[] = {pocaoVidaD, pocaoVidaG, pocaoVidaP, pocaoAumentoVida, pocaoMagica, portalDeBolso};
@@ -69,8 +69,8 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.mapa.qntMobsNoMapaLength = 0;
 	state.mapa.matrix = NULL; // Alocado no fim da função
 
-	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.username = malloc(31);
+	state.jogoAtual.jogador.vida = 100;
 	state.jogoAtual.jogador.vidaMaxima = 100;
 	state.jogoAtual.jogador.posicao.x = 1;
 	state.jogoAtual.jogador.posicao.y = 1;
@@ -89,7 +89,7 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
 	state.jogoAtual.mensagem_inventario = "Este é o teu inventário!";
 	state.jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
-	state.jogoAtual.quantidadeObjetos = NULL;
+	state.jogoAtual.quantidadeObjetos = NULL; // Alocado depois
 
 	load_settings_state(&state);
 	state.mapa.matrix = alocar_matrix_mapa(state.mapa.matrix_width, state.mapa.matrix_height);
