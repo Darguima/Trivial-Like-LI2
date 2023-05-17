@@ -7,6 +7,7 @@
 
 void mover_jogador(State *state, int dx, int dy)
 {
+	
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
 	int temp_y = state->jogoAtual.jogador.posicao.y + dy;
 
@@ -41,6 +42,8 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
+	
+
 	int key = getch();
 	char file[10];
 
@@ -58,6 +61,7 @@ void eventosJogo(State *state)
 
 	/* Interação com mapa */
 	case 'z':
+	   
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -73,10 +77,12 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
+		atualizarAposMovimento(state);
 
 		break;
 
 	case 'x':
+	
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -92,15 +98,17 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-
+atualizarAposMovimento(state);
 		break;
 
 	case 'e':
+
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
 			objetoSobreposto->disponivel = 0;
 		}
+		atualizarAposMovimento(state);
 		break;
 
 		/* Setas */
@@ -148,5 +156,8 @@ void eventosJogo(State *state)
 	case 'q':
 		state->sceneAtual = MenuInicial;
 		break;
+	
+    default:
+	atualizarAposMovimento(state);
 	}
 }

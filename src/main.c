@@ -2,6 +2,8 @@
 #include <ncurses.h>
 #include <locale.h>
 #include <time.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include "state.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
@@ -12,6 +14,7 @@
 
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
+#include "Scenes/Jogo/atualizarAposMovimento.h"
 
 #include "Scenes/GameOver/desenhaGameOver.h"
 #include "Scenes/GameOver/eventosGameOver.h"
@@ -30,11 +33,11 @@
 
 int main()
 {
-	// Active unicode chars
+	
+	// Activate unicode chars
 	setlocale(LC_ALL, "");
 	
 	WINDOW *window = initscr();
-
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
 	State state = criarEstado(ncols, nrows);
@@ -45,7 +48,6 @@ int main()
 	// Desativa o cursor do ecrã
 	curs_set(0);
 
-	cbreak();
 	noecho();
 	nonl();
 	intrflush(stdscr, false);
@@ -111,11 +113,19 @@ int main()
 		switch (state.sceneAtual)
 		{
 		case MenuInicial:
+		// 	if (system("pgrep aplay > /dev/null") == 0) {
+        // system("killall aplay");
+			 
+	         
+		// 	}
+			
 			desenhaMenuInicial(window, &state);
 			eventosMenuInicial(&state);
 			break;
 
 		case SelecionarJogador:
+
+		   
 			desenhaSelecionarJogador(window, &state);
 			eventosSelecionarJogador(&state);
 
@@ -126,11 +136,13 @@ int main()
 			desenhaMenusLaterais(window, &state);
 			desenhaJogo(janela_do_jogo, &state);
 			eventosJogo(&state);
+			
 			break;
 
 		case GameOver:
 			desenhaGameOver(window, &state);
 			eventosGameOver(&state);
+		
 			break;
 
 		case Definicoes:
@@ -151,6 +163,9 @@ int main()
 		case Sair:
 			desenhaSair(window, &state);
 			eventosSair(&state);
+			
+	 	
+		
 			break;
 		}
 

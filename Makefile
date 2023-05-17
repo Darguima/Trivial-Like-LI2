@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -O2
-LIBS=-lm -lcurses -ljson-c
+LIBS=-lm -lcurses -ljson-c 
 
 # Find all .c files
 SOURCES := $(shell find ./src -type f -name '*.c')
@@ -18,4 +18,5 @@ clean:
 dev:
     # Clean, compile and run 
 	make clean && make && make clean && ./triviallike
+
 

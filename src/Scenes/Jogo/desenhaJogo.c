@@ -3,6 +3,7 @@
 #include "./visao.h"
 #include "../../state.h"
 #include "../../MapaUtils/mapaUtils.h"
+#include "./atualizarAposMovimento.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -193,7 +194,6 @@ void desenhaJogo(WINDOW *window, State *state)
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y - initial_y, state->jogoAtual.jogador.posicao.x - initial_x, '@');
 	wattroff(window, COLOR_PAIR(MapaPlayerColor));
 	wattroff(window, COLOR_PAIR(MapaPlayerSobAtaqueColor));
-
 	wrefresh(window);
 
 	return;
