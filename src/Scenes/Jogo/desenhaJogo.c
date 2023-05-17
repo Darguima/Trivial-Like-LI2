@@ -49,6 +49,7 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				mvwaddch(window, window_y, window_x, '#');
 				break;
 			case PortaProximoMapa:
+				wattron(window, COLOR_PAIR(PortalColor));
 				mvwaddch(window, window_y, window_x, '+');
 				break;
 
@@ -69,6 +70,7 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				break;
 			}
 
+			wattroff(window, COLOR_PAIR(PortalColor));
 			wattroff(window, COLOR_PAIR(MapaVisivelColor));
 			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 			wattroff(window, COLOR_PAIR(MapaDesconhecidoColor));

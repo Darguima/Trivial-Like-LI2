@@ -38,6 +38,7 @@ typedef enum colors
 	FG_MapaDesconhecido,
 	BG_MapaDesconhecido,
 
+	FG_Portal,
 	FG_Player,
 	FG_Moeda,
 	FG_Arma,
@@ -62,6 +63,7 @@ typedef enum colorsSchema
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
+	PortalColor,
 	MoedaColor,
 	ArmaColor,
 	ObjetoColor,
