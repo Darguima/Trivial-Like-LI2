@@ -344,4 +344,6 @@ void geraMapa(State *state)
 
 	desenhaGerandoMapa(state->ncurses_screen, "A encontrar uma posição para dar spawn.");
 	encontrarPosicaoLivreUser(state);
+
+	werase(state->ncurses_screen);
 }
