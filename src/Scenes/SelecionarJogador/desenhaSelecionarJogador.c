@@ -27,7 +27,7 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   move(nrows - 14, 0);
   clrtoeol();
 
-  move(nrows - 8, 0);
+  move(nrows - 7, 0);
   clrtoeol();
 
   mvprintw(y - 11, x - 24, "     _____     _       _       _ _ _           ");
@@ -40,17 +40,18 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   mvaddstr(y + 0, x - 7, "1.");
   mvaddstr(y + 2, x - 7, "2.");
   mvaddstr(y + 4, x - 7, "3.");
-  mvaddstr(nrows - 6, 2, "Para apagar saves pressione [D]");
-  mvaddstr(nrows - 4, 2, "Selecione o save com [1]-[3]");
+  mvaddstr(nrows - 7, 2, "Para apagar saves pressione [D]");
+  mvaddstr(nrows - 5, 2, "Pressione [1]-[3] para escolher o save");
+  mvaddstr(nrows - 4, 2, "Pressione [J] para um jogo rápido");
   mvaddstr(nrows - 2, 2, "Pressione [Q] para voltar");
 
   if (state->scenesVariables.selecionarJogadorSceneVars.delete == 1)
   {
-    mvaddstr(nrows - 8, 2, "Selecione o save a remover com [1]-[3] ( [A] - voltar )");
+    mvaddstr(nrows - 7, 2, "Selecione o save a remover com [1]-[3] ( [A] - voltar )");
   }
   else if (state->scenesVariables.selecionarJogadorSceneVars.faildelete == 1)
   {
-    mvaddstr(nrows - 8, 2, "Erro a apagar save ( [A] - voltar )");
+    mvaddstr(nrows - 7, 2, "Erro a apagar save ( [A] - voltar )");
   }
 
   if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 1)

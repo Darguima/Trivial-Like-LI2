@@ -109,6 +109,8 @@ void eventosSelecionarJogador(State *state)
 
 	case 'q':
 		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;
+		state->scenesVariables.selecionarJogadorSceneVars.delete = 0;
+		state->scenesVariables.selecionarJogadorSceneVars.faildelete = 0;
 		state->jogoAtual.jogador.numSave = 0;
 		state->sceneAtual = MenuInicial;
 		break;

@@ -65,7 +65,10 @@ void load_game_state(State *state)
 	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
-		if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
+		// No jogo rápido, o numMapaAtual == 1
+		if (state->jogoAtual.jogador.numSave <= 0)
+			state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
+		else if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 0)
 			state->scenesVariables.selecionarJogadorSceneVars.askUser = 1;
 	}
 	else
