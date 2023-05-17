@@ -87,6 +87,11 @@ int estaDentroDoMapa(int x, int y, int xmax, int ymax)
   }
 }
 
+int estaVazio(Mapa mapa, int x, int y)
+{
+  return estaDentroDoMapa(x, y, mapa.matrix_width, mapa.matrix_height) && mapa.matrix[x][y].tipo == Vazio;
+}
+
 int estaSemParede(Mapa mapa, int x, int y)
 {
   return estaDentroDoMapa(x, y, mapa.matrix_width, mapa.matrix_height) && mapa.matrix[x][y].tipo != Parede;

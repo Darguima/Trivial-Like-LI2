@@ -38,6 +38,7 @@ typedef enum colors
 	FG_MapaDesconhecido,
 	BG_MapaDesconhecido,
 
+	FG_Portal,
 	FG_Player,
 	FG_Moeda,
 	FG_Arma,
@@ -62,6 +63,7 @@ typedef enum colorsSchema
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
+	PortalColor,
 	MoedaColor,
 	ArmaColor,
 	ObjetoColor,
@@ -193,8 +195,7 @@ typedef struct selecionarJogadorSceneVars
 {
 	int delete;			// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
-	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
-	int confirmarPocao;
+	int askUser;		// 0 - nada; 1 - pergunta_username; 2 - continuar_para_jogo
 } SelecionarJogadorSceneVars;
 
 typedef struct definicoesSceneVars
@@ -260,6 +261,7 @@ typedef struct mapa
 	int qntArmasNoMapaLength;
 	int qntObjetosNoMapaLength;
 	int qntMobsNoMapaLength;
+	int qntPortaisNoMapaLength;
 
 	ElementosDoMapa **matrix;
 } Mapa;

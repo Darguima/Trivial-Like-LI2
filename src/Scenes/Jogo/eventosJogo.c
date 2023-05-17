@@ -42,7 +42,6 @@ void reageVida(State *state)
 void eventosJogo(State *state)
 {
 	int key = getch();
-	char file[10];
 
 	ArmaNoMapa *armaSobreposta;
 	ObjetoNoMapa *objetoSobreposto;
@@ -50,12 +49,6 @@ void eventosJogo(State *state)
 
 	switch (key)
 	{
-	case 's':
-
-		sprintf(file, "%d.json", state->jogoAtual.jogador.numSave);
-		save_game_state(file, state->jogoAtual.jogador.vida, state->jogoAtual.jogador.username, state->jogoAtual.jogador.numMapaAtual, state->jogoAtual.jogador.dinheiro, state->jogoAtual.jogador.armaPrincipal.index, state->jogoAtual.jogador.armaSecundaria.index);
-		break;
-
 	/* Interação com mapa */
 	case 'z':
 		// atacar com principal
