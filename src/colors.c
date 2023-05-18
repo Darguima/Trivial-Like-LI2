@@ -17,8 +17,11 @@ void start_state_colors()
   init_color(FG_Player, 0, 0, 1000);
   init_color(FG_Moeda, 1000, 1000, 0);
   init_color(FG_Arma, 0, 1000, 0);
-  init_color(FG_Objeto, 0, 0, 1000);
+  init_color(FG_Objeto, 500, 500, 1000);
   init_color(FG_Mob, 1000, 0, 0);
+  
+  init_color(BG_Parede, 1000, 1000, 1000);
+  init_color(BG_ParedeNaoVisivel, 500, 500, 500);
 
   init_pair(WhiteBlack, COLOR_WHITE, COLOR_BLACK);
   init_pair(YellowBlack, COLOR_YELLOW, COLOR_BLACK);
@@ -40,6 +43,9 @@ void start_state_colors()
   init_pair(ArmaColor, FG_Arma, BG_MapaVisivel);
   init_pair(ObjetoColor, FG_Objeto, BG_MapaVisivel);
   init_pair(MobColor, FG_Mob, BG_MapaVisivel);
+  
+  init_pair(ParedeColor, BG_Parede, BG_Parede);
+  init_pair(ParedeNaoVisivelColor, BG_ParedeNaoVisivel, BG_ParedeNaoVisivel);
 
   init_pair(ArmaBox, FG_Arma, COLOR_BLACK);
   init_pair(ObjetoBox, FG_Objeto, COLOR_BLACK);

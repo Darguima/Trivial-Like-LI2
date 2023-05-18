@@ -44,6 +44,9 @@ typedef enum colors
 	FG_Arma,
 	FG_Objeto,
 	FG_Mob,
+
+	BG_Parede,
+	BG_ParedeNaoVisivel,
 } Colors;
 
 typedef enum colorsSchema
@@ -68,6 +71,9 @@ typedef enum colorsSchema
 	ArmaColor,
 	ObjetoColor,
 	MobColor,
+
+	ParedeColor,
+	ParedeNaoVisivelColor,
 
 	ArmaBox,
 	ObjetoBox,
