@@ -70,7 +70,7 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				if (bloco_visivel)
 					wattron(window, COLOR_PAIR(MoedaColor));
 
-				mvwaddch(window, window_y, window_x, 'c');
+				mvwaddch(window, window_y, window_x, 'o');
 
 				wattroff(window, COLOR_PAIR(MoedaColor));
 				break;
