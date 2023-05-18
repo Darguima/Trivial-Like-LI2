@@ -14,6 +14,7 @@ void prepararJogo(State *state)
 	state->jogoAtual.jogador.dinheiro = 0;
 	state->jogoAtual.jogador.armaPrincipal = punhos;
 	state->jogoAtual.jogador.armaSecundaria = punhos;
+	state->jogoAtual.jogador.quantidadeMortes = 0;
 	state->jogoAtual.quantidadeObjetos = calloc(catalogoObjetosLength, sizeof(int));
 
 	load_game_state(state);

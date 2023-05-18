@@ -174,6 +174,7 @@ typedef struct statusJogador
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
+	int quantidadeMortes;
 } StatusJogador;
 
 typedef enum dificuldadeJogo

@@ -79,6 +79,7 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.jogador.armaPrincipal = punhos;
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
+	state.jogoAtual.jogador.quantidadeMortes = 0;
 	state.jogoAtual.dificuldade = FACIL;
 	state.jogoAtual.iluminacao_ativa = 1;
 	state.jogoAtual.mapa_desconhecido_ativo = 1;
