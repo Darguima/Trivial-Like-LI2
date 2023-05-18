@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "./atualizarAposMovimento.h"
+#include "../../GeraMapa/geraMapa.h"
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../MapaUtils/mapaUtils.h"
@@ -46,6 +47,8 @@ void eventosJogo(State *state)
 	ArmaNoMapa *armaSobreposta;
 	ObjetoNoMapa *objetoSobreposto;
 	MobNoMapa *mob_sobreposto;
+
+	int *quantidadeInv = state->jogoAtual.quantidadeObjetos;
 
 	switch (key)
 	{
@@ -94,52 +97,155 @@ void eventosJogo(State *state)
 		{
 			
 			objetoSobreposto->disponivel = 0;
-			objetoSobreposto->objeto.quantidade++;
+			quantidadeInv[objetoSobreposto->objeto.index]++;
 		}
 		break;
 
 		/* Setas */
-	case KEY_A1:
-	case '7':
-		mover_jogador(state, -1, -1);
-		break;
-
 	case KEY_UP:
-	case '8':
 		mover_jogador(state, 0, -1);
 		break;
 
-	case KEY_A3:
-	case '9':
-		mover_jogador(state, +1, -1);
-		break;
-
 	case KEY_LEFT:
-	case '4':
 		mover_jogador(state, -1, 0);
 		break;
 
 	case KEY_RIGHT:
-	case '6':
 		mover_jogador(state, +1, 0);
 		break;
 
-	case KEY_C1:
-	case '1':
-		mover_jogador(state, -1, +1);
-		break;
-
 	case KEY_DOWN:
-	case '2':
 		mover_jogador(state, 0, +1);
+		break;
+
+		/* inventário */
+	case '1':
+		state->jogoAtual.mensagem_inventario = pocaoVidaP.mensagem;
+
+		if (quantidadeInv[0] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
+		{
+			if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 40)
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 40;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			}
+
+			quantidadeInv[0]--;
+		}
+		else if (quantidadeInv[0] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
 
 		break;
 
-	case KEY_C3:
+	case '2':
+		state->jogoAtual.mensagem_inventario = pocaoVidaG.mensagem;
+
+		if (quantidadeInv[1] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
+		{
+			if (state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima - 70)
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vida + 70;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			}
+
+			quantidadeInv[1]--;
+		}
+		else if (quantidadeInv[1] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
+		break;
+
 	case '3':
-		mover_jogador(state, +1, +1);
+		state->jogoAtual.mensagem_inventario = pocaoVidaD.mensagem;
+
+		if (quantidadeInv[2] > 0 && state->jogoAtual.jogador.vida < state->jogoAtual.jogador.vidaMaxima)
+		{
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			quantidadeInv[2]--;
+		}
+		else if (quantidadeInv[2] == 0)
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
 		break;
 
+	case '4':
+		state->jogoAtual.mensagem_inventario = pocaoAumentoVida.mensagem;
+
+		if (quantidadeInv[3] > 0)
+		{
+			if (state->jogoAtual.jogador.vidaMaxima < 275)
+			{
+				state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 25;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vidaMaxima = 300;
+			}
+			quantidadeInv[3]--;
+		}
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
+		break;
+
+	case '5':
+		state->jogoAtual.mensagem_inventario = pocaoMagica.mensagem;
+
+		if (quantidadeInv[4] > 0)
+		{
+			if (state->jogoAtual.jogador.vidaMaxima < 285)
+			{
+				state->jogoAtual.jogador.vidaMaxima = state->jogoAtual.jogador.vidaMaxima + 15;
+			}
+			else
+			{
+				state->jogoAtual.jogador.vidaMaxima = 300;
+			}
+
+			state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+			quantidadeInv[4]--;
+		}
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
+		break;
+
+	case '6':
+		state->jogoAtual.mensagem_inventario = portalDeBolso.mensagem;
+
+		if (quantidadeInv[5] > 0)
+		{
+			state->jogoAtual.jogador.vidaMaxima += 5;
+
+			state->jogoAtual.jogador.numMapaAtual++;
+			geraMapa(state);
+			save_game_state(state);
+			quantidadeInv[5]--;
+		}
+		else
+		{
+			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+		}
+
+		break;
+
+		/* Sair */
 	case 'q':
 		state->sceneAtual = MenuInicial;
 		break;
