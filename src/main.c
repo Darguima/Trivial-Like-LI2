@@ -41,7 +41,6 @@ int main()
 	int nrows, ncols;
 	getmaxyx(window, nrows, ncols);
 	State state = criarEstado(ncols, nrows);
-
 	/* Configuring Window */
 	srand48(time(NULL));
 	srand(time(NULL));

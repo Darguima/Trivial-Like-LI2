@@ -16,8 +16,9 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-
 	atualizarAposMovimento(state);
+
+
 }
 
 int ataqueComProbabilidade(Arma arma, int *vida_vitima)

@@ -58,12 +58,38 @@ void moverMobs(State *state)
 
 
     if ((min_Dist = distancia(state->jogoAtual.jogador.posicao ,state->jogoAtual.mobs[mob_i].posicao )) > state->jogoAtual.mobs[mob_i].mob.raioVisao) {
+    int x_deslocamento, y_deslocamento;
+
+    x_deslocamento = (rand() % 3) - 1;
+    y_deslocamento = (rand() % 3) - 1;
+
+    if (estaTotalmenteLivre(state, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
+    {
+      *pos_x += x_deslocamento;
+      *pos_y += y_deslocamento;
+    }
       continue ;
     }
+     int perseguicao = rand() % 100;
+    if  (perseguicao<=5)
+    {
+        int x_deslocamento, y_deslocamento;
+
+    x_deslocamento = (rand() % 3) - 1;
+    y_deslocamento = (rand() % 3) - 1;
+
+    if (estaTotalmenteLivre(state, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
+    {
+      *pos_x += x_deslocamento;
+      *pos_y += y_deslocamento;
+    }
+      continue ;
+    }
+else {
     //
     if(min_Dist <=1) {
       state->jogoAtual.mobs[mob_i].posicao = state->jogoAtual.jogador.posicao;
-      break;
+      continue;
     }
 
 
@@ -127,6 +153,7 @@ void moverMobs(State *state)
       }
 
     }
+  }
   }
 }
 
