@@ -17,8 +17,8 @@ void start_state_colors()
   init_color(FG_Player, 0, 0, 1000);
   init_color(FG_Moeda, 1000, 1000, 0);
   init_color(FG_Arma, 0, 1000, 0);
-  init_color(FG_Objeto, 0, 0, 1000);
-  init_color(FG_Mob, 1000, 0, 0);
+  init_color(FG_Objeto, 500, 1000, 1000);
+  init_color(FG_Mob, 1000, 500, 500);
   
   init_color(BG_Parede, 660, 168, 168);
   init_color(BG_ParedeNaoVisivel, 330, 84, 84);
