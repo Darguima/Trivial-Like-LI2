@@ -9,11 +9,15 @@ Arma const garras = {1, Garras, "Garras", 10, 60, "Garras ensanguentadas que sae
 Arma const espadaOxidada = {2, EspadaOxidada, "Espada Oxidada", 20, 75, "Espada que pertenceu a um soldado caído em combate."};
 Arma const espadaLonga = {3, EspadaLonga, "Espada Longa", 25, 95, "Espada forjada pelos melhores ferreiros. Embora não seja muito potente, raramente falha ao seu portador."};
 Arma const arco = {4, Arco, "Arco", 40, 30, "Um arco bastante flexível que causa muito dano mas possui uma terrível precisão."};
-Arma const acido = {5, Acido, "Acido", 20, 15, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
+Arma const acido = {5, Acido, "Acido", 20, 25, "Um líquido lançado por certos monstros que desfaz tudo o que toca."};
 Arma const cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano é compensado com a precisão dos seus projéteis."};
+Arma const aniquiladora = {7, Aniquiladora, "Aniquiladora", 100, 15, "Desconhece-se a origem deste artefacto demoniaco mas sabe-se que o seu poder de destruicao nao tem limites."};
+Arma const foice = {8, Foice, "Foice", 300, 10, "Arma que a propria Morte possui. Se a sua lamina toca em alguem, morre instantaneamente."};
+Arma const computador = {9, Computador, "Computador", 1, 100, "Um mero computador... Não serve para muito nestas condições."};
 
-int const catalogoArmasLength = 7;
-Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro};
+
+int const catalogoArmasLength = 10;
+Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro, aniquiladora,foice, computador};
 
 Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E', espadaOxidada, 40, 40, 3};
 Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E', punhos, 40, 40, 3};
@@ -25,9 +29,17 @@ Mob const mutante2 = {Mutante, "Mutante", 'M', punhos, 10, 10, 2};
 Mob const aranha1 = {Aranha, "Aranha", 'A', acido, 30, 30, 10};
 Mob const aranha2 = {Aranha, "Aranha", 'A', acido, 40, 40, 8};
 Mob const zombie1 = {Zombie, "Zombie", 'Z', garras, 70, 70, 2};
+Mob const demonio = {Demonio, "Demonio", 'D', aniquiladora, 150, 150, 5};
+Mob const morte = {Morte, "Morte", 'W', foice, 200, 200, 10};
+Mob const informatico = {Informatico, "Informatico", 'I', computador, 1000, 1000, 1};
 
-int const catalogoMobsLength = 10;
-Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1};
+
+
+
+
+
+int const catalogoMobsLength = 13;
+Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1, demonio, morte, informatico};
 
 Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", "Recupera 40 pts de vida."};
 Objeto const pocaoVidaG = {1, PocaoVidaG, "Poção de Vida Grande", "Recupera 70 pts de vida."};
