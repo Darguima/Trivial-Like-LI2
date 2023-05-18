@@ -13,20 +13,12 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
 
 void desenhaControlos(WINDOW *window, State *state)
 {
-    UNUSED(window);
     UNUSED(state);
-    mvprintw(1, 28, "T    R     I     V     I     A     L          L     I     K     E");
 
-    char options[NUM_OPTIONS][MAX_OPTION_LEN] = {"move  up", "move  down", "move  left", "move  right", "leave"};
-
-    // janela para menu
-    int startx = (COLS - 30) / 2 - 60;
-    int starty = 10;
-    WINDOW *menu_win = newwin(30, 150, starty, startx);
-    keypad(menu_win, TRUE); // ativar teclas de setas
+    char options[NUM_OPTIONS][MAX_OPTION_LEN] = {"Mover  cima", "Mover  baixo", "Mover  esquerda", "Mover  direita", "Sair"};
     refresh();
 
-    print_menu(menu_win, options, NUM_OPTIONS, state->scenesVariables.controlosSceneVars.highlight, state->scenesVariables.controlosSceneVars.side, state->scenesVariables.controlosSceneVars.help);
+    print_menu(window, options, NUM_OPTIONS, state->scenesVariables.controlosSceneVars.highlight, state->scenesVariables.controlosSceneVars.side, state->scenesVariables.controlosSceneVars.help);
 }
 void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, int highlight, int side, int help)
 {
@@ -51,7 +43,7 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
         }
     }
     // botao help para side 1
-    mvwaddstr(win, 1, 130, "help");
+    mvwaddstr(win, 1, COLS - 10, "Help");
     if (side == 1)
     {
         for (i = 0; i < num_options; i++)
@@ -62,7 +54,7 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
             mvwaddstr(win, z, x, options[i]);
         }
         wattron(win, A_REVERSE);
-        mvwaddstr(win, 1, 130, "help");
+        mvwaddstr(win, 1, COLS - 10, "Help");
         wattroff(win, A_REVERSE);
         mvwprintw(win, 28, 76, " ");
     }
@@ -73,54 +65,54 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
         switch (highlight)
         {
         case 1:
-            mvwprintw(win, 20, 2, "->    up arrow   <-");
-            mvwprintw(win, 10, 75, "  .   ");
-            mvwprintw(win, 11, 75, " ...  ");
-            mvwprintw(win, 12, 75, "..... ");
-            mvwprintw(win, 13, 75, "  .   ");
-            mvwprintw(win, 14, 75, "  .   ");
-            mvwprintw(win, 15, 75, "  .   ");
+            mvwprintw(win, LINES / 2 + 10, COLS / 2 - 12, "->    Up arrow   <-");
+            mvwprintw(win, LINES / 2 - 5, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 4, COLS / 2 - 5, " ...  ");
+            mvwprintw(win, LINES / 2 - 3, COLS / 2 - 5, "..... ");
+            mvwprintw(win, LINES / 2 - 2, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 1, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2    , COLS / 2 - 5, "  .   ");
             mvwprintw(win, 28, 76, " "); // por entrada de texto num sitio porreiro
 
             break;
         case 2:
-            mvwprintw(win, 20, 2, "->   down arrow  <-");
-            mvwprintw(win, 10, 75, "  .   ");
-            mvwprintw(win, 11, 75, "  .   ");
-            mvwprintw(win, 12, 75, "  .   ");
-            mvwprintw(win, 13, 75, "..... ");
-            mvwprintw(win, 14, 75, " ...  ");
-            mvwprintw(win, 15, 75, "  .   ");
+            mvwprintw(win, LINES / 2 + 10, COLS / 2 - 12, "->   Down arrow  <-");
+            mvwprintw(win, LINES / 2 - 5, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 4, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 3, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 2, COLS / 2 - 5, "..... ");
+            mvwprintw(win, LINES / 2 - 1, COLS / 2 - 5, " ...  ");
+            mvwprintw(win, LINES / 2   , COLS / 2 - 5,  "  .   ");
             mvwprintw(win, 28, 76, " ");
             break;
         case 3:
-            mvwprintw(win, 20, 2, "->   left arrow  <-");
-            mvwprintw(win, 10, 75, "      ");
-            mvwprintw(win, 11, 75, "   .  ");
-            mvwprintw(win, 12, 75, "   .. ");
-            mvwprintw(win, 13, 75, "......");
-            mvwprintw(win, 14, 75, "   .. ");
-            mvwprintw(win, 15, 75, "   . ");
+            mvwprintw(win, LINES / 2 + 10, COLS / 2 - 12, "->   Left arrow  <-");
+            mvwprintw(win, LINES / 2 - 5, COLS / 2 - 5, "      ");
+            mvwprintw(win, LINES / 2 - 4, COLS / 2 - 5, "   .  ");
+            mvwprintw(win, LINES / 2 - 3, COLS / 2 - 5, "   .. ");
+            mvwprintw(win, LINES / 2 - 2, COLS / 2 - 5, "......");
+            mvwprintw(win, LINES / 2 - 1, COLS / 2 - 5, "   .. ");
+            mvwprintw(win, LINES / 2    , COLS / 2 - 5, "   . ");
             mvwprintw(win, 28, 76, " ");
             break;
         case 4:
-            mvwprintw(win, 20, 2, "->  right arrow  <-");
-            mvwprintw(win, 10, 75, "      ");
-            mvwprintw(win, 11, 75, "  .   ");
-            mvwprintw(win, 12, 75, " ..   ");
-            mvwprintw(win, 13, 75, "......");
-            mvwprintw(win, 14, 75, " ..   ");
-            mvwprintw(win, 15, 75, "  .   ");
+            mvwprintw(win, LINES / 2 + 10, COLS / 2 - 12, "->  Right arrow  <-");
+            mvwprintw(win, LINES / 2 - 5, COLS / 2 - 5, "      ");
+            mvwprintw(win, LINES / 2 - 4, COLS / 2 - 5, "  .   ");
+            mvwprintw(win, LINES / 2 - 3, COLS / 2 - 5, " ..   ");
+            mvwprintw(win, LINES / 2 - 2, COLS / 2 - 5, "......");
+            mvwprintw(win, LINES / 2 - 1, COLS / 2 - 5, " ..   ");
+            mvwprintw(win, LINES / 2    , COLS / 2 - 5, "  .   ");
             mvwprintw(win, 28, 76, " ");
             break;
         case 5:
-            mvwprintw(win, 20, 2, "->    press q    <-");
-            mvwprintw(win, 10, 75, "......");
-            mvwprintw(win, 11, 75, ".    .");
-            mvwprintw(win, 12, 75, "......");
-            mvwprintw(win, 13, 75, "     .");
-            mvwprintw(win, 14, 75, "     .");
-            mvwprintw(win, 15, 75, "     .");
+            mvwprintw(win, LINES / 2 + 10, COLS / 2 - 12, "->    Press Q    <-");
+            mvwprintw(win, LINES / 2 - 5, COLS / 2 - 5, "......");
+            mvwprintw(win, LINES / 2 - 4, COLS / 2 - 5, ".    .");
+            mvwprintw(win, LINES / 2 - 3, COLS / 2 - 5, "......");
+            mvwprintw(win, LINES / 2 - 2, COLS / 2 - 5, "     .");
+            mvwprintw(win, LINES / 2 - 1, COLS / 2 - 5, "     .");
+            mvwprintw(win, LINES / 2    , COLS / 2 - 5, "     .");
             mvwprintw(win, 28, 76, " ");
             break;
         default:
@@ -129,12 +121,13 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
     }
     if (help == 1)
     {
-        mvwprintw(win, 25, 76, "$money$");
+        
+        mvwprintw(win, LINES-3, 2, "Pressione [Q] para voltar");
         mvwprintw(win, 28, 76, " ");
     }
     if (help == 0)
     {
-        mvwprintw(win, 25, 76, "       ");
+        mvwprintw(win, LINES-3, 2, "                         ");
         mvwprintw(win, 28, 76, " ");
     }
 

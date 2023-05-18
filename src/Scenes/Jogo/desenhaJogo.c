@@ -49,6 +49,15 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				mvwaddch(window, window_y, window_x, '#');
 				break;
 
+			case PortaProximoMapa:
+				if (bloco_visivel)
+					wattron(window, COLOR_PAIR(PortalColor));
+
+				mvwaddch(window, window_y, window_x, '+');
+
+				wattroff(window, COLOR_PAIR(PortalColor));
+				break;
+
 			case Moeda:
 				if (bloco_visivel)
 					wattron(window, COLOR_PAIR(MoedaColor));
@@ -57,7 +66,6 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 
 				wattroff(window, COLOR_PAIR(MoedaColor));
 				break;
-
 			case Vazio:
 				mvwaddch(window, window_y, window_x, ' ');
 				break;
@@ -67,6 +75,7 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				break;
 			}
 
+			wattroff(window, COLOR_PAIR(PortalColor));
 			wattroff(window, COLOR_PAIR(MapaVisivelColor));
 			wattroff(window, COLOR_PAIR(MapaMemoriaColor));
 			wattroff(window, COLOR_PAIR(MapaDesconhecidoColor));
@@ -210,65 +219,76 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	mvwprintw(l_win, 1, 1, "MAPA ATUAL: %d", state->jogoAtual.jogador.numMapaAtual);
 
 	// vida
-	mvwprintw(l_win, 3, 1, "VIDA: %d", state->jogoAtual.jogador.vida);
-	if (state->jogoAtual.jogador.vida > 96)
+	mvwprintw(l_win, 3, 1, "VIDA: %d/%d", state->jogoAtual.jogador.vida, state->jogoAtual.jogador.vidaMaxima);
+
+	for (int centena = 0; centena < 3; centena++)
 	{
-		mvwprintw(l_win, 4, 1, "%s", "#################");
-	}
-	else if (state->jogoAtual.jogador.vida != 0)
-	{
-		for (int i = 0; i < (state->jogoAtual.jogador.vida / 6) + 1; i++)
-		{
-			mvwprintw(l_win, 4, 1 + i, "%s", "#");
+		float vidaCentenaPercentagem = ((float)state->jogoAtual.jogador.vida - 100 * centena) / 100;
+
+			for (int i = 0; i < 15; i++)
+			{
+				if ((float)i / 18 < vidaCentenaPercentagem)
+				{
+					// Vida extra a dourado
+					if (centena > 0) {
+						wattron(l_win, COLOR_PAIR(YellowBlack));
+					}
+
+					mvwprintw(l_win, 4 + centena, 1 + i, "#");
+					wattroff(l_win, COLOR_PAIR(YellowBlack));
+				}
 		}
 	}
 
 	// arma principal
 	attron(A_BOLD);
-	mvwprintw(l_win, 7, 1, "%s", "PRINCIPAL ");
+	mvwprintw(l_win, 8, 1, "%s", "PRINCIPAL ");
 	attroff(A_BOLD);
-	mvwprintw(l_win, 7, 12, "[Z]:");
-	mvwprintw(l_win, 8, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
-	mvwprintw(l_win, 9, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
-	mvwprintw(l_win, 10, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
+	mvwprintw(l_win, 8, 12, "[Z]:");
+	mvwprintw(l_win, 9, 1, "%s", state->jogoAtual.jogador.armaPrincipal.nome);
+	mvwprintw(l_win, 10, 1, "%d pts de dano ", state->jogoAtual.jogador.armaPrincipal.dano);
+	mvwprintw(l_win, 11, 1, "%d%% de acertar", state->jogoAtual.jogador.armaPrincipal.probabilidade);
 
 	// arma secundaria
 	attron(A_BOLD);
-	mvwprintw(l_win, 12, 1, "%s", "SECUNDARIA ");
+	mvwprintw(l_win, 13, 1, "%s", "SECUNDARIA ");
 	attroff(A_BOLD);
-	mvwprintw(l_win, 12, 12, "[X]:");
-	mvwprintw(l_win, 13, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
-	mvwprintw(l_win, 14, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
-	mvwprintw(l_win, 15, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
+	mvwprintw(l_win, 13, 12, "[X]:");
+	mvwprintw(l_win, 14, 1, "%s", state->jogoAtual.jogador.armaSecundaria.nome);
+	mvwprintw(l_win, 15, 1, "%d pts de dano", state->jogoAtual.jogador.armaSecundaria.dano);
+	mvwprintw(l_win, 16, 1, "%d%% de acertar", state->jogoAtual.jogador.armaSecundaria.probabilidade);
 
 	// dinheiro
 	attron(A_BOLD);
-	mvwprintw(l_win, 17, 1, "%s", "MOEDAS:");
+	mvwprintw(l_win, 18, 1, "%s", "MOEDAS:");
 	attroff(A_BOLD);
-	mvwprintw(l_win, 17, 9, "%d", state->jogoAtual.jogador.dinheiro);
+	mvwprintw(l_win, 18, 9, "%d", state->jogoAtual.jogador.dinheiro);
 	wrefresh(l_win);
 
 	// fronteira menu direito
 	WINDOW *r_win = newwin(state->mapa.display_height, 20, 5, state->mapa.terminal.width - 20);
+
+	// a quantidade dos objetos num array
+	int *quantidade = state->jogoAtual.quantidadeObjetos;
+
 	box(r_win, 0, 0);
 	mvwprintw(r_win, 1, 1, "[1]Pocao Vida P");
-	mvwprintw(r_win, 2, 1, "................X%s", "0"); // nestes 0' vão as quantidades dos itens
+	mvwprintw(r_win, 2, 1, "................X%d", quantidade[0]); // nestes 0' vão as quantidades dos itens
 
 	mvwprintw(r_win, 5, 1, "[2]Pocao Vida G");
-	mvwprintw(r_win, 6, 1, "................X%s", "2");
+	mvwprintw(r_win, 6, 1, "................X%d", quantidade[1]);
 
 	mvwprintw(r_win, 9, 1, "[3]Pocao Vida D");
-	mvwprintw(r_win, 10, 1, "................X%s", "1");
+	mvwprintw(r_win, 10, 1, "................X%d", quantidade[2]);
 
 	mvwprintw(r_win, 13, 1, "[4]Pocao Aumento");
-	mvwprintw(r_win, 14, 1, "................X%s", "0");
+	mvwprintw(r_win, 14, 1, "................X%d", quantidade[3]);
 
 	mvwprintw(r_win, 17, 1, "[5]Pocao Magica");
-	mvwprintw(r_win, 18, 1, "................X%s", "0");
+	mvwprintw(r_win, 18, 1, "................X%d", quantidade[4]);
 
 	mvwprintw(r_win, 21, 1, "[6]Portal de Bolso");
-	mvwprintw(r_win, 22, 1, "................X%s", "1");
-
+	mvwprintw(r_win, 22, 1, "................X%d", quantidade[5]);
 	wrefresh(r_win);
 
 	// fronteira esquerda menu de baixo

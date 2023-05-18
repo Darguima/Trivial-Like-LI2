@@ -1,8 +1,11 @@
 #include <ncurses.h>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 #include "../state.h"
 #include "../MapaUtils/mapaUtils.h"
+
+#include "../Scenes/GerandoMapa/desenhaGerandoMapa.h"
 
 void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa, int mapa_desconhecido_ativo)
 {
@@ -35,35 +38,32 @@ void povoarMapa(int linhas, int colunas, ElementosDoMapa **mapa, int mapa_descon
 	return;
 }
 
-void copyAll(int x, int y, ElementosDoMapa aqui[x][y], ElementosDoMapa **ali)
+void copyAll(int matrix_width, int matrix_height, ElementosDoMapa **src, ElementosDoMapa **dst)
 {
-	for (int i = 0; i < x; i++)
-	{
-		for (int j = 0; j < y; j++)
-		{
-			aqui[i][j] = ali[i][j];
-		}
-	}
-	return;
+	for (int x = 0; x < matrix_width; x++)
+		for (int y = 0; y < matrix_height; y++)
+			dst[x][y] = src[x][y];
 }
 
-void applyCelular(int x, int y, ElementosDoMapa **mapa)
+void applyCelular(State *state, int matrix_width, int matrix_height)
 {
+	ElementosDoMapa **matrix = state->mapa.matrix;
+	ElementosDoMapa **auxMap = alocar_matrix_mapa(matrix_width, matrix_height);
+
 	for (int k = 0; k < 3; k++)
 	{
-		ElementosDoMapa auxMap[x][y];
-		copyAll(x, y, auxMap, mapa);
-		for (int s = 1; s < x; s++)
+		copyAll(matrix_width, matrix_height, matrix, auxMap);
+		for (int x = 1; x < matrix_width; x++)
 		{
-			for (int j = 1; j < y; j++)
+			for (int y = 1; y < matrix_height; y++)
 			{
 				int window_count = 0;
 				int window = 0;
-				for (int a = s - 1; a <= s + 1; a++)
+				for (int a = x - 1; a <= x + 1; a++)
 				{
-					for (int b = j - 1; b <= j + 1; b++)
+					for (int b = y - 1; b <= y + 1; b++)
 					{
-						if (estaDentroDoMapa(a, b, x, y))
+						if (estaDentroDoMapa(a, b, matrix_width, matrix_height))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -77,11 +77,11 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 						}
 					}
 				}
-				for (int a = s - 4; a <= s + 4; a++)
+				for (int a = x - 4; a <= x + 4; a++)
 				{
-					for (int b = j - 4; b <= j + 4; b++)
+					for (int b = y - 4; b <= y + 4; b++)
 					{
-						if (estaDentroDoMapa(a, b, x, y))
+						if (estaDentroDoMapa(a, b, matrix_width, matrix_height))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -98,29 +98,28 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 
 				if (window_count >= 5 || window <= 2)
 				{
-					mapa[s][j].tipo = Parede;
+					matrix[x][y].tipo = Parede;
 				}
 				else
 				{
-					mapa[s][j].tipo = Vazio;
+					matrix[x][y].tipo = Vazio;
 				}
 			}
 		}
 	}
 	for (int k = 0; k < 2; k++)
 	{
-		ElementosDoMapa auxMap[x][y];
-		copyAll(x, y, auxMap, mapa);
-		for (int s = 1; s < x; s++)
+		copyAll(matrix_width, matrix_height, matrix, auxMap);
+		for (int x = 1; x < matrix_width; x++)
 		{
-			for (int j = 1; j < y; j++)
+			for (int y = 1; y < matrix_height; y++)
 			{
 				int window_count = 0;
-				for (int a = s - 1; a <= s + 1; a++)
+				for (int a = x - 1; a <= x + 1; a++)
 				{
-					for (int b = j - 1; b <= j + 1; b++)
+					for (int b = y - 1; b <= y + 1; b++)
 					{
-						if (estaDentroDoMapa(a, b, x, y))
+						if (estaDentroDoMapa(a, b, matrix_width, matrix_height))
 						{
 
 							if (auxMap[a][b].tipo == Parede)
@@ -137,26 +136,29 @@ void applyCelular(int x, int y, ElementosDoMapa **mapa)
 
 				if (window_count >= 5)
 				{
-					mapa[s][j].tipo = Parede;
+					matrix[x][y].tipo = Parede;
 				}
 				else
 				{
-					mapa[s][j].tipo = Vazio;
+					matrix[x][y].tipo = Vazio;
 				}
 			}
 		}
 	}
 
-	return;
+	libertar_matrix_mapa(auxMap, matrix_width);
 }
 
 // sinal deve ser 1 ou -1 para mudar o sinal do offset
 // -1 vai aumentar a probabilidade de aparecer o elemento
 // +1 vai diminuir a probabilidade de aparecer o elemento
-int calcularProbabilidadeComDificuldade(int probabilidade, DificuldadeJogo dificuldade, int sinal)
+int calcularQuantidadeComDificuldade(int area, int probabilidade, DificuldadeJogo dificuldade, int sinal)
 {
-	int result = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
-	return result > 0 ? result : 1;
+	int probabilidade_final = (probabilidade + (probabilidade * dificuldade * 0.25 * sinal));
+
+	int quantidade = area / probabilidade_final;
+
+	return quantidade > 0 ? quantidade : 1;
 }
 
 void calcularQuantidadeElementosMapa(State *state)
@@ -164,23 +166,62 @@ void calcularQuantidadeElementosMapa(State *state)
 	int area = state->mapa.matrix_height * state->mapa.matrix_width;
 	DificuldadeJogo dificuldade = state->jogoAtual.dificuldade;
 
+	// Probabilidade de aparecer uma portal = 1 / 45000
+	state->mapa.qntPortaisNoMapaLength = calcularQuantidadeComDificuldade(area, 45000, dificuldade, +1);
+
+	// Probabilidade de aparecer uma moeda = 1 / 600
+	state->mapa.qntMoedasNoMapaLength = calcularQuantidadeComDificuldade(area, 600, dificuldade, +1);
+
 	// Probabilidade de aparecer uma arma = 1 / 3000
-	state->mapa.qntArmasNoMapaLength = area / calcularProbabilidadeComDificuldade(3000, dificuldade, +1);
+	state->mapa.qntArmasNoMapaLength = calcularQuantidadeComDificuldade(area, 3000, dificuldade, +1);
 	free(state->jogoAtual.armas);
 	state->jogoAtual.armas = malloc(state->mapa.qntArmasNoMapaLength * sizeof(ArmaNoMapa));
 
-	// Probabilidade de aparecer uma arma = 1 / 1500
-	state->mapa.qntObjetosNoMapaLength = area / calcularProbabilidadeComDificuldade(1500, dificuldade, +1);
+	// Probabilidade de aparecer um objeto = 1 / 1500
+	state->mapa.qntObjetosNoMapaLength = calcularQuantidadeComDificuldade(area, 1500, dificuldade, +1);
 	free(state->jogoAtual.objetos);
 	state->jogoAtual.objetos = malloc(state->mapa.qntObjetosNoMapaLength * sizeof(ObjetoNoMapa));
 
 	// Probabilidade de aparecer um mob = 1 / 600
-	state->mapa.qntMobsNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, -1);
+	state->mapa.qntMobsNoMapaLength = calcularQuantidadeComDificuldade(area, 600, dificuldade, -1);
 	free(state->jogoAtual.mobs);
 	state->jogoAtual.mobs = malloc(state->mapa.qntMobsNoMapaLength * sizeof(MobNoMapa));
+}
 
-	// Probabilidade de aparecer uma moeda = 1 / 600
-	state->mapa.qntMoedasNoMapaLength = area / calcularProbabilidadeComDificuldade(600, dificuldade, +1);
+void adicionarPortais(State *state)
+{
+	int distance, pos_x, pos_y;
+	int min_distance = (state->mapa.matrix_width + state->mapa.matrix_height) / 4;
+
+	for (int portais_gerados = 0; portais_gerados < state->mapa.qntPortaisNoMapaLength; portais_gerados++)
+	{
+		do
+		{
+			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
+			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
+			distance = sqrt(pow(abs(pos_x - state->mapa.matrix_width / 2), 2) + pow(abs(pos_y - state->mapa.matrix_height / 2), 2));
+		} while (
+				!estaVazio(state->mapa, pos_x, pos_y) ||
+				!estaVazio(state->mapa, pos_x + 1, pos_y) ||
+				!estaVazio(state->mapa, pos_x + 2, pos_y) ||
+				!estaVazio(state->mapa, pos_x, pos_y + 1) ||
+				!estaVazio(state->mapa, pos_x + 1, pos_y + 1) ||
+				!estaVazio(state->mapa, pos_x + 2, pos_y + 1) ||
+				!estaVazio(state->mapa, pos_x, pos_y + 2) ||
+				!estaVazio(state->mapa, pos_x + 1, pos_y + 2) ||
+				!estaVazio(state->mapa, pos_x + 2, pos_y + 2) ||
+				distance < min_distance);
+
+		state->mapa.matrix[pos_x][pos_y].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 1][pos_y].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 2][pos_y].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x][pos_y + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 1][pos_y + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 2][pos_y + 1].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x][pos_y + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 1][pos_y + 2].tipo = PortaProximoMapa;
+		state->mapa.matrix[pos_x + 2][pos_y + 2].tipo = PortaProximoMapa;
+	}
 }
 
 void adicionarMoedas(State *state)
@@ -193,7 +234,7 @@ void adicionarMoedas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
+		} while (!estaVazio(state->mapa, pos_x, pos_y));
 
 		state->mapa.matrix[pos_x][pos_y].tipo = Moeda;
 	}
@@ -209,7 +250,7 @@ void adicionarArmas(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
+		} while (!estaVazio(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.armas[armas_geradas].posicao = pos;
@@ -229,7 +270,7 @@ void adicionarObjetos(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
+		} while (!estaVazio(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.objetos[objetos_gerados].posicao = pos;
@@ -248,7 +289,7 @@ void adicionarMobs(State *state)
 		{
 			pos_x = (rand() % (state->mapa.matrix_width - 2)) + 1;
 			pos_y = (rand() % (state->mapa.matrix_height - 2)) + 1;
-		} while (!estaTotalmenteLivre(state, pos_x, pos_y));
+		} while (!estaVazio(state->mapa, pos_x, pos_y));
 
 		Coordenadas pos = {pos_x, pos_y};
 		state->jogoAtual.mobs[mobs_gerados].posicao = pos;
@@ -275,22 +316,34 @@ void encontrarPosicaoLivreUser(State *state)
 
 void geraMapa(State *state)
 {
+	werase(state->ncurses_screen);
+	desenhaGerandoMapa(state->ncurses_screen, "A povoar Mapa com paredes.");
+
 	int largura_mapa = state->mapa.matrix_width;
 	int altura_mapa = state->mapa.matrix_height;
 
 	// Gerar paredes
 	povoarMapa(largura_mapa, altura_mapa, state->mapa.matrix, state->jogoAtual.mapa_desconhecido_ativo);
-	applyCelular(largura_mapa, altura_mapa, state->mapa.matrix);
+	applyCelular(state, largura_mapa, altura_mapa);
 
 	// Gerar Elementos
+	desenhaGerandoMapa(state->ncurses_screen, "Calcular quantidades de elementos do mapa.");
+
 	calcularQuantidadeElementosMapa(state);
 
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar portais ao mapa.");
+	adicionarPortais(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar moedas ao mapa.");
 	adicionarMoedas(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar armas ao mapa.");
 	adicionarArmas(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar objetos ao mapa.");
 	adicionarObjetos(state);
+	desenhaGerandoMapa(state->ncurses_screen, "A adicionar mobs ao mapa.");
 	adicionarMobs(state);
 
+	desenhaGerandoMapa(state->ncurses_screen, "A encontrar uma posição para dar spawn.");
 	encontrarPosicaoLivreUser(state);
 
-	return;
+	werase(state->ncurses_screen);
 }

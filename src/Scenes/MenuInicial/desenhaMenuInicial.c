@@ -12,23 +12,23 @@ void desenhaMenuInicial(WINDOW *window, State *state)
 
     int nrows, ncols;
     getmaxyx(stdscr, nrows, ncols);
-    int y = (nrows / 2) - 4;
-    int x = (ncols / 2) - 2;
+    int y = (nrows / 2);
+    int x = (ncols / 2);
 
     refresh();
 
-    box(window, 0, 0); // desenhar caixa
+    mvprintw(y - 11, x - 24, "     _____     _       _       _ _ _           ");
+    mvprintw(y - 10, x - 24, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
+    mvprintw(y - 9, x - 24, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
+    mvprintw(y - 8, x - 24, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
+    mvprintw(y - 7, x - 24, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___|   ");
 
-    mvaddstr(y, x - 5, "1.Selecionar jogador");
-    mvaddstr(y + 3, x - 3, "2.Definições");
-    mvaddstr(y + 6, x - 2, "3.Controlos");
-    mvaddstr(y + 9, x - 1, "4.Sobre");
-    mvaddstr(y + 12, x, "5.Sair");
+    mvaddstr(y - 4, x - 10, "1.Selecionar jogador");
+    mvaddstr(y - 1, x - 7, "2.Definições");
+    mvaddstr(y + 2, x - 6, "3.Controlos");
+    mvaddstr(y + 5, x - 4, "4.Sobre");
+    mvaddstr(y + 8, x - 4, "5.Sair");
     mvaddstr(nrows - 2, 2, "Selecione a opção com [1]-[5]");
 
-    mvprintw(y - 7, x - 21, "     _____     _       _       _ _ _            ");
-    mvprintw(y - 6, x - 21, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
-    mvprintw(y - 5, x - 21, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
-    mvprintw(y - 4, x - 21, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
-    mvprintw(y - 3, x - 21, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___| ");
+    box(window, 0, 0); // desenhar caixa
 }

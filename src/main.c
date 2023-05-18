@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <time.h>
 #include "state.h"
+#include "colors.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"

@@ -5,7 +5,6 @@
 #include <json-c/json.h>
 
 #include "../../state.h"
-#include "../../GeraMapa/geraMapa.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
@@ -20,55 +19,54 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
   UNUSED(window);
   UNUSED(state);
 
-  // Resetar valores para um novo jogo
-  state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
-  state->jogoAtual.jogador.posicao.x = 1;
-  state->jogoAtual.jogador.posicao.y = 1;
-  state->jogoAtual.jogador.numMapaAtual = 1;
-  state->jogoAtual.jogador.dinheiro = 0;
-  state->jogoAtual.jogador.armaPrincipal = punhos;
-  state->jogoAtual.jogador.armaSecundaria = punhos;
-
-  geraMapa(state);
-
   int nrows, ncols;
   getmaxyx(stdscr, nrows, ncols);
-  int y = (nrows / 2) - 4;
-  int x = (ncols / 2) - 2;
+  int y = (nrows / 2);
+  int x = (ncols / 2);
 
   move(nrows - 14, 0);
   clrtoeol();
 
-  move(nrows - 8, 0);
+  move(nrows - 7, 0);
   clrtoeol();
-  box(window, 0, 0); // desenhar caixa
 
-  refresh();
-  mvaddstr(y - 10, x - 17, "Selecione Jogo");
-  mvaddstr(y, x - 17, "1.");
-  mvaddstr(y + 2, x - 17, "2.");
-  mvaddstr(y + 4, x - 17, "3.");
-  mvaddstr(nrows - 6, 2, "Para apagar jogador pressione d");
-  mvaddstr(nrows - 4, 2, "Pressione num jogador para jogar");
-  mvaddstr(nrows - 2, 2, "Pressione q para voltar");
+  mvprintw(y - 11, x - 24, "     _____     _       _       _ _ _           ");
+  mvprintw(y - 10, x - 24, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
+  mvprintw(y - 9, x - 24, "      | || '__| \\ \\ / / |/ _` | | | |/ / _ \\   ");
+  mvprintw(y - 8, x - 24, "      | || |  | |\\ V /| | (_| | | |   <  __/   ");
+  mvprintw(y - 7, x - 24, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___|   ");
+
+  mvaddstr(y - 3, x - 7, "Escolha o save");
+  mvaddstr(y + 0, x - 7, "1.");
+  mvaddstr(y + 2, x - 7, "2.");
+  mvaddstr(y + 4, x - 7, "3.");
+  mvaddstr(nrows - 7, 2, "Para apagar saves pressione [D]");
+  mvaddstr(nrows - 5, 2, "Pressione [1]-[3] para escolher o save");
+  mvaddstr(nrows - 4, 2, "Pressione [J] para um jogo rápido");
+  mvaddstr(nrows - 2, 2, "Pressione [Q] para voltar");
 
   if (state->scenesVariables.selecionarJogadorSceneVars.delete == 1)
   {
-    mvaddstr(nrows - 8, 2, "Delete Ligado, pressione numero para escolher qual progresso quer apagar ('a' : desligar)");
+    mvaddstr(nrows - 7, 2, "Selecione o save a remover com [1]-[3] ( [A] - voltar )");
   }
   else if (state->scenesVariables.selecionarJogadorSceneVars.faildelete == 1)
   {
-    mvaddstr(nrows - 8, 2, "Erro a apagar ficheiro ('a' : apagar mensagem)");
+    mvaddstr(nrows - 7, 2, "Erro a apagar save ( [A] - voltar )");
   }
 
   if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 1)
   {
     char str[80];
-    mvaddstr(nrows - 14, 2, "Qual o teu username? (escreve e enter para confirmar)");
+    mvaddstr(nrows - 14, 2, "Qual o username? ( [ENTER] para confirmar)");
     refresh();
+
     getnstr(str, 30);
     strcpy(state->jogoAtual.jogador.username, str);
-    mvprintw(nrows - 14, 2, "username: %s , pressione j para continuar com novo jogador ou outro numero para continuar com outro jogador", state->jogoAtual.jogador.username);
+
+    move(nrows - 14, 0);
+    clrtoeol();
+
+    mvprintw(nrows - 14, 2, "Username: %s - [J]", state->jogoAtual.jogador.username);
     refresh();
     state->scenesVariables.selecionarJogadorSceneVars.askUser = 2;
   }
@@ -88,9 +86,9 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
 
     if (fp == NULL)
     {
-      move(y + (i - 1) * 2, x - 15);
+      move(y - 2 + (i * 2), x - 4);
       clrtoeol();
-      mvaddstr(y + (i - 1) * 2, x - 15, "Novo Jogo");
+      mvaddstr(y - 2 + (i * 2), x - 4, "Novo Jogo");
     }
     else
     {
@@ -101,7 +99,9 @@ void desenhaSelecionarJogador(WINDOW *window, State *state)
       parsed_json = json_tokener_parse(buffer);
       json_object_object_get_ex(parsed_json, "username", &username);
       string = (char *)json_object_get_string(username);
-      mvaddstr(y + (i - 1) * 2, x - 15, string);
+      mvaddstr(y - 2 + (i * 2), x - 4, string);
     }
   }
+
+  box(window, 0, 0); // desenhar caixa
 }

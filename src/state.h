@@ -1,3 +1,5 @@
+#include <ncurses.h>
+
 #ifndef ___State_H___
 #define ___State_H___
 
@@ -36,6 +38,7 @@ typedef enum colors
 	FG_MapaDesconhecido,
 	BG_MapaDesconhecido,
 
+	FG_Portal,
 	FG_Player,
 	FG_Moeda,
 	FG_Arma,
@@ -60,6 +63,7 @@ typedef enum colorsSchema
 	MapaMemoriaColor,
 	MapaDesconhecidoColor,
 
+	PortalColor,
 	MoedaColor,
 	ArmaColor,
 	ObjetoColor,
@@ -91,7 +95,6 @@ typedef struct objeto
 	int index;
 	CatalogoObjetos objeto;
 	char *nome;			// nome para ser mostrado no inventário
-	int quantidade; // quantidade desse objeto
 	char *mensagem; // mensagem mostrada ao pegar no objeto
 
 } Objeto;
@@ -191,21 +194,26 @@ typedef struct selecionarJogadorSceneVars
 {
 	int delete;			// 1modo_apagar_ligado
 	int faildelete; // 1apagar_erro
-	int askUser;		// 0nada 1pergunta_username 2continuar_para_jogo
-	int confirmarPocao;
+	int askUser;		// 0 - nada; 1 - pergunta_username; 2 - continuar_para_jogo
 } SelecionarJogadorSceneVars;
+
+typedef struct definicoesSceneVars
+{
+	int ask_matrix_size;
+} DefinicoesSceneVars;
 
 typedef struct scenesVariables
 {
 	ControlosSceneVars controlosSceneVars;
 	SelecionarJogadorSceneVars selecionarJogadorSceneVars;
+	DefinicoesSceneVars definicoesSceneVars;
 } ScenesVariables;
 
 typedef struct jogoAtual
 {
 	StatusJogador jogador;
 	DificuldadeJogo dificuldade; // dificuldade cresce há medida que o número é maior (mais fácil = 0)
-	int iluminacao_ativa; // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
+	int iluminacao_ativa;				 // Se 1, o algoritmo da visão roda, se não, todo o mapa está visível
 	int mapa_desconhecido_ativo; // Se 0, todos os blocos passam a ser conhecidos
 	MobNoMapa *mobs;
 	ArmaNoMapa *armas;
@@ -214,6 +222,7 @@ typedef struct jogoAtual
 	char *mensagem_controlos;	 /* Mensagem para mostrar um como interagir com o mapa */
 	char *mensagem_inventario; /* mensagem de baixo direita*/
 	char *mensagem_inventario_controlos;
+	int *quantidadeObjetos; // a quantidade de objetos que há no inventário
 } JogoAtual;
 
 typedef enum elementosDoMapaCatalogo
@@ -252,6 +261,7 @@ typedef struct mapa
 	int qntArmasNoMapaLength;
 	int qntObjetosNoMapaLength;
 	int qntMobsNoMapaLength;
+	int qntPortaisNoMapaLength;
 
 	ElementosDoMapa **matrix;
 } Mapa;
@@ -265,9 +275,11 @@ typedef struct state
 	JogoAtual jogoAtual;
 	Mapa mapa;
 
+	WINDOW *ncurses_screen;
+
 } State;
 
-State criarEstado(int colunas, int linhas);
+State criarEstado(WINDOW *window, int colunas, int linhas);
 
 extern Arma const punhos;
 extern Arma const garras;

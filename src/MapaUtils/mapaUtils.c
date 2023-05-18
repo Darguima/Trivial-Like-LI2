@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "../state.h"
 #include <math.h>
 
@@ -7,6 +8,20 @@ int dif_y = pow(abs(player.y - mob.y),2);
 
 return (sqrt(dif_x + dif_y)) ;
 
+}
+
+ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height) {
+  ElementosDoMapa** matrix = (ElementosDoMapa **)malloc(matrix_width * sizeof(ElementosDoMapa *));
+	for (int i = 0; i < matrix_width; i++)
+		matrix[i] = (ElementosDoMapa *)malloc(matrix_height * sizeof(ElementosDoMapa));
+  
+  return matrix;
+}
+
+void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width) {
+	for (int i = 0; i < matrix_width; i++)
+		free(matrix[i]);
+  free(matrix);
 }
 
 int esta_sobre_arma(State *state, ArmaNoMapa **armaSobreposta)
@@ -79,6 +94,11 @@ int estaDentroDoMapa(int x, int y, int xmax, int ymax)
   {
     return 0;
   }
+}
+
+int estaVazio(Mapa mapa, int x, int y)
+{
+  return estaDentroDoMapa(x, y, mapa.matrix_width, mapa.matrix_height) && mapa.matrix[x][y].tipo == Vazio;
 }
 
 int estaSemParede(Mapa mapa, int x, int y)

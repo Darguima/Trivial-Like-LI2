@@ -36,7 +36,7 @@ void eventosControlos(State *state)
     default:
         break;
     }
-    if ((state->scenesVariables.controlosSceneVars.side) == 1 && key == 10)
+    if ((state->scenesVariables.controlosSceneVars.side) == 1 && key == 13)
     {
         (state->scenesVariables.controlosSceneVars.help) = 1;
     }

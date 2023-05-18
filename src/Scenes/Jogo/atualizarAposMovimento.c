@@ -3,6 +3,21 @@
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../MapaUtils/mapaUtils.h"
+#include "../../SalvarJogo/salvarJogo.h"
+
+void atualizarPortais(State *state, int pos_x, int pos_y)
+{
+  ElementosDoMapa elementoMapa = state->mapa.matrix[pos_x][pos_y];
+
+  if (elementoMapa.tipo != PortaProximoMapa)
+    return;
+
+  state->jogoAtual.jogador.numMapaAtual++;
+
+  geraMapa(state);
+
+  save_game_state(state);
+}
 
 void atualizarMoedas(State *state, int pos_x, int pos_y)
 {
@@ -186,6 +201,8 @@ void atualizarAposMovimento(State *state)
 
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
+  state->jogoAtual.mensagem_inventario = "Este é o teu inventário!";
+  state->jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
 
   /*
    * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
@@ -193,6 +210,7 @@ void atualizarAposMovimento(State *state)
    * o que pode ter sido feito pelas outras (p.e. as mensagens de descrição e controlos)
    */
 
+  atualizarPortais(state, pos_x, pos_y);
   atualizarMoedas(state, pos_x, pos_y);
   atualizarArmas(state);
   atualizarObjetos(state);

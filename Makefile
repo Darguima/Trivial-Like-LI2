@@ -17,4 +17,6 @@ clean:
 
 dev:
     # Clean, compile and run 
-		make clean && make && make clean && ./triviallike
+
+  make clean && make && make clean && ./triviallike
+
