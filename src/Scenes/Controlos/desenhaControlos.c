@@ -43,7 +43,7 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
         }
     }
     // botao help para side 1
-    mvwaddstr(win, 1, COLS - 10, "Help");
+    mvwaddstr(win, 1, COLS - 10, "Ajuda");
     if (side == 1)
     {
         for (i = 0; i < num_options; i++)
@@ -54,7 +54,7 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
             mvwaddstr(win, z, x, options[i]);
         }
         wattron(win, A_REVERSE);
-        mvwaddstr(win, 1, COLS - 10, "Help");
+        mvwaddstr(win, 1, COLS - 10, "Ajuda");
         wattroff(win, A_REVERSE);
         mvwprintw(win, 28, 76, " ");
     }
@@ -122,7 +122,7 @@ void print_menu(WINDOW *win, char options[][MAX_OPTION_LEN], int num_options, in
     if (help == 1)
     {
         
-        mvwprintw(win, LINES-3, 2, "Pressione [Q] para voltar");
+        mvwprintw(win, LINES-3, 2, "Pressiona [Q] para voltar");
         mvwprintw(win, 28, 76, " ");
     }
     if (help == 0)

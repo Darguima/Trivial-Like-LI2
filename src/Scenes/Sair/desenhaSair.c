@@ -22,9 +22,9 @@ void desenhaSair(WINDOW *window, State *state)
 
   box(window, 0, 0); // desenhar caixa
 
-  mvaddstr(y, x - 4, "Deseja mesmo sair?");
+  mvaddstr(y, x - 4, "Desejas mesmo sair?");
   mvaddstr(y + 2, x - 12, "O jogo ainda tem tanto para dar...");
 
-  mvaddstr(nrows - 4, 2, "Pressione [S] para sair");
-  mvaddstr(nrows - 2, 2, "Pressione [Q] para voltar ao menu anterior");
+  mvaddstr(nrows - 4, 2, "Pressiona [Q] para sair");
+  mvaddstr(nrows - 2, 2, "Pressiona [M] para voltar ao menu anterior");
 }

@@ -24,6 +24,6 @@ void desenhaGameOver(WINDOW *window, State *state)
     mvprintw(y+3 , x-30  , " | |_| |/ ___ \\| |  | | |___  | |_| |\\ V / | |___|  _ <   ");
     mvprintw(y+4 , x-30  , "  \\____/_/   \\_\\_|  |_|_____|  \\___/  \\_/  |_____|_| \\_\\  ");
 
-    mvaddstr(nrows - 4, 2, "Pressione 'm' para voltar ao menu");
-    mvaddstr(nrows - 2, 2, "Pressione 's' para sair do jogo");
+    mvaddstr(nrows - 4, 2, "Pressiona [M] para voltar ao menu");
+    mvaddstr(nrows - 2, 2, "Pressiona [Q] para sair do jogo");
 }

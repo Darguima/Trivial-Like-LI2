@@ -27,7 +27,7 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
     return;
 
   state->jogoAtual.mensagem_descricao = "Encontraste uma moeda!";
-  state->jogoAtual.mensagem_controlos = "A moeda é automaticamente recolhida";
+  state->jogoAtual.mensagem_controlos = "A moeda e automaticamente recolhida";
 
   state->mapa.matrix[pos_x][pos_y].tipo = Vazio;
   state->jogoAtual.jogador.dinheiro++;
@@ -39,7 +39,7 @@ void atualizarArmas(State *state)
   if (esta_sobre_arma(state, &armaSobreposta))
   {
     state->jogoAtual.mensagem_descricao = armaSobreposta->arma.mensagem;
-    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para usar como primária, [X] como secundária.";
+    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para usar como primaria, [X] como secundaria.";
   }
 }
 
@@ -89,8 +89,8 @@ void atacarComMobs(State *state)
     {
       if (ataqueComProbabilidade(mobAtual.mob.arma, &(state->jogoAtual.jogador.vida)))
       {
-        state->jogoAtual.mensagem_descricao = "Estás a ser atacado!";
-        state->jogoAtual.mensagem_controlos = "Foge, ou coloca-te em posição de combate.";
+        state->jogoAtual.mensagem_descricao = "Estas a ser atacado!";
+        state->jogoAtual.mensagem_controlos = "Foge ou contra-ataca.";
       }
 
       reageVida(state);
@@ -107,7 +107,7 @@ void atualizarMobs(State *state)
   if (esta_sobre_mob(state, &mobSobreposto))
   {
     state->jogoAtual.mensagem_descricao = "Em combate!";
-    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primária, [X] com a secundária.";
+    state->jogoAtual.mensagem_controlos = "Pressiona [Z] para atacar com a primaria, [X] com a secundaria.";
   }
 }
 
@@ -118,8 +118,8 @@ void atualizarAposMovimento(State *state)
 
   state->jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
   state->jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
-  state->jogoAtual.mensagem_inventario = "Este é o teu inventário!";
-  state->jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
+  state->jogoAtual.mensagem_inventario = "Este e o teu inventario!";
+  state->jogoAtual.mensagem_inventario_controlos = "Usa os numeros para escolher um objeto.";
 
   /*
    * A ordem pela qual aparecem as seguintes funções tem relevância no resultado final das alterações.
