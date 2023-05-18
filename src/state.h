@@ -116,6 +116,9 @@ typedef enum catalogoArmas
 	Arco,
 	Acido,
 	Cetro,
+	Aniquiladora,
+	Foice,
+	Computador,
 } CatalogoArmas;
 
 typedef struct arma
@@ -143,6 +146,9 @@ typedef enum catalogoMobs
 	Mutante,					/* M */
 	Aranha,						/* A */
 	Zombie,						/* Z */
+	Demonio,                    /* D */
+	Morte,                      /* W */
+	Informatico,				/* I */
 										/* Possibilidade de adicionar mais no futuro */
 } CatalogoMobs;
 
