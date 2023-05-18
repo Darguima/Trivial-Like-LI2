@@ -202,8 +202,8 @@ void desenhaJogo(WINDOW *window, State *state)
 	mvwaddch(window, state->jogoAtual.jogador.posicao.y - initial_y, state->jogoAtual.jogador.posicao.x - initial_x, '@');
 	wattroff(window, COLOR_PAIR(MapaPlayerColor));
 	wattroff(window, COLOR_PAIR(MapaPlayerSobAtaqueColor));
-	wrefresh(window);
 
+	wrefresh(window);
 	return;
 }
 
@@ -225,18 +225,19 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		float vidaCentenaPercentagem = ((float)state->jogoAtual.jogador.vida - 100 * centena) / 100;
 
-			for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 15; i++)
+		{
+			if ((float)i / 18 < vidaCentenaPercentagem)
 			{
-				if ((float)i / 18 < vidaCentenaPercentagem)
+				// Vida extra a dourado
+				if (centena > 0)
 				{
-					// Vida extra a dourado
-					if (centena > 0) {
-						wattron(l_win, COLOR_PAIR(YellowBlack));
-					}
-
-					mvwprintw(l_win, 4 + centena, 1 + i, "#");
-					wattroff(l_win, COLOR_PAIR(YellowBlack));
+					wattron(l_win, COLOR_PAIR(YellowBlack));
 				}
+
+				mvwprintw(l_win, 4 + centena, 1 + i, "#");
+				wattroff(l_win, COLOR_PAIR(YellowBlack));
+			}
 		}
 	}
 

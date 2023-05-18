@@ -13,7 +13,6 @@
 
 #include "Scenes/Jogo/desenhaJogo.h"
 #include "Scenes/Jogo/eventosJogo.h"
-#include "Scenes/Jogo/atualizarAposMovimento.h"
 
 #include "Scenes/GameOver/desenhaGameOver.h"
 #include "Scenes/GameOver/eventosGameOver.h"
@@ -60,7 +59,8 @@ int main()
 
 	while (1)
 	{
-		if (state.sceneAtual != sceneAnterior) {
+		if (state.sceneAtual != sceneAnterior)
+		{
 			werase(window);
 			sceneAnterior = state.sceneAtual;
 		}

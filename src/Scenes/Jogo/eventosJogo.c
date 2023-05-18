@@ -8,7 +8,7 @@
 
 void mover_jogador(State *state, int dx, int dy)
 {
-	
+
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
 	int temp_y = state->jogoAtual.jogador.posicao.y + dy;
 
@@ -18,8 +18,6 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
 	atualizarAposMovimento(state);
-
-
 }
 
 int ataqueComProbabilidade(Arma arma, int *vida_vitima)
@@ -44,7 +42,6 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
-	
 
 	int key = getch();
 
@@ -58,7 +55,7 @@ void eventosJogo(State *state)
 	{
 	/* Interação com mapa */
 	case 'z':
-	   atualizarAposMovimento(state);
+		atualizarAposMovimento(state);
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -78,7 +75,7 @@ void eventosJogo(State *state)
 		break;
 
 	case 'x':
-	atualizarAposMovimento(state);
+		atualizarAposMovimento(state);
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -97,7 +94,7 @@ void eventosJogo(State *state)
 		break;
 
 	case 'e':
-         atualizarAposMovimento(state);
+		atualizarAposMovimento(state);
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
