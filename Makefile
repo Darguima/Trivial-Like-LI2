@@ -9,12 +9,12 @@ OBJECTS := $(patsubst %.c, %.o, $(SOURCES))
 
 triviallike: $(OBJECTS)
     # Compile main.c
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+		$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 clean:
     # Delete recursively all objects (.o) files
-	find . -type f -name '*.o' -delete
+		find . -type f -name '*.o' -delete
 
 dev:
     # Clean, compile and run 
-	make clean && make && make clean && ./triviallike
+		make clean && make && make clean && ./triviallike
