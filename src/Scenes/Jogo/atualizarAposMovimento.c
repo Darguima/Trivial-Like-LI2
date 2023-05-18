@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "./distancia.h"
 #include "./eventosJogo.h"
 #include "../../state.h"
 #include "../../GeraMapa/geraMapa.h"
@@ -55,9 +54,9 @@ void moverMobs(State *state)
     Coordenadas diagonal_dirB = {pos_Direita,pos_Baixo};
     int aux_Dist;
     int min_Dist;
-
-
-    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao ,state->jogoAtual.mobs[mob_i].posicao )) > state->jogoAtual.mobs[mob_i].mob.raioVisao) {
+     int nao_perseguicao = rand() % 100;
+    
+    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao ,state->jogoAtual.mobs[mob_i].posicao )) > state->jogoAtual.mobs[mob_i].mob.raioVisao || nao_perseguicao<=5) {
     int x_deslocamento, y_deslocamento;
 
     x_deslocamento = (rand() % 3) - 1;
@@ -70,23 +69,6 @@ void moverMobs(State *state)
     }
       continue ;
     }
-     int perseguicao = rand() % 100;
-    if  (perseguicao<=5)
-    {
-        int x_deslocamento, y_deslocamento;
-
-    x_deslocamento = (rand() % 3) - 1;
-    y_deslocamento = (rand() % 3) - 1;
-
-    if (estaTotalmenteLivre(state, *pos_x + x_deslocamento, *pos_y + y_deslocamento))
-    {
-      *pos_x += x_deslocamento;
-      *pos_y += y_deslocamento;
-    }
-      continue ;
-    }
-else {
-    //
     if(min_Dist <=1) {
       state->jogoAtual.mobs[mob_i].posicao = state->jogoAtual.jogador.posicao;
       continue;
@@ -153,7 +135,6 @@ else {
       }
 
     }
-  }
   }
 }
 

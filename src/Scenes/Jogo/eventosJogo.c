@@ -154,8 +154,5 @@ void eventosJogo(State *state)
 	case 'q':
 		state->sceneAtual = MenuInicial;
 		break;
-	
-    default:
-	atualizarAposMovimento(state);
 	}
 }

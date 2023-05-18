@@ -2,8 +2,6 @@
 #include <ncurses.h>
 #include <locale.h>
 #include <time.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include "state.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
@@ -111,20 +109,12 @@ int main()
 
 		switch (state.sceneAtual)
 		{
-		case MenuInicial:
-		// 	if (system("pgrep aplay > /dev/null") == 0) {
-        // system("killall aplay");
-			 
-	         
-		// 	}
-			
+		case MenuInicial:			
 			desenhaMenuInicial(window, &state);
 			eventosMenuInicial(&state);
 			break;
 
 		case SelecionarJogador:
-
-		   
 			desenhaSelecionarJogador(window, &state);
 			eventosSelecionarJogador(&state);
 

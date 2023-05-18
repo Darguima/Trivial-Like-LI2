@@ -3,7 +3,6 @@
 #include "./visao.h"
 #include "../../state.h"
 #include "../../MapaUtils/mapaUtils.h"
-#include "./atualizarAposMovimento.h"
 
 /*
  * Enquanto os dois parametros da funcao não forem usados
