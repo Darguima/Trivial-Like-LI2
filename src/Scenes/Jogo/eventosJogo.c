@@ -36,7 +36,9 @@ void reageVida(State *state)
 	{
 		// Se a vida ficar a 0, o jogo acaba
 		state->sceneAtual = GameOver;
+		state->jogoAtual.jogador.quantidadeMortes++;
 		state->jogoAtual.jogador.vida = state->jogoAtual.jogador.vidaMaxima;
+		save_game_state(state);
 	}
 }
 
@@ -95,6 +97,7 @@ void eventosJogo(State *state)
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{
+			
 			objetoSobreposto->disponivel = 0;
 			quantidadeInv[objetoSobreposto->objeto.index]++;
 		}
