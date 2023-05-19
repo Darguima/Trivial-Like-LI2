@@ -24,11 +24,11 @@ void desenhaMenuInicial(WINDOW *window, State *state)
     mvprintw(y - 7, x - 24, "      |_||_|  |_| \\_/ |_|\\__,_|_|_|_|\\_\\___|   ");
 
     mvaddstr(y - 4, x - 10, "1.Selecionar jogador");
-    mvaddstr(y - 1, x - 7, "2.Definições");
+    mvaddstr(y - 1, x - 7, "2.Definicoes");
     mvaddstr(y + 2, x - 6, "3.Controlos");
     mvaddstr(y + 5, x - 4, "4.Sobre");
     mvaddstr(y + 8, x - 4, "5.Sair");
-    mvaddstr(nrows - 2, 2, "Selecione a opção com [1]-[5]");
+    mvaddstr(nrows - 2, 2, "Seleciona a opcao com [1]-[5]");
 
     box(window, 0, 0); // desenhar caixa
 }

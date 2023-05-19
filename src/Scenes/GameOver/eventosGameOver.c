@@ -29,7 +29,7 @@ void eventosGameOver(State *state)
 		state->sceneAtual = MenuInicial;
 		break;
 
-	case 's':
+	case 'q':
 		endwin();
 		exit(0);
 		break;

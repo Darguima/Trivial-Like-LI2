@@ -139,7 +139,7 @@ void eventosJogo(State *state)
 		}
 		else if (quantidadeInv[0] == 0)
 		{
-			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+			state->jogoAtual.mensagem_inventario_controlos = "Nao tens este objeto no teu inventario. Procura-o no mapa.";
 		}
 
 		break;
@@ -162,7 +162,7 @@ void eventosJogo(State *state)
 		}
 		else if (quantidadeInv[1] == 0)
 		{
-			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+			state->jogoAtual.mensagem_inventario_controlos = "Nao tens este objeto no teu inventario. Procura-o no mapa.";
 		}
 
 		break;
@@ -199,7 +199,7 @@ void eventosJogo(State *state)
 		}
 		else
 		{
-			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+			state->jogoAtual.mensagem_inventario_controlos = "Nao tens este objeto no teu inventario. Procura-o no mapa.";
 		}
 
 		break;
@@ -223,7 +223,7 @@ void eventosJogo(State *state)
 		}
 		else
 		{
-			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+			state->jogoAtual.mensagem_inventario_controlos = "Nao tens este objeto no teu inventario. Procura-o no mapa.";
 		}
 
 		break;
@@ -242,7 +242,7 @@ void eventosJogo(State *state)
 		}
 		else
 		{
-			state->jogoAtual.mensagem_inventario_controlos = "Não tens este objeto no teu inventário. Procura-o no mapa.";
+			state->jogoAtual.mensagem_inventario_controlos = "Nao tens este objeto no teu inventario. Procura-o no mapa.";
 		}
 
 		break;

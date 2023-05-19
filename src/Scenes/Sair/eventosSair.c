@@ -19,11 +19,11 @@ void eventosSair(State *state)
 
 	switch (key)
 	{
-	case 'q':
+	case 'm':
 		state->sceneAtual = MenuInicial;
 		break;
 
-	case 's':
+	case 'q':
 		endwin();
 		exit(0);
 		break;
