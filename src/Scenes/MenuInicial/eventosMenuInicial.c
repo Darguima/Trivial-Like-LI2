@@ -24,6 +24,7 @@ void eventosMenuInicial(State *state)
 		state->sceneAtual = Sobre;
 		break;
 
+	case 'q':
 	case '5':
 		state->sceneAtual = Sair;
 		break;

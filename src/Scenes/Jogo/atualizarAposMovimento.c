@@ -27,7 +27,7 @@ void atualizarMoedas(State *state, int pos_x, int pos_y)
     return;
 
   state->jogoAtual.mensagem_descricao = "Encontraste uma moeda!";
-  state->jogoAtual.mensagem_controlos = "A moeda e automaticamente recolhida";
+  state->jogoAtual.mensagem_controlos = "A moeda foi automaticamente recolhida";
 
   state->mapa.matrix[pos_x][pos_y].tipo = Vazio;
   state->jogoAtual.jogador.dinheiro++;
