@@ -44,6 +44,9 @@ typedef enum colors
 	FG_Arma,
 	FG_Objeto,
 	FG_Mob,
+
+	BG_Parede,
+	BG_ParedeNaoVisivel,
 } Colors;
 
 typedef enum colorsSchema
@@ -68,6 +71,9 @@ typedef enum colorsSchema
 	ArmaColor,
 	ObjetoColor,
 	MobColor,
+
+	ParedeColor,
+	ParedeNaoVisivelColor,
 
 	ArmaBox,
 	ObjetoBox,
@@ -116,6 +122,9 @@ typedef enum catalogoArmas
 	Arco,
 	Acido,
 	Cetro,
+	Aniquiladora,
+	Foice,
+	Computador,
 } CatalogoArmas;
 
 typedef struct arma
@@ -143,6 +152,9 @@ typedef enum catalogoMobs
 	Mutante,					/* M */
 	Aranha,						/* A */
 	Zombie,						/* Z */
+	Demonio,                    /* D */
+	Morte,                      /* W */
+	Informatico,				/* I */
 										/* Possibilidade de adicionar mais no futuro */
 } CatalogoMobs;
 
@@ -174,6 +186,7 @@ typedef struct statusJogador
 	int numSave;
 	int dinheiro;
 	int numMapaAtual; /* Quantas mapas já foram passados */
+	int quantidadeMortes;
 } StatusJogador;
 
 typedef enum dificuldadeJogo
