@@ -13,6 +13,15 @@ void save_game_state(State *state)
 	sprintf(filename, "%d.json", state->jogoAtual.jogador.numSave);
 
 	StatusJogador jogador = state->jogoAtual.jogador;
+	int *quantidadeObjetos = state->jogoAtual.quantidadeObjetos;
+
+	// Criar objeto JSON para reter estado do Jogo
+	json_object *quantidadeObjetosJSON = json_object_new_array();
+
+	for (int i = 0; i < catalogoObjetosLength; i++)
+	{
+		json_object_array_add(quantidadeObjetosJSON, json_object_new_int(quantidadeObjetos[i]));
+	}
 
 	// Criar objeto JSON para reter estado do Jogo
 	json_object *game_state = json_object_new_object();
@@ -25,6 +34,7 @@ void save_game_state(State *state)
 	json_object_object_add(game_state, "quantidadeMortes", json_object_new_int(jogador.quantidadeMortes));
 	json_object_object_add(game_state, "armaPrincipalIndex", json_object_new_int(jogador.armaPrincipal.index));
 	json_object_object_add(game_state, "armaSecundariaIndex", json_object_new_int(jogador.armaSecundaria.index));
+	json_object_object_add(game_state, "quantidadeObjetos", quantidadeObjetosJSON);
 
 	// Converter objeto JSON para string
 	const char *json_str = json_object_to_json_string_ext(game_state, JSON_C_TO_STRING_PRETTY);
@@ -68,7 +78,8 @@ void load_game_state(State *state)
 			*dinheiro,
 			*quantidadeMortes,
 			*armaPrincipalIndex,
-			*armaSecundariaIndex;
+			*armaSecundariaIndex,
+			*quantidadeObjetos;
 
 	// load ficheiro
 	fp = fopen(filename, "r");
@@ -92,12 +103,19 @@ void load_game_state(State *state)
 		json_object_object_get_ex(parsed_json, "quantidadeMortes", &quantidadeMortes);
 		json_object_object_get_ex(parsed_json, "armaPrincipalIndex", &armaPrincipalIndex);
 		json_object_object_get_ex(parsed_json, "armaSecundariaIndex", &armaSecundariaIndex);
+		json_object_object_get_ex(parsed_json, "quantidadeObjetos", &quantidadeObjetos);
 
 		state->jogoAtual.jogador.vida = json_object_get_int(vida);
 		state->jogoAtual.jogador.username = (char *)json_object_get_string(username);
 		state->jogoAtual.jogador.numMapaAtual = json_object_get_int(numMapaAtual);
 		state->jogoAtual.jogador.dinheiro = json_object_get_int(dinheiro);
 		state->jogoAtual.jogador.quantidadeMortes = json_object_get_int(quantidadeMortes);
+
+		int tamanhoArrayGuardado = json_object_array_length(quantidadeObjetos);
+		for (int i = 0; i < tamanhoArrayGuardado; i++)
+		{
+			state->jogoAtual.quantidadeObjetos[i] = json_object_get_int(json_object_array_get_idx(quantidadeObjetos, i));
+		}
 
 		arma1_index = json_object_get_int(armaPrincipalIndex);
 		arma2_index = json_object_get_int(armaSecundariaIndex);

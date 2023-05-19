@@ -13,11 +13,10 @@ Arma const acido = {5, Acido, "Acido", 20, 25, "Um liquido lançado por certos m
 Arma const cetro = {6, Cetro, "Cetro", 15, 100, "Um cetro carregado de magia. O seu baixo dano e compensado com a precisão dos seus projeteis."};
 Arma const aniquiladora = {7, Aniquiladora, "Aniquiladora", 100, 15, "Desconhece-se a origem deste artefacto demoniaco mas sabe-se que o seu poder de destruicao nao tem limites."};
 Arma const foice = {8, Foice, "Foice", 300, 5, "Arma que a propria Morte possui. Se a sua lamina toca em alguem, morre instantaneamente."};
-Arma const computador = {9, Computador, "Computador", 1, 100, "Um mero computador... Não serve para muito nestas condições."};
-
+Arma const computador = {9, Computador, "Computador", 1, 100, "Um mero computador... Não serve para muito nestas condicoes."};
 
 int const catalogoArmasLength = 10;
-Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro, aniquiladora,foice, computador};
+Arma const catalogoArmas[] = {punhos, garras, espadaOxidada, espadaLonga, arco, acido, cetro, aniquiladora, foice, computador};
 
 Mob const esqueleto1 = {Esqueleto, "Esqueleto", 'E', espadaOxidada, 40, 40, 3};
 Mob const esqueleto2 = {Esqueleto, "Esqueleto", 'E', punhos, 40, 40, 3};
@@ -33,19 +32,14 @@ Mob const demonio = {Demonio, "Demonio", 'D', aniquiladora, 150, 150, 5};
 Mob const morte = {Morte, "Morte", 'W', foice, 200, 200, 10};
 Mob const informatico = {Informatico, "Informatico", 'I', computador, 1000, 1000, 1};
 
-
-
-
-
-
 int const catalogoMobsLength = 13;
 Mob const catalogoMobs[] = {esqueleto1, esqueleto2, soldadoEsqueleto1, vampiro1, vampiro2, mutante1, mutante2, aranha1, aranha2, zombie1, demonio, morte, informatico};
 
-Objeto const pocaoVidaP = {0, PocaoVidaP, "Poção de Vida Pequena", "Recupera 40 pts de vida."};
-Objeto const pocaoVidaG = {1, PocaoVidaG, "Poção de Vida Grande", "Recupera 70 pts de vida."};
-Objeto const pocaoVidaD = {2, PocaoVidaD, "Poção de Vida Definitiva", "Recupera toda a vida."};
-Objeto const pocaoAumentoVida = {3, PocaoAumentoVida, "Poção de Aumento de Vida", "Aumenta a vida máxima em 25 pts."};
-Objeto const pocaoMagica = {4, PocaoMagica, "Poção Mágica", "Aumenta a vida máxima em 15 pts e recupera-a toda."};
+Objeto const pocaoVidaP = {0, PocaoVidaP, "Pocao de Vida Pequena", "Recupera 40 pts de vida."};
+Objeto const pocaoVidaG = {1, PocaoVidaG, "Pocao de Vida Grande", "Recupera 70 pts de vida."};
+Objeto const pocaoVidaD = {2, PocaoVidaD, "Pocao de Vida Definitiva", "Recupera toda a vida."};
+Objeto const pocaoAumentoVida = {3, PocaoAumentoVida, "Poo de Aumento de Vida", "Aumenta a vida máxima em 25 pts."};
+Objeto const pocaoMagica = {4, PocaoMagica, "Pocao Magica", "Aumenta a vida máxima em 15 pts e recupera-a toda."};
 Objeto const portalDeBolso = {5, PortalDeBolso, "Portal de Bolso", "Portal de um só uso que muda o mapa. Amentando a vida máxima em 5 pts."};
 
 int const catalogoObjetosLength = 6;
@@ -92,6 +86,7 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.jogador.armaSecundaria = punhos;
 	state.jogoAtual.jogador.numSave = 0;
 	state.jogoAtual.jogador.quantidadeMortes = 0;
+	
 	state.jogoAtual.dificuldade = FACIL;
 	state.jogoAtual.iluminacao_ativa = 1;
 	state.jogoAtual.mapa_desconhecido_ativo = 1;
@@ -100,8 +95,8 @@ State criarEstado(WINDOW *window, int colunas, int linhas)
 	state.jogoAtual.objetos = NULL; // Alocado depois
 	state.jogoAtual.mensagem_descricao = "Encontra a porta para passar de mapa!";
 	state.jogoAtual.mensagem_controlos = "Utiliza as setas para te movimentares.";
-	state.jogoAtual.mensagem_inventario = "Este é o teu inventário!";
-	state.jogoAtual.mensagem_inventario_controlos = "Usa os números para escolheres um objeto.";
+	state.jogoAtual.mensagem_inventario = "Este e o teu inventario!";
+	state.jogoAtual.mensagem_inventario_controlos = "Usa os numeros para escolheres um objeto.";
 	state.jogoAtual.quantidadeObjetos = NULL; // Alocado depois
 
 	load_settings_state(&state);
