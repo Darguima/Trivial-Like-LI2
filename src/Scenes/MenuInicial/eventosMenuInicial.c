@@ -8,6 +8,7 @@ void eventosMenuInicial(State *state)
 
 	switch (key)
 	{
+	case 'j':
 	case '1':
 		state->sceneAtual = SelecionarJogador;
 		break;
