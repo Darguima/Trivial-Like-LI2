@@ -46,7 +46,15 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 			switch (state->mapa.matrix[map_x][map_y].tipo)
 			{
 			case Parede:
+			
+				if (bloco_visivel)
+					wattron(window, COLOR_PAIR(ParedeColor));
+				else
+					wattron(window, COLOR_PAIR(ParedeNaoVisivelColor));
+
 				mvwaddch(window, window_y, window_x, '#');
+				wattroff(window, COLOR_PAIR(ParedeColor));
+				wattroff(window, COLOR_PAIR(ParedeNaoVisivelColor));
 				break;
 
 			case PortaProximoMapa:
@@ -62,7 +70,7 @@ void desenhaMapa(WINDOW *window, State *state, int initial_x, int final_x, int i
 				if (bloco_visivel)
 					wattron(window, COLOR_PAIR(MoedaColor));
 
-				mvwaddch(window, window_y, window_x, 'c');
+				mvwaddch(window, window_y, window_x, 'o');
 
 				wattroff(window, COLOR_PAIR(MoedaColor));
 				break;
@@ -226,18 +234,19 @@ void desenhaMenusLaterais(WINDOW *window, State *state)
 	{
 		float vidaCentenaPercentagem = ((float)state->jogoAtual.jogador.vida - 100 * centena) / 100;
 
-			for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 15; i++)
+		{
+			if ((float)i / 18 < vidaCentenaPercentagem)
 			{
-				if ((float)i / 18 < vidaCentenaPercentagem)
+				// Vida extra a dourado
+				if (centena > 0)
 				{
-					// Vida extra a dourado
-					if (centena > 0) {
-						wattron(l_win, COLOR_PAIR(YellowBlack));
-					}
-
-					mvwprintw(l_win, 4 + centena, 1 + i, "#");
-					wattroff(l_win, COLOR_PAIR(YellowBlack));
+					wattron(l_win, COLOR_PAIR(YellowBlack));
 				}
+
+				mvwprintw(l_win, 4 + centena, 1 + i, "#");
+				wattroff(l_win, COLOR_PAIR(YellowBlack));
+			}
 		}
 	}
 

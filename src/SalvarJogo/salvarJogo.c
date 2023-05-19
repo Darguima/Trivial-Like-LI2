@@ -22,6 +22,7 @@ void save_game_state(State *state)
 	json_object_object_add(game_state, "username", json_object_new_string(jogador.username));
 	json_object_object_add(game_state, "numMapaAtual", json_object_new_int(jogador.numMapaAtual));
 	json_object_object_add(game_state, "dinheiro", json_object_new_int(jogador.dinheiro));
+	json_object_object_add(game_state, "quantidadeMortes", json_object_new_int(jogador.quantidadeMortes));
 	json_object_object_add(game_state, "armaPrincipalIndex", json_object_new_int(jogador.armaPrincipal.index));
 	json_object_object_add(game_state, "armaSecundariaIndex", json_object_new_int(jogador.armaSecundaria.index));
 
@@ -65,6 +66,7 @@ void load_game_state(State *state)
 			*username,
 			*numMapaAtual,
 			*dinheiro,
+			*quantidadeMortes,
 			*armaPrincipalIndex,
 			*armaSecundariaIndex;
 
@@ -87,6 +89,7 @@ void load_game_state(State *state)
 		json_object_object_get_ex(parsed_json, "username", &username);
 		json_object_object_get_ex(parsed_json, "numMapaAtual", &numMapaAtual);
 		json_object_object_get_ex(parsed_json, "dinheiro", &dinheiro);
+		json_object_object_get_ex(parsed_json, "quantidadeMortes", &quantidadeMortes);
 		json_object_object_get_ex(parsed_json, "armaPrincipalIndex", &armaPrincipalIndex);
 		json_object_object_get_ex(parsed_json, "armaSecundariaIndex", &armaSecundariaIndex);
 
@@ -94,6 +97,7 @@ void load_game_state(State *state)
 		state->jogoAtual.jogador.username = (char *)json_object_get_string(username);
 		state->jogoAtual.jogador.numMapaAtual = json_object_get_int(numMapaAtual);
 		state->jogoAtual.jogador.dinheiro = json_object_get_int(dinheiro);
+		state->jogoAtual.jogador.quantidadeMortes = json_object_get_int(quantidadeMortes);
 
 		arma1_index = json_object_get_int(armaPrincipalIndex);
 		arma2_index = json_object_get_int(armaSecundariaIndex);
