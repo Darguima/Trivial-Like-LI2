@@ -30,11 +30,11 @@ void desenhaDefinicoes(WINDOW *window, State *state)
   dificuldade = "Undefined";
 
   if (state->jogoAtual.dificuldade == FACIL)
-    dificuldade = "Fácil";
+    dificuldade = "Facil";
   else if (state->jogoAtual.dificuldade == MEDIO)
-    dificuldade = "Médio";
+    dificuldade = "Medio";
   else if (state->jogoAtual.dificuldade == DIFICIL)
-    dificuldade = "Difícil";
+    dificuldade = "Dificil";
 
   mvprintw(y - 11, x - 24, "     _____     _       _       _ _ _           ");
   mvprintw(y - 10, x - 24, "    |_   _| __(_)_   _(_) __ _| (_) | _____    ");
@@ -70,7 +70,7 @@ void desenhaDefinicoes(WINDOW *window, State *state)
     mvprintw(
         y + 5,
         iluminacao_ativa ? x - 12 : x - 11,
-        iluminacao_ativa ? "4.Desativar Iluminação" : "4.Ativar Iluminação");
+        iluminacao_ativa ? "4.Desativar Iluminacao" : "4.Ativar Iluminacao");
   }
 
   if (state->scenesVariables.definicoesSceneVars.ask_matrix_size == 1)
@@ -79,7 +79,7 @@ void desenhaDefinicoes(WINDOW *window, State *state)
     int new_width, new_height;
 
     mvprintw(
-        nrows - 14, 2, "Qual a largura (entre %d - 1500) do mapa? (escreve e enter para confirmar)",
+        nrows - 14, 2, "Qual a largura (entre %d - 1500) do mapa? (escreve e [Enter] para confirmar)",
         state->mapa.display_width);
     scanw("%d", &new_width);
     refresh();
@@ -88,7 +88,7 @@ void desenhaDefinicoes(WINDOW *window, State *state)
     clrtoeol();
 
     mvprintw(
-        nrows - 14, 2, "Qual a altura (entre %d - 1500) do mapa? (escreve e enter para confirmar)",
+        nrows - 14, 2, "Qual a altura (entre %d - 1500) do mapa? (escreve e [Enter] para confirmar)",
         state->mapa.display_height);
     scanw("%d", &new_height);
     refresh();
@@ -112,8 +112,8 @@ void desenhaDefinicoes(WINDOW *window, State *state)
     clrtoeol();
   }
 
-  mvprintw(nrows - 4, 2, "Selecione a opção com [1]-[%c]", mapa_desconhecido_ativo ? '3' : '4');
-  mvwprintw(window, nrows - 2, 2, "Pressione [Q] para voltar atrás");
+  mvprintw(nrows - 4, 2, "Seleciona a opcao com [1]-[%c]", mapa_desconhecido_ativo ? '3' : '4');
+  mvwprintw(window, nrows - 2, 2, "Pressiona [Q] para voltar");
 
   refresh();
 }
