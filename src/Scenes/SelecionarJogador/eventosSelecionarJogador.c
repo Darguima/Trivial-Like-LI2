@@ -3,6 +3,7 @@
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../GeraMapa/geraMapa.h"
+#include "../../musicajogo.h"
 
 void prepararJogo(State *state)
 {
@@ -22,6 +23,7 @@ void prepararJogo(State *state)
 
 	if (state->scenesVariables.selecionarJogadorSceneVars.askUser == 2)
 	{
+		playGameSong();
 		geraMapa(state);
 		state->sceneAtual = Jogo;
 		state->scenesVariables.selecionarJogadorSceneVars.askUser = 0;

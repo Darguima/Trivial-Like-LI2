@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -O2
-LIBS=-lm -lcurses -ljson-c
+LIBS=-lm -lcurses -ljson-c -lSDL2 -lSDL2_mixer
 
 # Find all .c files
 SOURCES := $(shell find ./src -type f -name '*.c')

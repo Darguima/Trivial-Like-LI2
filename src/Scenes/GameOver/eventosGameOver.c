@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <ncurses.h>
+#include "../../musicamenu.h"
 
 #include "../../state.h"
 #include "../../SalvarJogo/salvarJogo.h"
@@ -27,6 +28,7 @@ void eventosGameOver(State *state)
 
 	case 'm':
 		state->sceneAtual = MenuInicial;
+		playMenuSong(state);
 		break;
 
 	case 'q':

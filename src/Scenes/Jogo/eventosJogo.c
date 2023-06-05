@@ -3,6 +3,7 @@
 #include "./atualizarAposMovimento.h"
 #include "../../GeraMapa/geraMapa.h"
 #include "../../state.h"
+#include "../../musicamenu.h"
 #include "../../SalvarJogo/salvarJogo.h"
 #include "../../MapaUtils/mapaUtils.h"
 
@@ -253,6 +254,7 @@ void eventosJogo(State *state)
 		/* Sair */
 	case 'q':
 		state->sceneAtual = MenuInicial;
+		playMenuSong();
 		break;
 	}
 }

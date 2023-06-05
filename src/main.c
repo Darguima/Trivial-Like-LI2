@@ -4,6 +4,7 @@
 #include <time.h>
 #include "state.h"
 #include "colors.h"
+#include "musicamenu.h"
 
 #include "Scenes/MenuInicial/desenhaMenuInicial.h"
 #include "Scenes/MenuInicial/eventosMenuInicial.h"
@@ -45,14 +46,17 @@ int main()
 	nonl();
 	intrflush(stdscr, false);
 	keypad(stdscr, true);
+	Mix_Init(MIX_INIT_MP3); 
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
 	/* Iniciar e definir as nossas cores*/
 	start_state_colors();
-
+ 
 	/* Criar um estado ss*/
 	int n_linhas, n_colunas;
 	getmaxyx(window, n_linhas, n_colunas);
 	State state = criarEstado(window, n_colunas, n_linhas);
+	playMenuSong();
 
 	Scene sceneAnterior = state.sceneAtual;
 	WINDOW *window_game = newwin(n_linhas - 10, n_colunas - 40, 5, 20);

@@ -1,5 +1,6 @@
 #include <ncurses.h>
-
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #ifndef ___State_H___
 #define ___State_H___
 
