@@ -59,19 +59,13 @@ void moverMobs(State *state)
   {
     int *pos_x = &(state->jogoAtual.mobs[mob_i].posicao.x);
     int *pos_y = &(state->jogoAtual.mobs[mob_i].posicao.y);
-    int pos_Cima = *pos_y - 1;
-    int pos_Baixo = *pos_y + 1;
-    int pos_Esquerda = *pos_x - 1;
-    int pos_Direita = *pos_x + 1;
-    Coordenadas diagonal_esqC = {pos_Esquerda, pos_Cima};
-    Coordenadas diagonal_esqB = {pos_Esquerda, pos_Baixo};
-    Coordenadas diagonal_dirC = {pos_Direita, pos_Cima};
-    Coordenadas diagonal_dirB = {pos_Direita, pos_Baixo};
+    int x_Aux = *pos_x;
+    int y_Aux = *pos_y;
     int aux_Dist;
     int min_Dist;
     int nao_perseguicao = rand() % 100;
 
-    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao, state->jogoAtual.mobs[mob_i].posicao)) > state->jogoAtual.mobs[mob_i].mob.raioVisao || nao_perseguicao <= 5)
+    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao, state->jogoAtual.mobs[mob_i].posicao)) > state->jogoAtual.mobs[mob_i].mob.raioVisao || nao_perseguicao<5)
     {
       int x_deslocamento, y_deslocamento;
 
@@ -90,73 +84,32 @@ void moverMobs(State *state)
       state->jogoAtual.mobs[mob_i].posicao = state->jogoAtual.jogador.posicao;
       continue;
     }
+    
+    for (int x_pos = -1 ; x_pos<=1 ; x_pos++) {
+      for(int y_pos = -1 ; y_pos <=1 ; y_pos++) {
+        Coordenadas mob_Temp = {x_Aux+ x_pos, y_Aux + y_pos};
+        if((x_pos==0 && y_pos != 0)  || (x_pos !=0 && y_pos==0)) {
+           if (estaSemParede(state->mapa,mob_Temp.x,mob_Temp.y ))
+        {
+          if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
+          {
+            min_Dist = aux_Dist;
+            state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
+          }
+        }
+      }
+        else{
+           if (estaSemParede(state->mapa, mob_Temp.x, mob_Temp.y) && estaSemParede(state->mapa, x_Aux +x_pos, *pos_y) && estaSemParede(state->mapa, *pos_x, y_Aux + y_pos))
+    {
+      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
+      {
+        min_Dist = aux_Dist;
+        state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
+      }
+    }
+            
 
-    if (estaSemParede(state->mapa, *pos_x, pos_Cima))
-    {
-      Coordenadas mob_Temp = {*pos_x, pos_Cima};
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
-      }
-    }
-    if (estaSemParede(state->mapa, *pos_x, pos_Baixo))
-    {
-      Coordenadas mob_Temp = {*pos_x, pos_Baixo};
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
-      }
-    }
-    if (estaSemParede(state->mapa, pos_Esquerda, *pos_y))
-    {
-      Coordenadas mob_Temp = {pos_Esquerda, *pos_y};
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
-      }
-    }
-    if (estaSemParede(state->mapa, pos_Direita, *pos_y))
-    {
-      Coordenadas mob_Temp = {pos_Direita, *pos_y};
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, mob_Temp)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = mob_Temp;
-      }
-    }
-    if (estaSemParede(state->mapa, diagonal_esqC.x, diagonal_esqC.y) && estaSemParede(state->mapa, pos_Esquerda, *pos_y) && estaSemParede(state->mapa, *pos_x, pos_Cima))
-    {
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, diagonal_esqC)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = diagonal_esqC;
-      }
-    }
-    if (estaSemParede(state->mapa, diagonal_esqB.x, diagonal_esqB.y) && estaSemParede(state->mapa, pos_Esquerda, *pos_y) && estaSemParede(state->mapa, *pos_x, pos_Baixo))
-    {
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, diagonal_esqB)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = diagonal_esqB;
-      }
-    }
-    if (estaSemParede(state->mapa, diagonal_dirC.x, diagonal_dirC.y) && estaSemParede(state->mapa, pos_Direita, *pos_y) && estaSemParede(state->mapa, *pos_x, pos_Cima))
-    {
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, diagonal_dirC)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = diagonal_dirC;
-      }
-    }
-    if (estaSemParede(state->mapa, diagonal_dirB.x, diagonal_dirB.y) && estaSemParede(state->mapa, pos_Direita, *pos_y) && estaSemParede(state->mapa, *pos_x, pos_Baixo))
-    {
-      if ((aux_Dist = distancia(state->jogoAtual.jogador.posicao, diagonal_dirB)) < min_Dist)
-      {
-        min_Dist = aux_Dist;
-        state->jogoAtual.mobs[mob_i].posicao = diagonal_dirB;
+        }
       }
     }
   }
@@ -176,8 +129,6 @@ void atacarComMobs(State *state)
 
     // Monstros atacam na vertical e horizontal e no sítio
     if (
-        ((mobAtual.posicao.x - 1 == player_pos.x || mobAtual.posicao.x + 1 == player_pos.x) && mobAtual.posicao.y == player_pos.y) ||
-        ((mobAtual.posicao.y - 1 == player_pos.y || mobAtual.posicao.y + 1 == player_pos.y) && mobAtual.posicao.x == player_pos.x) ||
         (mobAtual.posicao.x == player_pos.x && mobAtual.posicao.y == player_pos.y))
     {
       if (ataqueComProbabilidade(mobAtual.mob.arma, &(state->jogoAtual.jogador.vida)))
