@@ -59,7 +59,8 @@ int main()
 
 	while (1)
 	{
-		if (state.sceneAtual != sceneAnterior) {
+		if (state.sceneAtual != sceneAnterior)
+		{
 			werase(window);
 			sceneAnterior = state.sceneAtual;
 		}

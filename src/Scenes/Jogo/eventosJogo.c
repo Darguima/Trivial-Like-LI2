@@ -8,6 +8,7 @@
 
 void mover_jogador(State *state, int dx, int dy)
 {
+
 	int temp_x = state->jogoAtual.jogador.posicao.x + dx;
 	int temp_y = state->jogoAtual.jogador.posicao.y + dy;
 
@@ -16,7 +17,6 @@ void mover_jogador(State *state, int dx, int dy)
 		state->jogoAtual.jogador.posicao.x = temp_x;
 		state->jogoAtual.jogador.posicao.y = temp_y;
 	}
-
 	atualizarAposMovimento(state);
 }
 
@@ -44,6 +44,7 @@ void reageVida(State *state)
 
 void eventosJogo(State *state)
 {
+
 	int key = getch();
 
 	ArmaNoMapa *armaSobreposta;
@@ -56,6 +57,7 @@ void eventosJogo(State *state)
 	{
 	/* Interação com mapa */
 	case 'z':
+		atualizarAposMovimento(state);
 		// atacar com principal
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -75,6 +77,7 @@ void eventosJogo(State *state)
 		break;
 
 	case 'x':
+		atualizarAposMovimento(state);
 		// Atacar com secundária
 		if (esta_sobre_mob(state, &mob_sobreposto))
 		{
@@ -90,10 +93,10 @@ void eventosJogo(State *state)
 			// Adicionar Arma ao inventário
 			armaSobreposta->disponivel = 0;
 		}
-
 		break;
 
 	case 'e':
+		atualizarAposMovimento(state);
 		// Pegar um objeto
 		if (esta_sobre_objeto(state, &objetoSobreposto))
 		{

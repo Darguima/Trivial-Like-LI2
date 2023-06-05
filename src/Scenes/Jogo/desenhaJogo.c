@@ -212,7 +212,6 @@ void desenhaJogo(WINDOW *window, State *state)
 	wattroff(window, COLOR_PAIR(MapaPlayerSobAtaqueColor));
 
 	wrefresh(window);
-
 	return;
 }
 

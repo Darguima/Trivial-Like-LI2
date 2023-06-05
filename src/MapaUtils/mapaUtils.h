@@ -1,5 +1,7 @@
 #include "../state.h"
 
+int distancia (Coordenadas player, Coordenadas mob);
+
 ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height);
 void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width);
 

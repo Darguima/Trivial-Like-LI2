@@ -1,17 +1,28 @@
 #include <stdlib.h>
 #include "../state.h"
+#include <math.h>
 
-ElementosDoMapa** alocar_matrix_mapa(int matrix_width, int matrix_height) {
-  ElementosDoMapa** matrix = (ElementosDoMapa **)malloc(matrix_width * sizeof(ElementosDoMapa *));
-	for (int i = 0; i < matrix_width; i++)
-		matrix[i] = (ElementosDoMapa *)malloc(matrix_height * sizeof(ElementosDoMapa));
-  
+int distancia(Coordenadas player, Coordenadas mob)
+{
+  int dif_x = pow(abs(player.x - mob.x), 2);
+  int dif_y = pow(abs(player.y - mob.y), 2);
+
+  return (sqrt(dif_x + dif_y));
+}
+
+ElementosDoMapa **alocar_matrix_mapa(int matrix_width, int matrix_height)
+{
+  ElementosDoMapa **matrix = (ElementosDoMapa **)malloc(matrix_width * sizeof(ElementosDoMapa *));
+  for (int i = 0; i < matrix_width; i++)
+    matrix[i] = (ElementosDoMapa *)malloc(matrix_height * sizeof(ElementosDoMapa));
+
   return matrix;
 }
 
-void libertar_matrix_mapa(ElementosDoMapa** matrix, int matrix_width) {
-	for (int i = 0; i < matrix_width; i++)
-		free(matrix[i]);
+void libertar_matrix_mapa(ElementosDoMapa **matrix, int matrix_width)
+{
+  for (int i = 0; i < matrix_width; i++)
+    free(matrix[i]);
   free(matrix);
 }
 
@@ -104,9 +115,9 @@ int estaTotalmenteLivreParaOUser(State *state, int x, int y)
 
   return estaDentroDoMapa(x, y, state->mapa.matrix_width, state->mapa.matrix_height) &&
          state->mapa.matrix[x][y].tipo == Vazio &&
-         !esta_sobre_arma(state, (ArmaNoMapa **) &null) &&
-         !esta_sobre_objeto(state,(ObjetoNoMapa **) &null) &&
-         !esta_sobre_mob(state, (MobNoMapa **) &null);
+         !esta_sobre_arma(state, (ArmaNoMapa **)&null) &&
+         !esta_sobre_objeto(state, (ObjetoNoMapa **)&null) &&
+         !esta_sobre_mob(state, (MobNoMapa **)&null);
 }
 
 // Não existe mesmo nada nesta posição, nem se quer o user
