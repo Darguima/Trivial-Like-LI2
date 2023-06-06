@@ -65,7 +65,7 @@ void moverMobs(State *state)
     int min_Dist;
     int nao_perseguicao = rand() % 100;
 
-    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao, state->jogoAtual.mobs[mob_i].posicao)) > state->jogoAtual.mobs[mob_i].mob.raioVisao || nao_perseguicao<5)
+    if ((min_Dist = distancia(state->jogoAtual.jogador.posicao, state->jogoAtual.mobs[mob_i].posicao)) > state->jogoAtual.mobs[mob_i].mob.raioVisao || nao_perseguicao<20)
     {
       int x_deslocamento, y_deslocamento;
 
