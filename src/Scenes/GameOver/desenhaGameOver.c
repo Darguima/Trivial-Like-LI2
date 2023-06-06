@@ -33,5 +33,5 @@ void desenhaGameOver(WINDOW *window, State *state)
     }
 
     mvprintw(nrows - 4, 2, "Pressione [M] para voltar ao menu");
-    mvprintw(nrows - 2, 2, "Pressione [S] para sair do jogo");
+    mvprintw(nrows - 2, 2, "Pressione [Q] para sair do jogo");
 }
