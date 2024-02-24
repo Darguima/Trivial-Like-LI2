@@ -1,89 +1,101 @@
-# TrivialLike
-###### Laboratórios de Informática II
+# Trivial-Like LI2
+
+## About the Project
+
+This project was developed for the LI2 University of Minho Subject of the Software Engineering degree.
+
+On this project were left tons of hours of work, and we are proud of the final result. Each new feature that we added, we won more energy to continue and to improve the project.
+
+#### Grade ⭐️ 19/20
+
+### Demo 📽️
+
+![Demo Image](./readme/demo.png)
+
+https://github.com/Darguima/Trivial-Like-LI2/assets/49988070/bd3e1cbd-0621-4597-a22c-3aba0e414fc2
 
 ### Features
 
-* Movimento do jogador
-* Outros ainda em desenvolvimento :)
+* Players name (to continue the game after leaving it)
+* Random map generation with dynamic size
+* Vision system (that can be turned off), with lightning system
+* Random enemies generation, with IA movement
+* Random items generation
+* Settings (that are persistent even after closing the game)
+* Music
 
-### Controlos ⌨️ (Apenas Teclado)
+### Controls ⌨️ (Keyboard Only)
 
-* **Setas** - Mover o jogador
-* **q** - Para sair / voltar
+* **Arrows** - Move the player
+* **q** - Enter Pause mode
 
-## Código
+###### The game controls are shown on the bottom of the screen, and shown when is possible to use them.
 
-O código está organizado em módulos.
+## Download 📥📲
 
-O programa começa em `src/main.c` que cria a janela do ncurses e o estado do jogo (disponível em `src/state.c`). Depois dentro do loop da função main a cada iteração é verificado qual é a scene atual e chamadas as respetivas funções de renderização (desenha*.c) e de controlo de eventos (eventos*.c).
+You can download the game on [project's releases](https://github.com/Darguima/Trivial-Like-LI2/releases).
 
-Cada scene tem a sua pasta dentro de `src/Scenes/` com 2 ficheiros (mais os respetivos headers), responsáveis pelas respetivas funções de renderização e controlo de eventos, com nome igual ao ficheiro.
+### The goal ⛳️
 
-## Contribuir
+As you can easily see on the demo, the goal was develop a clone of Roguelike game with ncurses library from C.
 
-### Repositório
+If you want, you can read the [project statement](enunciado.pdf) (in Portuguese).
 
-Para clonar o repositório usa um dos seguintes comandos
+### About the Code 🧑‍💻
 
-```bash
-# Por HTTPS
-$ git clone https://github.com/Darguima/triviallike.git
-$ cd triviallike
+We try to since the begin organize the code in a way that we could easily add new features, creating a very well modulated project, always splitting the events from the drawing functions.
 
-# Por SSH
-$ git clone git@github.com:Darguima/triviallike.git
-$ cd triviallike
-```
+## Getting Started 🚀
 
-### Dependências
-
-#### Debian / Ubuntu / Mint
-
-Para instalar o `ncurses` (libncurses-dev) ,o `gcc` (build-essential) em derivados Debian.
+#### Cloning the repository
 
 ```bash
-$ sudo apt-get install libncurses-dev build-essential
+$ git clone https://github.com/Darguima/Trivial-Like-LI2.git
+$ git clone git@github.com:Darguima/Trivial-Like-LI2.git
 ```
-Para instalar o `json-c` (libjson-c-dev)
+
+### Installing dependencies 📦
 
 ```bash
-$ sudo apt install libjson-c-dev
+# Debian / Ubuntu / Mint
+$ sudo apt-get install libncurses-dev build-essential libjson-c-dev
+
+# Arch
+$ sudo pacman -S sdl2_mixer
 ```
 
----
+#### Running the project 🏃‍♂️
 
-### Compilar
+Start by going to the root folder:
 
-Para compilar, limpar os objetos e executar.
+```bash
+$ cd Trivial-Like-LI2/
+```
+
+##### Compiling the code 🛠️
+```bash
+$ make
+
+# Executing program
+$ ./triviallike
+```
+
+##### Developing
+
+This function `clean`, `compile` and `execute` the project
 
 ```bash
 $ make dev
 ```
 
-Para apenas compilar o código:
-
-```bash
-$ make
-```
-
-Para apenas remover todos os ficheiros de código objeto:
-
+##### Cleaning object files and executable
 ```bash
 $ make clean
 ```
 
-Será gerado um executável `triviallike` que pode ser executado isoladamente.
+## Developed by 🧑‍💻:
 
-```bash
-# No Linux
-$ ./triviallike
-```
-
-Agora podes enviar para qualquer lado o executável, sem necessidade de teres o `gcc` e o código em outros computadores.
-
-## Realizado por
-
-- **a104537** Afonso Pedreira ;
-- **A104344** Dário Guimarães ;
-- **a104534** Hugo Rauber ;
-- **a104523** Rodrigo Macedo ;
+- [Afonso Pedreira](https://github.com/afooonso)
+- [Dário Guimarães](https://github.com/darguima)
+- [Hugo Rauber](https://github.com/HugoLRauber)
+- [Rodrigo Macedo](https://github.com/rmufasa)
