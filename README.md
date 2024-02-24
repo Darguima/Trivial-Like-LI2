@@ -4,7 +4,7 @@
 
 This project was developed for the LI2 University of Minho Subject of the Software Engineering degree.
 
-On this project were left tons of hours of work, and we are proud of the final result. Each new feature that we had, we win more energy to continue and to make the project better.
+On this project were left tons of hours of work, and we are proud of the final result. Each new feature that we added, we won more energy to continue and to improve the project.
 
 #### Grade ⭐️ 19/20
 
@@ -30,6 +30,10 @@ https://github.com/Darguima/Trivial-Like-LI2/assets/49988070/bd3e1cbd-0621-4597-
 * **q** - Enter Pause mode
 
 ###### The game controls are shown on the bottom of the screen, and shown when is possible to use them.
+
+## Download 📥📲
+
+You can download the game on [project's releases](https://github.com/Darguima/Trivial-Like-LI2/releases).
 
 ### The goal ⛳️
 
