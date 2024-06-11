@@ -7,7 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 
 void playGameSong() {
-	Mix_Music* music = Mix_LoadMUS("./src/jogo.mp3");
+	Mix_Music* music = Mix_LoadMUS("./assets/jogo.mp3");
 	Mix_PlayMusic(music, -1);
 
 }
